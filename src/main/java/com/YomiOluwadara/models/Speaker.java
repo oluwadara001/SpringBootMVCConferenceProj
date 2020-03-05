@@ -9,11 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 
-/**
+import org.hibernate.annotations.Type;
+
+/*
  * @author OO046152
- *
+ * Tables in the model package depicts the tables in the DB. Each class is 
+ * mapped to a database tables: class variable are mapped to database columns
  */
 
 @Entity(name = "speakers")
@@ -21,12 +25,18 @@ public class Speaker {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long speaker_id;
+	private Long speaker_id;
 	private String first_name;
 	private String last_name;
 	private String title;
 	private String company;
 	private String speaker_bio;
+	// using byte type for photo @lob = large object
+	// @Type help hibernate deal with binary data that could be large
+	@Lob
+	@Type(type = "org.hibernate.type.BinaryType")
+	private byte[] speaker_photo;
+
 	@ManyToMany(mappedBy = "speakers")
 	private List<Session> sessions; // pointing back to session class
 
@@ -38,7 +48,7 @@ public class Speaker {
 		this.speaker_bio = speaker_bio;
 	}
 
-	public long getSpeaker_id() {
+	public Long getSpeaker_id() {
 		return speaker_id;
 	}
 
@@ -89,6 +99,18 @@ public class Speaker {
 
 	public void setSessions(List<Session> sessions) {
 		this.sessions = sessions;
+	}
+
+	public byte[] getSpeaker_photo() {
+		return speaker_photo;
+	}
+
+	public void setSpeaker_photo(byte[] speaker_photo) {
+		this.speaker_photo = speaker_photo;
+	}
+
+	public void setSpeaker_id(Long speaker_id) {
+		this.speaker_id = speaker_id;
 	}
 
 }
