@@ -1,12 +1,17 @@
 /**
  * 
  */
-package models;
+package com.YomiOluwadara.models;
+
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  * @author OO046152
@@ -35,6 +40,21 @@ public class Session {
 	private String session_name;
 	private String session_description;
 	private int session_length;
+	@ManyToMany
+	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
+	private List<Speaker> speakers;
+
+	/*
+	 * private List<Speaker> speakers; is the attribute pointing to the Speaker
+	 * class adding variable from Speaker class so we can tie the two model classes
+	 * together with JPA relationships that represent their exact database
+	 * relationship
+	 * 
+	 * @ManyToMany- defines many to many, one speaker might have several sessions
+	 * and vice versa
+	 * 
+	 * @JoinTable- defines the join tables and the foreign keys
+	 */
 
 	public Long getSession_id() {
 		return session_id;
@@ -66,6 +86,14 @@ public class Session {
 
 	public void setSession_length(int session_length) {
 		this.session_length = session_length;
+	}
+
+	public List<Speaker> getSpeakers() {
+		return speakers;
+	}
+
+	public void setSpeakers(List<Speaker> speakers) {
+		this.speakers = speakers;
 	}
 
 	/*
