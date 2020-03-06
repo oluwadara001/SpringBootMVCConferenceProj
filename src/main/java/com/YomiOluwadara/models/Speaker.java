@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.Type;
 
 /*
- * @author OO046152
+ * @author OO046152:Yomi Oluwadara
  * Tables in the model package depicts the tables in the DB. Each class is 
  * mapped to a database tables: class variable are mapped to database columns
  */

@@ -14,7 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
- * @author OO046152
+ * @author OO046152:Yomi Oluwadara
  * 
  *         Session class maps to the conference sessions annotate this class as
  *         JPA entity with the @Entity
