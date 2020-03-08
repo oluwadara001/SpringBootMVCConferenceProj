@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.YomiOluwadara.controllers;
+package com.YomiOluwadara.conferencedemo.controllers;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.YomiOluwadara.models.Speaker;
-import com.YomiOluwadara.repositories.SpeakerRepository;
+import com.YomiOluwadara.conferencedemo.models.Speaker;
+import com.YomiOluwadara.conferencedemo.repositories.SpeakerRepository;
 
 /**
  * @author OO046152 :Yomi Oluwadara

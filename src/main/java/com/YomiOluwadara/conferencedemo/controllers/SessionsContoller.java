@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.YomiOluwadara.controllers;
+package com.YomiOluwadara.conferencedemo.controllers;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.YomiOluwadara.models.Session;
-import com.YomiOluwadara.repositories.SessionRepository;
+import com.YomiOluwadara.conferencedemo.models.Session;
+import com.YomiOluwadara.conferencedemo.repositories.SessionRepository;
 
 /**
  * @author OO046152 :Yomi Oluwadara
@@ -46,7 +46,6 @@ import com.YomiOluwadara.repositories.SessionRepository;
 @RestController
 @RequestMapping("/api/v1/sessions")
 public class SessionsContoller {
-
 	@Autowired
 	private SessionRepository sessionRepository;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.YomiOluwadara.models;
+package com.YomiOluwadara.conferencedemo.models;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * @author OO046152:Yomi Oluwadara
  * 
@@ -20,8 +22,11 @@ import javax.persistence.ManyToMany;
  *         JPA entity with the @Entity
  * @Entity(name = "sessions") attributes this class to the database table called
  *              session
+ * 
+ * @JsonIgnoreProperties : helps handle loading
  */
 @Entity(name = "sessions")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Session {
 
 	/*

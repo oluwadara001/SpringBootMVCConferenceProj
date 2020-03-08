@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.YomiOluwadara.models;
+package com.YomiOluwadara.conferencedemo.models;
 
 import java.util.List;
 
@@ -14,10 +14,14 @@ import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*
  * @author OO046152:Yomi Oluwadara
  * Tables in the model package depicts the tables in the DB. Each class is 
  * mapped to a database tables: class variable are mapped to database columns
+ * 
+ * @JsonIgnore : helps with serialization
  */
 
 @Entity(name = "speakers")
@@ -38,6 +42,7 @@ public class Speaker {
 	private byte[] speaker_photo;
 
 	@ManyToMany(mappedBy = "speakers")
+	@JsonIgnore
 	private List<Session> sessions; // pointing back to session class
 
 	public String getSpeaker_bio() {
