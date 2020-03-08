@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * 
  * @JsonIgnoreProperties : helps handle loading
  */
+
 @Entity(name = "sessions")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Session {
@@ -45,6 +47,7 @@ public class Session {
 	private String session_name;
 	private String session_description;
 	private int session_length;
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
 	private List<Speaker> speakers;
