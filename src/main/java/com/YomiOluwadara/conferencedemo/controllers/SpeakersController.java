@@ -46,6 +46,7 @@ public class SpeakersController {
 	}
 
 	// creates a new speaker
+	// http://localhost:8888/api/v1/speakers
 	@PostMapping
 	public Speaker create(@RequestBody Speaker speaker) {
 		return speakerRepository.saveAndFlush(speaker);

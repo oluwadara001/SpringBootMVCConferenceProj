@@ -1,0 +1,86 @@
+
+FIRST INSTALLATION
+
+pre- steps
+1  Download docker
+2  Download progress image into local machine
+
+SPINNING UP POSTGRESS IN DOCKER
+Downloads the alpine version of postgres
+  docker pull postgres:alpine
+
+then run> (shows you the progress image you just downloaded)
+  docker images  
+
+run a docker instance
+  docker run --name postgres-demo -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:11.5-alpine
+
+run below to see if the above was successful  
+  docker ps
+
+bash into container
+  winpty docker exec -it postgres-demo bash   ( if you are using  git bash)
+
+get root access
+  psql -U postgres
+
+Create the Database:
+  create database conference_app;
+  check the Database that was created
+--  \l
+--  \c       to connect to db via terminal
+
+_______________________________________________________________________________
+STARING UP POSTGRESS IN DOCKER AFTER FIRST INSTALLATION
+  CONNECT TO DOCKER INSTANCE FIRST VIA GITBASH, THEN CONNECT TO DB
+
+  -- follow steps above ( do not start from declaring another instance)
+  docker start postgres-demo
+  docker ps
+  winpty docker exec -it postgres-demo bash
+  psql -U postgres
+   \c  
+
+--once the coonnection is established to the db in docker, then connect to the db utility, follow the ggf steps
+
+3 LAUNCH PGADMING4 - DB UTILTIY
+launch pgadmin4 app from local machine ( it will open with the below uri)
+  http://127.0.0.1:52147/browser/  
+  master password : password  
+username: postgres
+password: mysecretpassword
+
+note: scql scripts are in git repository  
+ git repo for SQL : https://github.com/dlbunker/ps-first-spring-boot-app/tree/master/database/postgresql
+
+ IN git GITBASH:
+docker start postgres-demo        : to start the db again once
+#docker stop postgres-demo         " to stop db"
+
+
+
+psql -d conference_app -f insert_data.sql
+--  \l
+--  \c       to connect to db via terminal
+
+
+**********************************************************************************
+**********************************************************************************
+change spring boot starting port
+**********************************************************************************
+**********************************************************************************
+*******Identify and stop the process that's listening on port 8080 or configure this application to
+listen on another port.
+Pgbouncer.exe is now listening at port 8080 thereby causing SpringBoot not to start
+
+pgbouncer- has to do with postgresql
+https://www.file.net/process/pgbouncer.exe.html
+
+how to configure Spring to listen to another Port
+https://frontbackend.com/spring-boot/how-can-i-configure-port-for-a-spring-boot-application
+
+
+
+** docker container running postgres alphine ***
+
+https://medium.com/better-programming/connect-from-local-machine-to-postgresql-docker-container-f785f00461a7

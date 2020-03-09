@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /*
  * @author OO046152:Yomi Oluwadara
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //@Entity
 //@Table(name = "speakers")
 @Entity(name = "speakers")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Speaker {
 
 	@Id
