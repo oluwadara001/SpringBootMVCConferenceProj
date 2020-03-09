@@ -27,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @JsonIgnoreProperties : helps handle loading
  */
 
+//@Entity
+//@Table(name = "sessions")
 @Entity(name = "sessions")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Session {
@@ -42,6 +44,7 @@ public class Session {
 	 */
 
 	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long session_id;
 	private String session_name;

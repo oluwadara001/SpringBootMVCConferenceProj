@@ -24,10 +24,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @JsonIgnore : helps with serialization
  */
 
+//@Entity
+//@Table(name = "speakers")
 @Entity(name = "speakers")
 public class Speaker {
 
 	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long speaker_id;
 	private String first_name;
