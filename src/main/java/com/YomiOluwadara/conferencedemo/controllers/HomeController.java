@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
  * 
  *        Method getStatus() uses a map to put the coded version of application
  *        from the application.properties file
+ * 
+ *        HEROKU link: https://yomi-conferenc-eapp.herokuapp.com/
+ * 
  */
 
 @RestController
