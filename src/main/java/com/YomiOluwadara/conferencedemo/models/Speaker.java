@@ -119,8 +119,8 @@ public class Speaker {
 		this.speaker_photo = speaker_photo;
 	}
 
-	public void setSpeaker_id(Long speaker_id) {
-		this.speaker_id = speaker_id;
-	}
+//	public void setSpeaker_id(Long speaker_id) {
+//		this.speaker_id = speaker_id;
+//	}
 
 }
