@@ -32,12 +32,22 @@ public class HomeController {
 	@Value("${yomi.app.version}")
 	private String yomiAppVersion;
 
+	
 	@GetMapping
 	@RequestMapping("/") // http://localhost:5000
-	public Map getStatus() {
+	public Map getVersion() {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("yomi.app.version", yomiAppVersion);
 		return map;
 	}
+	
+	
+	//method to display a welcome message to the user
+	@GetMapping
+	@RequestMapping("/home")
+	public String welcomeMessage() {
+		return "Hello, welcome to the Yomi conference app project";
+	}
+	
 
 }
