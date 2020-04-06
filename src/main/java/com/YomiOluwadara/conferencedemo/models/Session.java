@@ -50,7 +50,7 @@ public class Session {
 	private String session_name;
 	private String session_description;
 	private int session_length;
-	@JsonIgnore
+	@JsonIgnore // helps with serialization issues : ignores nested json pay loads
 	@ManyToMany
 	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
 	private List<Speaker> speakers;

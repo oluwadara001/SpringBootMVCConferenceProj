@@ -79,12 +79,12 @@ public class SessionsContoller {
 	// return method is void because record is being deleted
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
-		// ADD LOGIC to check for children method before deleting
 		sessionRepository.deleteById(id);
+		// TODO : add logic that allows for the deleting of children records
 	}
+	
 
 	// find a session given its id,then store that id in Session variable (session)
-
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public Session update(@PathVariable Long id, @RequestBody Session session) {
 		// taking the existing session and copies in incoming session data to it but
