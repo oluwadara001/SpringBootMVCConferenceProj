@@ -20,10 +20,13 @@ import com.YomiOluwadara.conferencedemo.repositories.SessionRepository;
 
 /**
  * @author OO046152 :Yomi Oluwadara
+ * 
+ * class SessionsContoller : consists of all the CRUD operations that could be performed on session
+ * 
  * @RestController: makes class responds to incoming and outgoing as JSON end
  *                  points
  * @RequestMapping: specifies the route path/url
- * @Autowired: Use spring to inject dependency(dependency injection) for (for
+ * @Autowired: Use by spring to inject dependency(dependency injection) for (for
  *             SessionReposity interface) - creates an instance of
  *             SessionRpeposity, the instance will be used to called the CRUD
  *             method the interface now have access to due to "extends"
@@ -46,6 +49,7 @@ import com.YomiOluwadara.conferencedemo.repositories.SessionRepository;
 @RestController
 @RequestMapping("/api/v1/sessions")
 public class SessionsContoller {
+	
 	@Autowired
 	private SessionRepository sessionRepository;
 
@@ -58,12 +62,14 @@ public class SessionsContoller {
 	// method that finds the id of a session that is passed as parameter from the
 	// user
 	@GetMapping
-	@RequestMapping("/{id}")
+	@RequestMapping("/{id}") //url for fetching a session id  of 2 : http://localhost:5000/api/v1/sessions/2
 	public Session get(@PathVariable Long id) {
 		return sessionRepository.getOne(id);
+	
+		
 	}
 
-	// method that creates /post a new session
+	// method that creates/ post a new session at http://localhost:5000/api/v1/sessions/ and passing ( as json)  all the variables needed to create a session object
 	@PostMapping
 	public Session create(@RequestBody final Session session) {
 		return sessionRepository.saveAndFlush(session);

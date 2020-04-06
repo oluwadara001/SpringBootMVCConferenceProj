@@ -121,6 +121,6 @@ public class Speaker {
 
 	public void setSpeaker_id(Long speaker_id) {
 	this.speaker_id = speaker_id;
-}
+	}
 
 }
