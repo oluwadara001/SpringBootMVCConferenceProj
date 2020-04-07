@@ -12,6 +12,6 @@ import com.YomiOluwadara.conferencedemo.models.Speaker;
  *
  */
 
-public interface SpeakerRepository extends JpaRepository<Speaker, Long> {
+public interface SpeakerDAO extends JpaRepository<Speaker, Long> {
 
 }

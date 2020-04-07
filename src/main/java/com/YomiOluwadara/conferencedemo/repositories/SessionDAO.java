@@ -15,6 +15,6 @@ import com.YomiOluwadara.conferencedemo.models.Session;
  *         SessionRpository could be traditionally be called SessionDao
  */
 
-public interface SessionRepository extends JpaRepository<Session, Long> {
+public interface SessionDAO extends JpaRepository<Session, Long> {
 
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.YomiOluwadara.conferencedemo.models.Speaker;
-import com.YomiOluwadara.conferencedemo.repositories.SpeakerRepository;
+import com.YomiOluwadara.conferencedemo.repositories.SpeakerDAO;
 
 /**
  * @author OO046152 :Yomi Oluwadara
@@ -30,42 +30,42 @@ import com.YomiOluwadara.conferencedemo.repositories.SpeakerRepository;
 public class SpeakersController {
 
 	@Autowired
-	private SpeakerRepository speakerRepository;
+	private SpeakerDAO speakerDAO;
 
 	// method that returns the list of all speakers
 	@GetMapping
 	public List<Speaker> list() {
-		return speakerRepository.findAll();
+		return speakerDAO.findAll();
 	}
 
 	// method that returns a specific speaker given their id
 	@GetMapping
 	@RequestMapping("/{id}")
 	public Speaker get(@PathVariable Long id) {
-		return speakerRepository.getOne(id);
+		return speakerDAO.getOne(id);
 	}
 
 	// creates a new speaker
 	// http://localhost:8888/api/v1/speakers
 	@PostMapping
 	public Speaker create(@RequestBody Speaker speaker) {
-		return speakerRepository.saveAndFlush(speaker);
+		return speakerDAO.saveAndFlush(speaker);
 	}
 
 	// method that deletes a speaker given their id
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
 		// ADD LOGIC to check for children method before deleting
-		speakerRepository.deleteById(id);
+		speakerDAO.deleteById(id);
 	}
 
 	// method that takes a speaker id and update certain attributes/properties of
 	// the speaker
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
-		Speaker existingSpeaker = speakerRepository.getOne(id);
+		Speaker existingSpeaker = speakerDAO.getOne(id);
 		BeanUtils.copyProperties(speaker, existingSpeaker, "speaker_id");
-		return speakerRepository.saveAndFlush(existingSpeaker);
+		return speakerDAO.saveAndFlush(existingSpeaker);
 	}
 
 }

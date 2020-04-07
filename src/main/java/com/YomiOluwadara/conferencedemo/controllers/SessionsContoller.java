@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.YomiOluwadara.conferencedemo.models.Session;
-import com.YomiOluwadara.conferencedemo.repositories.SessionRepository;
+import com.YomiOluwadara.conferencedemo.repositories.SessionDAO;
 
 /**
  * @author OO046152 :Yomi Oluwadara
@@ -51,12 +51,12 @@ import com.YomiOluwadara.conferencedemo.repositories.SessionRepository;
 public class SessionsContoller {
 	
 	@Autowired
-	private SessionRepository sessionRepository;
+	private SessionDAO sessionDAO;
 
 	// method that returns a list of all sessions
 	@GetMapping
 	public List<Session> list() {
-		return sessionRepository.findAll();
+		return sessionDAO.findAll();
 	}
 
 	// method that finds the id of a session that is passed as parameter from the
@@ -64,7 +64,7 @@ public class SessionsContoller {
 	@GetMapping
 	@RequestMapping("/{id}") //url for fetching a session id  of 2 : http://localhost:5000/api/v1/sessions/2
 	public Session get(@PathVariable Long id) {
-		return sessionRepository.getOne(id);
+		return sessionDAO.getOne(id);
 	
 		
 	}
@@ -72,14 +72,14 @@ public class SessionsContoller {
 	// method that creates/ post a new session at http://localhost:5000/api/v1/sessions/ and passing ( as json)  all the variables needed to create a session object
 	@PostMapping
 	public Session create(@RequestBody final Session session) {
-		return sessionRepository.saveAndFlush(session);
+		return sessionDAO.saveAndFlush(session);
 	}
 
 	// method that deletes a session given its id, provided no children sessions
 	// return method is void because record is being deleted
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
-		sessionRepository.deleteById(id);
+		sessionDAO.deleteById(id);
 		// TODO : add logic that allows for the deleting of children records
 	}
 	
@@ -88,14 +88,14 @@ public class SessionsContoller {
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public Session update(@PathVariable Long id, @RequestBody Session session) {
 		// taking the existing session and copies in incoming session data to it but
-		Session existingSession = sessionRepository.getOne(id);
+		Session existingSession = sessionDAO.getOne(id);
 		// implementation of: BeanUtils.copyProperties(source, target,
 		// ignoreProperties);
 		BeanUtils.copyProperties(session, existingSession, "session_id");
 		// ignoringProperties (the session_id)
 		// ADD LOGIC to ensure all attributes of session are passed in( else they will
 		// be defaulted to null),otherwise return a 400 bad payload
-		return sessionRepository.saveAndFlush(existingSession);
+		return sessionDAO.saveAndFlush(existingSession);
 
 	}
 }
