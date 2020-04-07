@@ -50,6 +50,7 @@ import com.YomiOluwadara.conferencedemo.services.SessionsService;
 
 @RestController
 @RequestMapping("/api/v1/sessions")
+
 public class SessionsContoller {
 	
 	SessionsService sessionsService;
