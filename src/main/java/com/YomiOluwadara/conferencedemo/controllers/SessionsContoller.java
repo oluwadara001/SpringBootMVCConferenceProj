@@ -57,6 +57,7 @@ public class SessionsContoller {
 	@GetMapping
 	public List<Session> list() {
 		return sessionDAO.findAll();
+		
 	}
 
 	// method that finds the id of a session that is passed as parameter from the
