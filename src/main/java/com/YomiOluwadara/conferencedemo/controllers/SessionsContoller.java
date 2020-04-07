@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.YomiOluwadara.conferencedemo.models.Session;
 import com.YomiOluwadara.conferencedemo.repositories.SessionDAO;
+import com.YomiOluwadara.conferencedemo.services.SessionsService;
 
 /**
  * @author OO046152 :Yomi Oluwadara
@@ -50,24 +52,29 @@ import com.YomiOluwadara.conferencedemo.repositories.SessionDAO;
 @RequestMapping("/api/v1/sessions")
 public class SessionsContoller {
 	
-	@Autowired
-	private SessionDAO sessionDAO;
+	SessionsService sessionsService;
+	
+	
+	public SessionsContoller (SessionsService sessionsService) {
+		this.sessionsService = sessionsService;
+	}
+	
 
-	// method that returns a list of all sessions
+	@Autowired
+	 SessionDAO sessionDAO;
+
+	
 	@GetMapping
-	public List<Session> list() {
-		return sessionDAO.findAll();
-		
+	public @ResponseBody List<Session> list() {
+		return sessionsService.list();	
 	}
 
-	// method that finds the id of a session that is passed as parameter from the
-	// user
+	
+	
 	@GetMapping
 	@RequestMapping("/{id}") //url for fetching a session id  of 2 : http://localhost:5000/api/v1/sessions/2
-	public Session get(@PathVariable Long id) {
-		return sessionDAO.getOne(id);
-	
-		
+	public @ResponseBody Session get(@PathVariable Long id) {
+		return sessionsService.get(id);
 	}
 
 	// method that creates/ post a new session at http://localhost:5000/api/v1/sessions/ and passing ( as json)  all the variables needed to create a session object
