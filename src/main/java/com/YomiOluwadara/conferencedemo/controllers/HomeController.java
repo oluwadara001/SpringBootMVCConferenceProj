@@ -6,10 +6,14 @@ package com.YomiOluwadara.conferencedemo.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.YomiOluwadara.conferencedemo.services.HomeService;
 
 /**
  * @author OO046152 :Yomi Oluwadara
@@ -28,26 +32,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
-
-	@Value("${yomi.app.version}")
-	private String yomiAppVersion;
-
 	
-	@GetMapping
-	@RequestMapping("/") // http://localhost:5000
-	public Map getVersion() {
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("yomi.app.version", yomiAppVersion);
-		return map;
+	HomeService homeService;
+	
+	public HomeController (HomeService homeService) {
+		this.homeService = homeService;
 	}
 	
-	
-	//method to display a welcome message to the user
 	@GetMapping
 	@RequestMapping("/home")
-	public String welcomeMessage() {
-		return "Hello, welcome to the Yomi conference app project";
+	public  @ResponseBody  String welcomeMessage() {
+		return homeService.welcomeMessage();
 	}
+		
+	@GetMapping
+	@RequestMapping("/") // http://localhost:5000
+	public @ResponseBody  String getAppVersion() {
+		return homeService.appVersion();
+		
+	}
+
+	
+	
+
+	
 	
 
 }
