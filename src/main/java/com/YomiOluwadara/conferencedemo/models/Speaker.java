@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Speaker {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long speaker_id;
 	private String first_name;
@@ -98,11 +97,6 @@ public class Speaker {
 		this.company = company;
 	}
 
-	// default class constructor
-	public Speaker() {
-
-	}
-
 	public List<Session> getSessions() {
 		return sessions;
 	}
@@ -120,7 +114,12 @@ public class Speaker {
 	}
 
 	public void setSpeaker_id(Long speaker_id) {
-	this.speaker_id = speaker_id;
+		this.speaker_id = speaker_id;
+	}
+
+	// default constructor
+	public Speaker() {
+
 	}
 
 }
