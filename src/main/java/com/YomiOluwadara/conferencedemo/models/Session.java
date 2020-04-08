@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -44,7 +45,6 @@ public class Session {
 	 */
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long session_id;
 	private String session_name;
@@ -54,6 +54,12 @@ public class Session {
 	@ManyToMany
 	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
 	private List<Speaker> speakers;
+
+	@JsonIgnore
+	@OneToMany
+	// @JoinTable(name = "sessions", joinColumns = @JoinColumn(name = "session_id"),
+	// inverseJoinColumns = @JoinColumn(name = "attendee_id"))
+	private List<Attendee> attendees;
 
 	/*
 	 * private List<Speaker> speakers; is the attribute pointing to the Speaker
@@ -107,6 +113,14 @@ public class Session {
 		this.speakers = speakers;
 	}
 
+	public List<Attendee> getAttendees() {
+		return attendees;
+	}
+
+	public void setAttendees(List<Attendee> attendees) {
+		this.attendees = attendees;
+	}
+
 	/*
 	 * default constructor- will help with serialization and de-serialization which
 	 * will happen when we plug the controllers to match the data into and out of
@@ -115,8 +129,5 @@ public class Session {
 	public Session() {
 
 	}
-
-	
-	
 
 }

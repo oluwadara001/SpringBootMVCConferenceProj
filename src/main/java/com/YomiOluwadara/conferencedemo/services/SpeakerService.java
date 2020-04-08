@@ -26,28 +26,28 @@ public class SpeakerService {
 	private SpeakerDAO speakerDAO;
 
 //method that returns the list of all speakers
-	public List<Speaker> list() {
+	public List<Speaker> allSpeakers() {
 		return speakerDAO.findAll();
 	}
 
 //method that returns a specific speaker given their id
-	public Speaker get(@PathVariable Long id) {
+	public Speaker findOnespeaker(@PathVariable Long id) {
 		return speakerDAO.getOne(id);
 	}
 
 //creates a new speaker with all its attributes
-	public Speaker create(@RequestBody Speaker speaker) {
+	public Speaker addNewSpeaker(@RequestBody Speaker speaker) {
 		return speakerDAO.saveAndFlush(speaker);
 	}
 
 //method that deletes a speaker given their id
-	public void delete(@PathVariable Long id) {
+	public void deleteOneSpeaker(@PathVariable Long id) {
 		// ADD LOGIC to check for children method before deleting
 		speakerDAO.deleteById(id);
 	}
 
 //method that updates/patch certain attributes of a speaker 
-	public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
+	public Speaker updateSpeakerInfo(@PathVariable Long id, @RequestBody Speaker speaker) {
 		Speaker existingSpeaker = speakerDAO.getOne(id);
 		BeanUtils.copyProperties(speaker, existingSpeaker, "speaker_id");
 		return speakerDAO.saveAndFlush(existingSpeaker);

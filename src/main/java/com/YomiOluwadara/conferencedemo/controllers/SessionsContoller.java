@@ -5,8 +5,6 @@ package com.YomiOluwadara.conferencedemo.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.YomiOluwadara.conferencedemo.models.Session;
-import com.YomiOluwadara.conferencedemo.repositories.SessionDAO;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
 
 /**
  * @author OO046152 :Yomi Oluwadara
  * 
- * class SessionsContoller : consists of all the CRUD operations that could be performed on session
+ *         class SessionsContoller : consists of all the CRUD operations that
+ *         could be performed on session
  * 
  * @RestController: makes class responds to incoming and outgoing as JSON end
  *                  points
@@ -39,51 +37,46 @@ import com.YomiOluwadara.conferencedemo.services.SessionsService;
 @RequestMapping("/api/v1/sessions")
 
 public class SessionsContoller {
-	
+
 	SessionsService sessionsService;
-	
-	public SessionsContoller (SessionsService sessionsService) {
+
+	public SessionsContoller(SessionsService sessionsService) {
 		this.sessionsService = sessionsService;
 	}
-	
 
-	@Autowired
-	 SessionDAO sessionDAO;
+//	@Autowired
+//	 SessionDAO sessionDAO;
 
-	
 	@GetMapping
 	public @ResponseBody List<Session> list() {
-		return sessionsService.list();	
+		return sessionsService.allSessions();
 	}
 
-	
-	
 	@GetMapping
-	@RequestMapping("/{id}") //url for fetching a session id  of 2 : http://localhost:5000/api/v1/sessions/2
+	@RequestMapping("/{id}") // url for fetching a session id of 2 : http://localhost:5000/api/v1/sessions/2
 	public @ResponseBody Session get(@PathVariable Long id) {
-		return sessionsService.get(id);
+		return sessionsService.findOneSession(id);
 	}
 
-	// method that creates/ post a new session 
+	// method that creates/ post a new session
 	@PostMapping
 	public Session create(@RequestBody final Session session) {
-		return sessionsService.create(session);
+		return sessionsService.addNewSession(session);
 	}
-	
-	
+
 	// method that deletes a session given its id, provided no children sessions
 	// return method is void because record is being deleted
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public @ResponseBody void delete(@PathVariable Long id) {
-		sessionsService.delete(id);
+		sessionsService.deleteOneSession(id);
+		;
 	}
-	
 
-	 //method that updates a specified record find a session given its id,then store that id in Session variable (session)
+	// method that updates a specified record find a session given its id,then store
+	// that id in Session variable (session)
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public @ResponseBody Session update(@PathVariable Long id, @RequestBody Session session) {
-		return sessionsService.update(id, session);
+		return sessionsService.updateSessionInfo(id, session);
 	}
-	
-	
+
 }
