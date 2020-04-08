@@ -34,7 +34,7 @@ public class AttendeeService {
 	}
 
 	// method that returns a specific speaker given their id
-	public Attendee findOneAttendee(@PathVariable Long id) {
+	public Attendee findOneAttendee(@PathVariable long id) {
 		return attendeeDAO.getOne(id);
 	}
 

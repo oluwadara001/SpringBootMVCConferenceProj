@@ -25,7 +25,7 @@ public class Attendee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int attendee_id;
+	private long attendee_id;
 	private String first_name;
 	private String last_name;
 	private String title;
@@ -43,11 +43,11 @@ public class Attendee {
 
 	}
 
-	public int getAttendee_id() {
+	public long getAttendee_id() {
 		return attendee_id;
 	}
 
-	public void setAttendee_id(int attendee_id) {
+	public void setAttendee_id(long attendee_id) {
 		this.attendee_id = attendee_id;
 	}
 
