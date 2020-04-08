@@ -13,59 +13,70 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.YomiOluwadara.conferencedemo.models.Speaker;
 import com.YomiOluwadara.conferencedemo.repositories.SpeakerDAO;
+import com.YomiOluwadara.conferencedemo.services.SpeakerService;
 
 /**
  * @author OO046152 :Yomi Oluwadara
  * 
  *         see meanings of annotations used in the SessionsController.java
+ *   SpeakerService speakerService; so you call the methods in that class from the controller class
+ *         
+ *         
  *
  */
 
 @RestController
 @RequestMapping("/api/v1/speakers")
 public class SpeakersController {
+	
+	SpeakerService speakerService;
+	
+	public SpeakersController (SpeakerService speakerService) {
+		this.speakerService = speakerService;		
+	}
+	
 
 	@Autowired
 	private SpeakerDAO speakerDAO;
 
 	// method that returns the list of all speakers
 	@GetMapping
-	public List<Speaker> list() {
-		return speakerDAO.findAll();
+	public @ResponseBody List<Speaker> list() {
+		return speakerService.list();
 	}
 
 	// method that returns a specific speaker given their id
 	@GetMapping
 	@RequestMapping("/{id}")
 	public Speaker get(@PathVariable Long id) {
-		return speakerDAO.getOne(id);
+		//return speakerDAO.getOne(id);
+		return speakerService.get(id);
 	}
 
 	// creates a new speaker
 	// http://localhost:8888/api/v1/speakers
 	@PostMapping
 	public Speaker create(@RequestBody Speaker speaker) {
-		return speakerDAO.saveAndFlush(speaker);
+		//return speakerDAO.saveAndFlush(speaker);
+		return speakerService.create(speaker);
 	}
 
 	// method that deletes a speaker given their id
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable Long id) {
-		// ADD LOGIC to check for children method before deleting
-		speakerDAO.deleteById(id);
+		speakerService.delete(id);
 	}
 
 	// method that takes a speaker id and update certain attributes/properties of
 	// the speaker
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
-		Speaker existingSpeaker = speakerDAO.getOne(id);
-		BeanUtils.copyProperties(speaker, existingSpeaker, "speaker_id");
-		return speakerDAO.saveAndFlush(existingSpeaker);
+	public @ResponseBody Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
+		return speakerService.update(id, speaker);
 	}
 
 }

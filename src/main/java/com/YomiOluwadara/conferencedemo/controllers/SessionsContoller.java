@@ -42,7 +42,6 @@ public class SessionsContoller {
 	
 	SessionsService sessionsService;
 	
-	
 	public SessionsContoller (SessionsService sessionsService) {
 		this.sessionsService = sessionsService;
 	}
