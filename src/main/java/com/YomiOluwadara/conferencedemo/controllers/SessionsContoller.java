@@ -32,20 +32,7 @@ import com.YomiOluwadara.conferencedemo.services.SessionsService;
  *             SessionReposity interface) - creates an instance of
  *             SessionRpeposity, the instance will be used to called the CRUD
  *             method the interface now have access to due to "extends"
- * @PostMapping :
- * @PathVariable : Take input and inject it as method parameter method =
- *               RequestMethod.DELETE (htpp delete) is needed if the operation
- *               is not a GET or POST
  * 
- *               saveAndFlush: save changes and commit them to the database
- * 
- *               BeansUtils object:takes the existing session and copies in
- *               incoming session data to it
- * 
- *               ignoreProperties: tells the BeansUtils what
- *               properties/variables that wont be updated/replaced
- * 
- *               all CRUD methods implemented
  */
 
 @RestController
@@ -78,33 +65,26 @@ public class SessionsContoller {
 		return sessionsService.get(id);
 	}
 
-	// method that creates/ post a new session at http://localhost:5000/api/v1/sessions/ and passing ( as json)  all the variables needed to create a session object
+	// method that creates/ post a new session 
 	@PostMapping
 	public Session create(@RequestBody final Session session) {
-		return sessionDAO.saveAndFlush(session);
+		return sessionsService.create(session);
 	}
-
+	
+	
 	// method that deletes a session given its id, provided no children sessions
 	// return method is void because record is being deleted
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable Long id) {
-		sessionDAO.deleteById(id);
-		// TODO : add logic that allows for the deleting of children records
+	public @ResponseBody void delete(@PathVariable Long id) {
+		sessionsService.delete(id);
 	}
 	
 
-	// find a session given its id,then store that id in Session variable (session)
+	 //method that updates a specified record find a session given its id,then store that id in Session variable (session)
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public Session update(@PathVariable Long id, @RequestBody Session session) {
-		// taking the existing session and copies in incoming session data to it but
-		Session existingSession = sessionDAO.getOne(id);
-		// implementation of: BeanUtils.copyProperties(source, target,
-		// ignoreProperties);
-		BeanUtils.copyProperties(session, existingSession, "session_id");
-		// ignoringProperties (the session_id)
-		// ADD LOGIC to ensure all attributes of session are passed in( else they will
-		// be defaulted to null),otherwise return a 400 bad payload
-		return sessionDAO.saveAndFlush(existingSession);
-
+	public @ResponseBody Session update(@PathVariable Long id, @RequestBody Session session) {
+		return sessionsService.update(id, session);
 	}
+	
+	
 }
