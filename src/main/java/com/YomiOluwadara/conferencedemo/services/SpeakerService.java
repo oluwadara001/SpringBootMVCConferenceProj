@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.YomiOluwadara.conferencedemo.models.Speaker;
 import com.YomiOluwadara.conferencedemo.repositories.SpeakerDAO;
@@ -37,7 +35,7 @@ public class SpeakerService {
 		return speakerDAO.getOne(id);
 	}
 
-//creates a new speaker
+//creates a new speaker with all its attributes
 	public Speaker create(@RequestBody Speaker speaker) {
 		return speakerDAO.saveAndFlush(speaker);
 	}
