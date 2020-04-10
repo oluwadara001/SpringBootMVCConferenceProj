@@ -18,7 +18,7 @@ import com.YomiOluwadara.conferencedemo.controllers.HomeController;
  * 
  */
 
-class HomeControllerTest {
+class HomeServicesTest {
 	@DisplayName("Tests in the Home controller class")
 	@Nested
 	class HomeControllerTests {
