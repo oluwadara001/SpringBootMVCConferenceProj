@@ -26,6 +26,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *              session
  * 
  * @JsonIgnoreProperties : helps handle loading
+ * 
+ *                       /* note on variable names variables- keeping them the
+ *                       same way they are defined in the session database
+ *                       schema making jpa auto-bing to them - no need for
+ *                       annotations , if you change the variables so they now
+ *                       different from how they were declared in the database
+ *                       schema, you must add @column annotation to each of the
+ *                       variable
+ * 
+ * @id is the primary key, hence the annotation, and its auto generated
+ * 
+ *     /* private List<Speaker> speakers; is the attribute pointing to the
+ *     Speaker class adding variable from Speaker class so we can tie the two
+ *     model classes together with JPA relationships that represent their exact
+ *     database relationship
+ * 
+ * @ManyToMany- defines many to many, one speaker might have several sessions
+ *              and vice versa
+ * 
+ * @JoinTable- defines the join tables and the foreign keys
+ * 
+ *             /* default constructor- will help with serialization and
+ *             de-serialization which will happen when we plug the controllers
+ *             to match the data into and out of JSON
  */
 
 //@Entity
@@ -33,16 +57,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity(name = "sessions")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Session {
-
-	/*
-	 * note on variable names variables- keeping them the same way they are defined
-	 * in the session database schema making jpa auto-bing to them - no need for
-	 * annotations , if you change the variables so they now different from how they
-	 * were declared in the database schema, you must add @column annotation to each
-	 * of the variable
-	 * 
-	 * @id is the primary key, hence the annotation, and its auto generated
-	 */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,21 +71,8 @@ public class Session {
 
 	@JsonIgnore
 	@OneToMany
-	// @JoinTable(name = "sessions", joinColumns = @JoinColumn(name = "session_id"),
-	// inverseJoinColumns = @JoinColumn(name = "attendee_id"))
+	// @JoinColumn(name = "attendee_id")
 	private List<Attendee> attendees;
-
-	/*
-	 * private List<Speaker> speakers; is the attribute pointing to the Speaker
-	 * class adding variable from Speaker class so we can tie the two model classes
-	 * together with JPA relationships that represent their exact database
-	 * relationship
-	 * 
-	 * @ManyToMany- defines many to many, one speaker might have several sessions
-	 * and vice versa
-	 * 
-	 * @JoinTable- defines the join tables and the foreign keys
-	 */
 
 	public Long getSession_id() {
 		return session_id;
@@ -121,11 +122,6 @@ public class Session {
 		this.attendees = attendees;
 	}
 
-	/*
-	 * default constructor- will help with serialization and de-serialization which
-	 * will happen when we plug the controllers to match the data into and out of
-	 * JSON
-	 */
 	public Session() {
 
 	}

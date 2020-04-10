@@ -18,14 +18,16 @@ import com.YomiOluwadara.conferencedemo.services.AttendeeService;
 
 /**
  * @author OO046152
+ * 
+ *         creating a class member of AttendeeService so will can call the
+ *         methods in that class inside this class- controller class
  *
  */
 
 @RestController
 @RequestMapping("/api/v1/attendees")
 public class AttendeeController {
-	// creating a class member of AttendeeService so will can call the methods in
-	// that class inside this class- controller class
+
 	AttendeeService attendeeService;
 
 	public AttendeeController(AttendeeService attendeeService) {
