@@ -104,6 +104,9 @@ class SessionsControllerTest {
 			assertEquals(session_id, sessionRestController.getSession_id());
 			assertEquals(session.getSession_name(), sessionRestController.getSession_name());
 			assertEquals(session.getSession_description(), sessionRestController.getSession_description());
+			assertEquals(session.getSession_length(), sessionRestController.getSession_length());
+			assertEquals(session.getSpeakers(), sessionRestController.getSpeakers());
+			assertEquals(session.getAttendees(), sessionRestController.getAttendees());
 
 		}
 
