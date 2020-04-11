@@ -54,7 +54,7 @@ public class SessionsContoller {
 
 	@GetMapping
 	@RequestMapping("/{id}") // url for fetching a session id of 2 : http://localhost:5000/api/v1/sessions/2
-	public @ResponseBody Session get(@PathVariable Long id) {
+	public @ResponseBody Session get(@PathVariable long id) {
 		return sessionsService.findOneSession(id);
 	}
 

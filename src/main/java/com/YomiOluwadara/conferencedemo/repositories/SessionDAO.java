@@ -11,7 +11,7 @@ import com.YomiOluwadara.conferencedemo.models.Session;
  * @author OO046152 :Yomi Oluwadara interfaces will extend the JpaReposity using
  *         "Session" class/entity as data type, and, "Long" as key so it can
  *         leverage the CRUD methods in this repository when writing services
- *         
+ * 
  *         SessionRpository could be traditionally be called SessionDao
  */
 

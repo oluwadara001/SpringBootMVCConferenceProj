@@ -60,7 +60,8 @@ class SessionsControllerTest {
 
 		// making the session id a class variable so it could be shared among all the
 		// class member methods
-		final Long session_id = (long) 6;
+
+		// final int session_id = 10000;
 
 		@BeforeEach
 		void setup() throws Exception {
@@ -73,10 +74,9 @@ class SessionsControllerTest {
 			// setting each Session variables.These variables in the session class all needs
 			// to be valued so we can have a Session Object
 			Session session = new Session();
-			// session = new Session();
 
 			// using setters to set other variables for the object of a Session
-
+			session.setSession_id(1000);
 			session.setSession_name("test session");
 			session.setSession_description("I'm being tested");
 			session.setSession_length(60);
@@ -96,14 +96,17 @@ class SessionsControllerTest {
 			// testing the "actual" result in the SessionsService class )- a session object
 			// ( having all the expected session attributes)
 			when(sessionsService.findOneSession(anyLong())).thenReturn(session);
+			Session sessionRestController = sessionsContoller.get(session.getSession_id());
 
-			Session sessionRestController = sessionsContoller.get(session_id);
+			// Session sessionRestController = sessionsContoller.get(session_id);
 			// testing that user id that is being passed is not null
-			assertNotNull(sessionRestController);
+			assertNotNull(sessionRestController.getSession_id());
 			// assert that other Session variable from the session service are also equal to
 			// the values returned in the session controller (expected : session service ,
 			// actual session controller)
-			assertEquals(session_id, sessionRestController.getSession_id());
+
+			// assertEquals(session_id, sessionRestController.getSession_id());
+			assertEquals(session.getSession_id(), sessionRestController.getSession_id());
 			assertEquals(session.getSession_name(), sessionRestController.getSession_name());
 			assertEquals(session.getSession_description(), sessionRestController.getSession_description());
 			assertEquals(session.getSession_length(), sessionRestController.getSession_length());
