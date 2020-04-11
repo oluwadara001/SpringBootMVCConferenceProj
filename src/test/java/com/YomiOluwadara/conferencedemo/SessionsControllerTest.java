@@ -60,7 +60,7 @@ class SessionsControllerTest {
 
 		// making the session id a class variable so it could be shared among all the
 		// class member methods
-		final Long session_id = 0L;
+		final Long session_id = (long) 6;
 
 		@BeforeEach
 		void setup() throws Exception {
@@ -76,6 +76,7 @@ class SessionsControllerTest {
 			// session = new Session();
 
 			// using setters to set other variables for the object of a Session
+
 			session.setSession_name("test session");
 			session.setSession_description("I'm being tested");
 			session.setSession_length(60);
@@ -95,8 +96,9 @@ class SessionsControllerTest {
 			// testing the "actual" result in the SessionsService class )- a session object
 			// ( having all the expected session attributes)
 			when(sessionsService.findOneSession(anyLong())).thenReturn(session);
+
 			Session sessionRestController = sessionsContoller.get(session_id);
-			// testing that user id is not null
+			// testing that user id that is being passed is not null
 			assertNotNull(sessionRestController);
 			// assert that other Session variable from the session service are also equal to
 			// the values returned in the session controller (expected : session service ,
