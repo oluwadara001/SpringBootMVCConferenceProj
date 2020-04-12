@@ -126,4 +126,15 @@ public class Session {
 
 	}
 
+	public Session(long session_id, String session_name, String session_description, int session_length,
+			List<Speaker> speakers, List<Attendee> attendees) {
+		super();
+		this.session_id = session_id;
+		this.session_name = session_name;
+		this.session_description = session_description;
+		this.session_length = session_length;
+		this.speakers = speakers;
+		this.attendees = attendees;
+	}
+
 }

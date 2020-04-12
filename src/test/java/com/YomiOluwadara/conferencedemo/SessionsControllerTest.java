@@ -60,8 +60,7 @@ class SessionsControllerTest {
 
 		// making the session id a class variable so it could be shared among all the
 		// class member methods
-
-		// final int session_id = 10000;
+		// final long session_id = 10000;
 
 		@BeforeEach
 		void setup() throws Exception {
@@ -73,18 +72,18 @@ class SessionsControllerTest {
 			// class Session to call the setter methods of the class that would be useful in
 			// setting each Session variables.These variables in the session class all needs
 			// to be valued so we can have a Session Object
-			Session session = new Session();
 
+			Session session = new Session();
 			// using setters to set other variables for the object of a Session
 			session.setSession_id(1000);
 			session.setSession_name("test session");
 			session.setSession_description("I'm being tested");
 			session.setSession_length(60);
-			// creating a list object so we can add speakers and set value for the
-			// setSpeakers()
+			Speaker speakerObj = new Speaker();
 			List<Speaker> speakers = new ArrayList<Speaker>();
-			// speakers.add(new Speaker().setFirst_name("first_name"));
+			// speakers.add(new Speaker(Speaker speaker1));
 			session.setSpeakers(speakers);
+			// TODO add logic to add speaker
 			List<Attendee> attendees = new ArrayList<Attendee>();
 			session.setAttendees(attendees);
 
@@ -96,6 +95,9 @@ class SessionsControllerTest {
 			// testing the "actual" result in the SessionsService class )- a session object
 			// ( having all the expected session attributes)
 			when(sessionsService.findOneSession(anyLong())).thenReturn(session);
+
+			// using sessionsContoller object to call the get() and assigning it to type
+			// Session.
 			Session sessionRestController = sessionsContoller.get(session.getSession_id());
 
 			// Session sessionRestController = sessionsContoller.get(session_id);
@@ -105,7 +107,7 @@ class SessionsControllerTest {
 			// the values returned in the session controller (expected : session service ,
 			// actual session controller)
 
-			// assertEquals(session_id, sessionRestController.getSession_id());
+			assertEquals(session, sessionRestController.getSession_id());
 			assertEquals(session.getSession_id(), sessionRestController.getSession_id());
 			assertEquals(session.getSession_name(), sessionRestController.getSession_name());
 			assertEquals(session.getSession_description(), sessionRestController.getSession_description());

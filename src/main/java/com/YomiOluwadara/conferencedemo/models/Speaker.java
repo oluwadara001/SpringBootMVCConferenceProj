@@ -122,4 +122,18 @@ public class Speaker {
 
 	}
 
+	// parameterized constructor
+	public Speaker(Long speaker_id, String first_name, String last_name, String title, String company,
+			String speaker_bio, byte[] speaker_photo, List<Session> sessions) {
+		super();
+		this.speaker_id = speaker_id;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.title = title;
+		this.company = company;
+		this.speaker_bio = speaker_bio;
+		this.speaker_photo = speaker_photo;
+		this.sessions = sessions;
+	}
+
 }
