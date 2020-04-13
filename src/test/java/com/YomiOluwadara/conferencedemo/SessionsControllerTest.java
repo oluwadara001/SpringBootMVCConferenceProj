@@ -157,7 +157,7 @@ class SessionsControllerTest {
 			assertNotNull(listOfSessionobjects);
 			// calling the delete from the controller
 			sessionsContoller.delete(sessonObj1.getSession_id());
-
+			assertEquals(1, listOfSessionobjects.size() - 1);
 		}
 
 	}
