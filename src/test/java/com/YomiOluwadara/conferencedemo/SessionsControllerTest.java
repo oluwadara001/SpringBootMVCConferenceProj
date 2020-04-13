@@ -69,20 +69,20 @@ class SessionsControllerTest {
 
 			// Creating an instance of the session class and using it to set session
 			// attributes to be tested
-			Session session = new Session();
-			session.setSession_id(1000);
-			session.setSession_name("test session");
-			session.setSession_description("I'm being tested");
-			session.setSession_length(60);
+			Session sessionObj = new Session();
+			sessionObj.setSession_id(1000);
+			sessionObj.setSession_name("test session");
+			sessionObj.setSession_description("I'm being tested");
+			sessionObj.setSession_length(60);
 
 			// testing the "actual" result in the SessionsService class )- a session object
 			// ( having all the expected session attributes)
-			when(sessionsService.findOneSession(anyLong())).thenReturn(session);
+			when(sessionsService.findOneSession(anyLong())).thenReturn(sessionObj);
 
 			// using sessionsContoller object to call the get() and assigning it to type
 			// Session.
 			// sessionsContoller.get(session.getSession_id());
-			Session sessionRestControllerActual = sessionsContoller.get(session.getSession_id());
+			Session sessionRestControllerActual = sessionsContoller.get(sessionObj.getSession_id());
 
 			// testing that user id that is being passed is not null
 			assertNotNull(sessionRestControllerActual.getSession_id());
@@ -90,10 +90,10 @@ class SessionsControllerTest {
 			// assert that other Session variable from the session service are also equal to
 			// the values returned in the session controller (expected : session service ,
 			// actual session controller)
-			assertEquals(session.getSession_id(), sessionRestControllerActual.getSession_id());
-			assertEquals(session.getSession_name(), sessionRestControllerActual.getSession_name());
-			assertEquals(session.getSession_description(), sessionRestControllerActual.getSession_description());
-			assertEquals(session.getSession_length(), sessionRestControllerActual.getSession_length());
+			assertEquals(sessionObj.getSession_id(), sessionRestControllerActual.getSession_id());
+			assertEquals(sessionObj.getSession_name(), sessionRestControllerActual.getSession_name());
+			assertEquals(sessionObj.getSession_description(), sessionRestControllerActual.getSession_description());
+			assertEquals(sessionObj.getSession_length(), sessionRestControllerActual.getSession_length());
 		}
 
 		@Test
@@ -120,6 +120,43 @@ class SessionsControllerTest {
 			assertNotNull(sessionObjectsFromSessionSerive);
 			// check if the two lists has the same size
 			assertEquals(sessionObjectsFromSessionSerive.size(), sessionObjectsFromSessioncontroller.size());
+
+		}
+
+		@Test
+		@DisplayName("creates a seesion object and add to db")
+		void createOneSessionTest() {
+			Session sessonObj = new Session();
+			sessonObj.setSession_id(145);
+			sessonObj.setSession_name("test session being added");
+			sessonObj.setSession_description("I'm a new sessin being added");
+			sessonObj.setSession_length(45);
+			assertNotNull(sessonObj);
+			// create a list and add the session object to it
+			List<Session> listOfSessionobjects = new ArrayList<Session>();
+			listOfSessionobjects.add(sessonObj);
+			assertEquals(1, listOfSessionobjects.size());
+		}
+
+		@Test
+		@DisplayName("deletes one session object given its id")
+		void deleteOneSession() {
+			Session sessonObj1 = new Session();
+			sessonObj1.setSession_id(145);
+			sessonObj1.setSession_name("test session being added");
+			sessonObj1.setSession_description("I'm a new sessin being added");
+			sessonObj1.setSession_length(45);
+			Session sessonObj2 = new Session();
+			sessonObj2.setSession_id(2000);
+			sessonObj2.setSession_name("test session 2");
+			sessonObj2.setSession_description("session_description");
+			sessonObj2.setSession_length(45);
+			List<Session> listOfSessionobjects = new ArrayList<Session>();
+			listOfSessionobjects.add(sessonObj1);
+			listOfSessionobjects.add(sessonObj2);
+			assertNotNull(listOfSessionobjects);
+			// calling the delete from the controller
+			sessionsContoller.delete(sessonObj1.getSession_id());
 
 		}
 
