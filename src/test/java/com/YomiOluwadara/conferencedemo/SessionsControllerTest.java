@@ -116,9 +116,7 @@ class SessionsControllerTest {
 			when(sessionsService.allSessions()).thenReturn(sessionObjectsFromSessionSerive);
 			// for session controller:: call the list() and assign it type List
 			List<Session> sessionObjectsFromSessioncontroller = sessionsContoller.list();
-			// assert that no null list is returned from session service
 			assertNotNull(sessionObjectsFromSessionSerive);
-			// check if the two lists has the same size
 			assertEquals(sessionObjectsFromSessionSerive.size(), sessionObjectsFromSessioncontroller.size());
 
 		}
@@ -154,10 +152,20 @@ class SessionsControllerTest {
 			List<Session> listOfSessionobjects = new ArrayList<Session>();
 			listOfSessionobjects.add(sessonObj1);
 			listOfSessionobjects.add(sessonObj2);
+			System.out.println(listOfSessionobjects);
 			assertNotNull(listOfSessionobjects);
-			// calling the delete from the controller
 			sessionsContoller.delete(sessonObj1.getSession_id());
-			assertEquals(1, listOfSessionobjects.size() - 1);
+			// listOfSessionobjects.remove(sessonObj2);
+			System.out.println(listOfSessionobjects + " 2nd print");
+			// TODO complete implementation
+			// assertEquals(1, listOfSessionobjects.size());
+		}
+
+		@Test
+		@DisplayName("deletes one session object given its id")
+		void updateOneSession() {
+			// TODO, add implementation
+
 		}
 
 	}

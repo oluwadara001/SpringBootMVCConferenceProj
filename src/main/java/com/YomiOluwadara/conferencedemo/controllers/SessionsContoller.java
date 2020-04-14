@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.YomiOluwadara.conferencedemo.controllers;
 
 import java.util.List;
