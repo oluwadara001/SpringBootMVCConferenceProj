@@ -1,5 +1,10 @@
+docker and progress DB. md
 
+***********************************************************************************************************
+***********************************************************************************************************
 FIRST INSTALLATION
+***********************************************************************************************************
+***********************************************************************************************************
 
 pre- steps
 1  Download docker
@@ -7,56 +12,62 @@ pre- steps
 
 SPINNING UP POSTGRESS IN DOCKER
 Downloads the alpine version of postgres
-  docker pull postgres:alpine
+  >docker pull postgres:alpine
 
 then run> (shows you the progress image you just downloaded)
-  docker images  
+>  docker images
 
 run a docker instance
-  docker run --name postgres-demo -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:11.5-alpine
+>  docker run --name postgres-demo -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:11.5-alpine
 
-run below to see if the above was successful  
-  docker ps
+run below to see if the above was successful
+>  docker ps
 
 bash into container
-  winpty docker exec -it postgres-demo bash   ( if you are using  git bash)
+>  winpty docker exec -it postgres-demo bash
+  if you are using  git bash
 
 get root access
-  psql -U postgres
+>  psql -U postgres
 
 Create the Database:
-  create database conference_app;
-  check the Database that was created
+>  create database conference_app;
+>  check the Database that was created
 --  \l
 --  \c       to connect to db via terminal
 
-_______________________________________________________________________________
+*********************************************
+***______________________________________________________________________________
 STARING UP POSTGRESS IN DOCKER AFTER FIRST INSTALLATION
+
   CONNECT TO DOCKER INSTANCE FIRST VIA GITBASH, THEN CONNECT TO DB
 
-  -- follow steps above ( do not start from declaring another instance)
+  -- follow steps above ( do not start from declaring another)
+
   docker start postgres-demo
   docker ps
   winpty docker exec -it postgres-demo bash
   psql -U postgres
-   \c  
+   \c
 
---once the coonnection is established to the db in docker, then connect to the db utility, follow the ggf steps
+--once the connection has been established to the db in docker, then connect to the db utility, follow the following steps
 
 3 LAUNCH PGADMING4 - DB UTILTIY
 launch pgadmin4 app from local machine ( it will open with the below uri)
-  http://127.0.0.1:52147/browser/  
-  master password : password  
+  http://127.0.0.1:52147/browser/
+  master password : password
 username: postgres
 password: mysecretpassword
 
-note: scql scripts are in git repository  
+
+**note: you will have to create and install data into database tables as part of set up in postgresql****
+
+note: sql scripts are in git repository
  git repo for SQL : https://github.com/dlbunker/ps-first-spring-boot-app/tree/master/database/postgresql
 
  IN git GITBASH:
 docker start postgres-demo        : to start the db again once
 #docker stop postgres-demo         " to stop db"
-
 
 
 psql -d conference_app -f insert_data.sql
@@ -66,7 +77,7 @@ psql -d conference_app -f insert_data.sql
 
 **********************************************************************************
 **********************************************************************************
-change spring boot starting port
+how to change spring boot starting port
 **********************************************************************************
 **********************************************************************************
 *******Identify and stop the process that's listening on port 8080 or configure this application to
@@ -84,3 +95,15 @@ https://frontbackend.com/spring-boot/how-can-i-configure-port-for-a-spring-boot-
 ** docker container running postgres alphine ***
 
 https://medium.com/better-programming/connect-from-local-machine-to-postgresql-docker-container-f785f00461a7
+
+***********************************************************************
+SPRING BOOT COMMON APPLICATION PROPERTEIS
+***********************************************************************
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#transaction-properties
+
+setting environment variables in eclipse
+
+
+Kindness in thought leads to wisdom.
+Kindness in speech leads to eloquence.
+Kindness in action leads to love -Lao  Tzu

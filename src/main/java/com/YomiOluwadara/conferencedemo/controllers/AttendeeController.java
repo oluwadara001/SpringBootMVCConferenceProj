@@ -1,7 +1,8 @@
 /**
- * 
+ *
  */
 package com.YomiOluwadara.conferencedemo.controllers;
+
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import com.YomiOluwadara.conferencedemo.services.AttendeeService;
 
 /**
  * @author OO046152
- * 
+ *
  *         creating a class member of AttendeeService so will can call the
  *         methods in that class inside this class- controller class
  *
@@ -35,13 +36,15 @@ public class AttendeeController {
 	}
 
 	@GetMapping
-	public @ResponseBody List<Attendee> list() {
+	public @ResponseBody
+	List<Attendee> list() {
 		return attendeeService.allAttendees();
 	}
 
 	@GetMapping
 	@RequestMapping("/{id}")
-	public @ResponseBody Attendee get(@PathVariable Long id) {
+	public @ResponseBody
+	Attendee get(@PathVariable Long id) {
 		return attendeeService.findOneAttendee(id);
 	}
 
@@ -56,7 +59,8 @@ public class AttendeeController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public @ResponseBody Attendee update(@PathVariable Long id, Attendee attendee) {
+	public @ResponseBody
+	Attendee update(@PathVariable Long id, Attendee attendee) {
 		return attendeeService.updateAttendeeInfo(id, attendee);
 	}
 
