@@ -24,7 +24,7 @@ import com.YomiOluwadara.conferencedemo.services.SpeakerService;
  *         SpeakerService speakerService; so you call the methods in that class
  *         from the controller class
  * 
- * 
+ * 			all speakers : http://localhost:5000/api/v1/speakers
  *
  */
 

@@ -1,8 +1,14 @@
 /**
+ * @author OO046152
+ *
+ *         creating a class member of AttendeeService so will can call the
+ *         methods in that class inside this class- controller class
+ *
+ *         url for retreive all registered attendees: http://localhost:5000/api/v1/attendees/
  *
  */
-package com.YomiOluwadara.conferencedemo.controllers;
 
+package com.YomiOluwadara.conferencedemo.controllers;
 
 import java.util.List;
 
@@ -17,13 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.YomiOluwadara.conferencedemo.models.Attendee;
 import com.YomiOluwadara.conferencedemo.services.AttendeeService;
 
-/**
- * @author OO046152
- *
- *         creating a class member of AttendeeService so will can call the
- *         methods in that class inside this class- controller class
- *
- */
 
 @RestController
 @RequestMapping("/api/v1/attendees")

@@ -59,6 +59,12 @@ launch pgadmin4 app from local machine ( it will open with the below uri)
 username: postgres
 password: mysecretpassword
 
+*******************************************************************************8
+********************************************************************************
+if spring boot failed to connect to db therby throwing pqsl autentication error, check out
+https://stackoverflow.com/questions/38427407/caused-by-org-postgresql-util-psqlexception-fatal-password-authentication-fai
+**************************************************************************************
+***************************************************************************************
 
 **note: you will have to create and install data into database tables as part of set up in postgresql****
 

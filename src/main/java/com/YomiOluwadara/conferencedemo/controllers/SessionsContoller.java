@@ -56,7 +56,7 @@ public class SessionsContoller {
 		return sessionsService.findOneSession(id);
 	}
 
-	// method that creates/ post a new session
+	// method that creates/post a new session
 	@PostMapping
 	public Session create(@RequestBody final Session session) {
 		return sessionsService.addNewSession(session);

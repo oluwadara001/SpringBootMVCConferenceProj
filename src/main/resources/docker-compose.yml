@@ -1,0 +1,18 @@
+# Starts a psql container for testing / development purposes.
+# this does not really solve the problem of postgress not able to  authenticate, the actaul soilution is here below
+#  https://stackoverflow.com/questions/38427407/caused-by-org-postgresql-util-psqlexception-fatal-password-authentication-fai
+
+version: '3.8'
+services:
+  psql:
+    image: postgres:11.5-alpine
+    ports:
+      - 127.0.0.1:3306:3306
+    restart: unless-stopped
+    environment:
+      PSQL_ROOT_PASSWORD: mysecretpassword
+    networks:
+      - psql
+ networks:
+  psql:
+    driver: bridge
