@@ -82,7 +82,7 @@ class SessionsControllerTest {
 			// using sessionsContoller object to call the get() and assigning it to type
 			// Session.
 			// sessionsContoller.get(session.getSession_id());
-			Session sessionRestControllerActual = sessionsContoller.get(sessionObj.getSession_id());
+			Session sessionRestControllerActual = sessionsContoller.getOneSession(sessionObj.getSession_id());
 
 			// testing that user id that is being passed is not null
 			assertNotNull(sessionRestControllerActual.getSession_id());
@@ -115,7 +115,7 @@ class SessionsControllerTest {
 			sessionObjectsFromSessionSerive.add(session2);
 			when(sessionsService.allSessions()).thenReturn(sessionObjectsFromSessionSerive);
 			// for session controller:: call the list() and assign it type List
-			List<Session> sessionObjectsFromSessioncontroller = sessionsContoller.list();
+			List<Session> sessionObjectsFromSessioncontroller = sessionsContoller.listAllSessions();
 			assertNotNull(sessionObjectsFromSessionSerive);
 			assertEquals(sessionObjectsFromSessionSerive.size(), sessionObjectsFromSessioncontroller.size());
 
@@ -154,7 +154,7 @@ class SessionsControllerTest {
 			listOfSessionobjects.add(sessonObj2);
 			System.out.println(listOfSessionobjects);
 			assertNotNull(listOfSessionobjects);
-			sessionsContoller.delete(sessonObj1.getSession_id());
+			sessionsContoller.deleteOneSession(sessonObj1.getSession_id());
 			// listOfSessionobjects.remove(sessonObj2);
 			System.out.println(listOfSessionobjects + " 2nd print");
 			// TODO complete implementation
