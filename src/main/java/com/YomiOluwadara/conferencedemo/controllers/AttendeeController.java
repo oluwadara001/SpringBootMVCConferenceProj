@@ -59,8 +59,7 @@ public class AttendeeController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public @ResponseBody
-	Attendee update(@PathVariable Long id, Attendee attendee) {
+	public @ResponseBody Attendee update(@PathVariable Long id, Attendee attendee) {
 		return attendeeService.updateAttendeeInfo(id, attendee);
 	}
 

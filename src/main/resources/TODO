@@ -3,9 +3,18 @@
    1b   make sure that the tests are interacting with the database - jdbc template and all
             use former tests in the data mig dao
 
-2   Implement a login page
+2.   Implement a login
     2a  Determine where to leverage a third party login service like Auth{0} or code it
     2b  If coded, implement login credentials validation (ensure all tests are running against a live database)
+    2c  To login, ask if user is "existing", then check if user credentials is already inside the cache memory
+            (see datamig dao for examples)
+            if user name and password are not in cache, fetch from database and add to cache
+    2d  if user is a "new user", call "create new user" , and insert user login credentials into the db table
+        **Note, if user attempt to login the secound time, thier login creds should be added to cache and fetch from
+        cache memory
+
+
+
         create user table
             CREATE TABLE user
             (
@@ -19,3 +28,5 @@
                 email        varchar(80) NOT NULL,
                 phone_number varchar(20) NULL
             );
+3.  Registering conference
+        Let user be abke to search conferences, but when they click the "register buttom", the login page is called.

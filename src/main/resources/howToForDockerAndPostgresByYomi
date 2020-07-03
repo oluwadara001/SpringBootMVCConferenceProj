@@ -43,12 +43,12 @@ STARING UP POSTGRESS IN DOCKER AFTER FIRST INSTALLATION
   CONNECT TO DOCKER INSTANCE FIRST VIA GITBASH, THEN CONNECT TO DB
 
   -- follow steps above ( do not start from declaring another)
-
-  docker start postgres-demo
-  docker ps
-  winpty docker exec -it postgres-demo bash
-  psql -U postgres
-   \c
+   (Starting the db server in DOCKER)
+  >   docker start postgres-demo
+  > docker ps
+  > winpty docker exec -it postgres-demo bash
+  > psql -U postgres
+  >  \c
 
 --once the connection has been established to the db in docker, then connect to the db utility, follow the following steps
 
@@ -73,6 +73,21 @@ docker start postgres-demo        : to start the db again once
 psql -d conference_app -f insert_data.sql
 --  \l
 --  \c       to connect to db via terminal
+
+
+
+****************************************************************
+***************************************************************
+Drew's suggestion when  Spring fails to start due to the error
+
+ org.postgresql.util.PSQLException: FATAL: password authentication failed for user "postgres"
+
+
+
+
+if it's failing because it can't communicate with the DB, you may want to look into docker-compose and specifically
+the network option it has - it simplifies things so much! Basically, the docker container doesn't expose ports unless
+you tell it to, which is super easy with a docker-compose file!
 
 
 **********************************************************************************
