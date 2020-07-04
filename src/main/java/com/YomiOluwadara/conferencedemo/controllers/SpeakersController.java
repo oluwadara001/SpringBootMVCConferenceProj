@@ -11,7 +11,6 @@ package com.YomiOluwadara.conferencedemo.controllers;
 
 import java.util.List;
 
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +50,7 @@ public class SpeakersController {
 	@GetMapping
 	@RequestMapping("/{id}")
 	public Speaker findOneSpeaker(@PathVariable Long id) {
-		return speakerService.findOnespeaker(id);
+		return speakerService.findOneSpeaker(id);
 	}
 
 	/**

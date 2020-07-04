@@ -1,6 +1,34 @@
 /**
- * 
+ * @author OO046152:Yomi Oluwadara
+ * <p>
+ * Session class maps to the conference sessions annotate this class as
+ * JPA entity with the @Entity
+ * @Entity(name = "sessions") attributes this class to the database table called
+ * session
+ * @JsonIgnoreProperties : helps handle loading
+ * <p>
+ * /* note on variable names variables- keeping them the
+ * same way they are defined in the session database
+ * schema making jpa auto-bing to them - no need for
+ * annotations , if you change the variables so they now
+ * different from how they were declared in the database
+ * schema, you must add @column annotation to each of the
+ * variable
+ * @id is the primary key, hence the annotation, and its auto generated
+ * <p>
+ * /* private List<Speaker> speakers; is the attribute pointing to the
+ * Speaker class adding variable from Speaker class so we can tie the two
+ * model classes together with JPA relationships that represent their exact
+ * database relationship
+ * @ManyToMany- defines many to many, one speaker might have several sessions
+ * and vice versa
+ * @JoinTable- defines the join tables and the foreign keys
+ * <p>
+ * /* default constructor- will help with serialization and
+ * de-serialization which will happen when we plug the controllers
+ * to match the data into and out of JSON
  */
+
 package com.YomiOluwadara.conferencedemo.models;
 
 import java.util.List;
@@ -17,46 +45,11 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * @author OO046152:Yomi Oluwadara
- * 
- *         Session class maps to the conference sessions annotate this class as
- *         JPA entity with the @Entity
- * @Entity(name = "sessions") attributes this class to the database table called
- *              session
- * 
- * @JsonIgnoreProperties : helps handle loading
- * 
- *                       /* note on variable names variables- keeping them the
- *                       same way they are defined in the session database
- *                       schema making jpa auto-bing to them - no need for
- *                       annotations , if you change the variables so they now
- *                       different from how they were declared in the database
- *                       schema, you must add @column annotation to each of the
- *                       variable
- * 
- * @id is the primary key, hence the annotation, and its auto generated
- * 
- *     /* private List<Speaker> speakers; is the attribute pointing to the
- *     Speaker class adding variable from Speaker class so we can tie the two
- *     model classes together with JPA relationships that represent their exact
- *     database relationship
- * 
- * @ManyToMany- defines many to many, one speaker might have several sessions
- *              and vice versa
- * 
- * @JoinTable- defines the join tables and the foreign keys
- * 
- *             /* default constructor- will help with serialization and
- *             de-serialization which will happen when we plug the controllers
- *             to match the data into and out of JSON
- */
-
-//@Entity
-//@Table(name = "sessions")
 @Entity(name = "sessions")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
+
+	//TODO: change column names to use the camel case pattern, use the @column annotation
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +59,9 @@ public class Session {
 	private int session_length;
 	@JsonIgnore // helps with serialization issues : ignores nested json pay loads
 	@ManyToMany
-	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"), inverseJoinColumns = @JoinColumn(name = "speaker_id"))
+	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"),
+			inverseJoinColumns = @JoinColumn(name = "speaker_id"))
+
 	private List<Speaker> speakers;
 
 	@JsonIgnore
@@ -127,7 +122,7 @@ public class Session {
 	}
 
 	public Session(long session_id, String session_name, String session_description, int session_length,
-			List<Speaker> speakers, List<Attendee> attendees) {
+				   List<Speaker> speakers, List<Attendee> attendees) {
 		super();
 		this.session_id = session_id;
 		this.session_name = session_name;
