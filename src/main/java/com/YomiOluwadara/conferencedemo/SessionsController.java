@@ -14,7 +14,7 @@
  * url for all sessions: http://localhost:5000/api/v1/sessions/
  * url for fetching a session id of 2 : http://localhost:5000/api/v1/sessions/2
  */
-package com.YomiOluwadara.conferencedemo.controllers;
+package com.YomiOluwadara.conferencedemo;
 
 import java.util.List;
 
@@ -34,11 +34,11 @@ import com.YomiOluwadara.conferencedemo.services.SessionsService;
 @RestController
 @RequestMapping("/api/v1/sessions")
 
-public class SessionsContoller {
+public class SessionsController {
 
 	SessionsService sessionsService;
 
-	public SessionsContoller(SessionsService sessionsService) {
+	public SessionsController(SessionsService sessionsService) {
 		this.sessionsService = sessionsService;
 	}
 

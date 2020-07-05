@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.YomiOluwadara.conferencedemo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,23 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.YomiOluwadara.conferencedemo.controllers.SessionsContoller;
 import com.YomiOluwadara.conferencedemo.models.Session;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
-
-/**
- * @author OO046152 Yomi Oluwadara
- * 
- *         All the methods in the SessionService class will be tested within the
- *         nested class SessionsServicesTests.
- * 
- *         note the import of import static
- *         org.mockito.ArgumentMatchers.anyLong; that will be used in place of
- *         long id
- * 
- *         NOTE: there are a lot of in-line comments
- * 
- */
 
 class SessionsControllerTest {
 
@@ -43,131 +26,116 @@ class SessionsControllerTest {
 	@DisplayName("testing the controller methods in session controller")
 	class SessionsServicesTests {
 
-		// used for injecting SessionsContoller instance that will be used to call
-		// methods in the SessionsContoller class
+		//inject SessionsController instance that will be used to call methods in the SessionsController class
 		@InjectMocks
-		SessionsContoller sessionsContoller;
-		// mocks an instance of the SessionService that will be used to call methods in
-		// the SessionService class
-		@Mock
-		SessionsService sessionsService;
+		SessionsController sessionsController;
 
-		// bring in a variable of type session, so a Session object can be successfully
-		// created in this test class
-		Session session;
+		// mocks an instance of the SessionService that will be used to call methods in the SessionService class
+		@Mock
+		 SessionsService sessionsService;
+		// variables of type session, so a Session object can be successfully created in this test class
+		 Session session;
+		 Session session2;
 
 		@BeforeEach
 		void setup() throws Exception {
-			// needed from mockito API to initialize mocks and make them available in
-			// SessionController and SessiosSerives classes where they will be used
+			// needed for mockito API to initialize mocks and make them available in
+			// SessionController and SessionService classes where they will be used
 			MockitoAnnotations.initMocks(this);
+			 session = new Session();
+			 session2 = new Session();
 		}
 
 		@Test
-		@DisplayName("find one seesion given sesion id")
+		@DisplayName("find one session given its session id")
 		void findOneSessionTest() {
-
-			// Creating an instance of the session class and using it to set session
-			// attributes to be tested
-			Session sessionObj = new Session();
-			sessionObj.setSession_id(1000);
-			sessionObj.setSession_name("test session");
-			sessionObj.setSession_description("I'm being tested");
-			sessionObj.setSession_length(60);
+			//set values for session object
+			session.setSession_id(1000);
+			session.setSession_name("test session");
+			session.setSession_description("I'm being tested");
+			session.setSession_length(60);
 
 			// testing the "actual" result in the SessionsService class )- a session object
 			// ( having all the expected session attributes)
-			when(sessionsService.findOneSession(anyLong())).thenReturn(sessionObj);
+			when(sessionsService.findOneSession(anyLong())).thenReturn(session);
 
-			// using sessionsContoller object to call the get() and assigning it to type
-			// Session.
-			// sessionsContoller.get(session.getSession_id());
-			Session sessionRestControllerActual = sessionsContoller.getOneSession(sessionObj.getSession_id());
+			//call the getOneSession from the sessionController class
+			Session sessionRestControllerActual = sessionsController.getOneSession(session.getSession_id());
 
-			// testing that user id that is being passed is not null
+			// test that user id that is being passed is not null
 			assertNotNull(sessionRestControllerActual.getSession_id());
 
 			// assert that other Session variable from the session service are also equal to
-			// the values returned in the session controller (expected : session service ,
-			// actual session controller)
-			assertEquals(sessionObj.getSession_id(), sessionRestControllerActual.getSession_id());
-			assertEquals(sessionObj.getSession_name(), sessionRestControllerActual.getSession_name());
-			assertEquals(sessionObj.getSession_description(), sessionRestControllerActual.getSession_description());
-			assertEquals(sessionObj.getSession_length(), sessionRestControllerActual.getSession_length());
+			// the values returned in the session controller
+			assertEquals(session.getSession_id(), sessionRestControllerActual.getSession_id());
+			assertEquals(session.getSession_name(), sessionRestControllerActual.getSession_name());
+			assertEquals(session.getSession_description(), sessionRestControllerActual.getSession_description());
+			assertEquals(session.getSession_length(), sessionRestControllerActual.getSession_length());
 		}
 
 		@Test
-		@DisplayName("return all seesions")
+		@DisplayName("return all session")
 		void findAllSessionTest() {
-			Session session = new Session();
 			session.setSession_id(1000);
 			session.setSession_name("test session 1");
-			session.setSession_description("session desription1");
+			session.setSession_description("session description one");
 			session.setSession_length(60);
-			Session session2 = new Session();
 			session2.setSession_id(2000);
 			session2.setSession_name("test session 2");
 			session2.setSession_description("session_description");
 			session2.setSession_length(45);
 			// for sessionService::create list and add session objects to it
-			List<Session> sessionObjectsFromSessionSerive = new ArrayList<Session>();
-			sessionObjectsFromSessionSerive.add(session);
-			sessionObjectsFromSessionSerive.add(session2);
-			when(sessionsService.allSessions()).thenReturn(sessionObjectsFromSessionSerive);
+			List<Session> sessionList = new ArrayList<Session>();
+			sessionList.add(session);
+			sessionList.add(session2);
+			when(sessionsService.allSessions()).thenReturn(sessionList);
 			// for session controller:: call the list() and assign it type List
-			List<Session> sessionObjectsFromSessioncontroller = sessionsContoller.listAllSessions();
-			assertNotNull(sessionObjectsFromSessionSerive);
-			assertEquals(sessionObjectsFromSessionSerive.size(), sessionObjectsFromSessioncontroller.size());
-
+			List<Session> sessionListFromSessionController = sessionsController.listAllSessions();
+			assertNotNull(sessionList);
+			assertEquals(sessionList.size(), sessionListFromSessionController.size());
 		}
 
 		@Test
-		@DisplayName("creates a seesion object and add to db")
+		@DisplayName("creates a session object and add to db")
 		void createOneSessionTest() {
-			Session sessonObj = new Session();
-			sessonObj.setSession_id(145);
-			sessonObj.setSession_name("test session being added");
-			sessonObj.setSession_description("I'm a new sessin being added");
-			sessonObj.setSession_length(45);
-			assertNotNull(sessonObj);
+			session.setSession_id(145);
+			session.setSession_name("test session being added");
+			session.setSession_description("I'm a new session being added");
+			session.setSession_length(45);
+			assertNotNull(session);
 			// create a list and add the session object to it
-			List<Session> listOfSessionobjects = new ArrayList<Session>();
-			listOfSessionobjects.add(sessonObj);
-			assertEquals(1, listOfSessionobjects.size());
+			List<Session> sessionList = new ArrayList<Session>();
+			sessionList.add(session);
+			assertEquals(1, sessionList.size());
 		}
 
 		@Test
 		@DisplayName("deletes one session object given its id")
 		void deleteOneSession() {
-			Session sessonObj1 = new Session();
-			sessonObj1.setSession_id(145);
-			sessonObj1.setSession_name("test session being added");
-			sessonObj1.setSession_description("I'm a new sessin being added");
-			sessonObj1.setSession_length(45);
-			Session sessonObj2 = new Session();
-			sessonObj2.setSession_id(2000);
-			sessonObj2.setSession_name("test session 2");
-			sessonObj2.setSession_description("session_description");
-			sessonObj2.setSession_length(45);
-			List<Session> listOfSessionobjects = new ArrayList<Session>();
-			listOfSessionobjects.add(sessonObj1);
-			listOfSessionobjects.add(sessonObj2);
-			System.out.println(listOfSessionobjects);
-			assertNotNull(listOfSessionobjects);
-			sessionsContoller.deleteOneSession(sessonObj1.getSession_id());
-			// listOfSessionobjects.remove(sessonObj2);
-			System.out.println(listOfSessionobjects + " 2nd print");
+			session.setSession_id(145);
+			session.setSession_name("test session being added");
+			session.setSession_description("I'm a new sessin being added");
+			session.setSession_length(45);
+			session2.setSession_id(2000);
+			session2.setSession_name("test session 2");
+			session2.setSession_description("session_description");
+			session2.setSession_length(45);
+			List<Session> sessionList = new ArrayList<Session>();
+			sessionList.add(session);
+			sessionList.add(session2);
+			assertNotNull(sessionList);
+			sessionsController.deleteOneSession(session.getSession_id());
+			// sessionList.remove(sessonObj2);
+			System.out.println(sessionList + " 2nd print");
 			// TODO complete implementation
-			// assertEquals(1, listOfSessionobjects.size());
+			 assertEquals(1, sessionList.size());
 		}
 
 		@Test
-		@DisplayName("deletes one session object given its id")
+		@DisplayName("updates one session object given its id")
 		void updateOneSession() {
 			// TODO, add implementation
-
 		}
-
 	}
 
 }

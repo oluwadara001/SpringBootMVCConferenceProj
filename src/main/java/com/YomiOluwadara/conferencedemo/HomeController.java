@@ -12,7 +12,7 @@
  * home url :http://localhost:5000/home
  * version :http://localhost:5000/
  */
-package com.YomiOluwadara.conferencedemo.controllers;
+package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.services.HomeService;
 import org.springframework.web.bind.annotation.GetMapping;

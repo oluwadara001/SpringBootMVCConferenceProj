@@ -7,7 +7,7 @@
  * <p>
  * all speakers : http://localhost:5000/api/v1/speakers
  */
-package com.YomiOluwadara.conferencedemo.controllers;
+package com.YomiOluwadara.conferencedemo;
 
 import java.util.List;
 

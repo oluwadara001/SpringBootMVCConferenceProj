@@ -7,7 +7,7 @@
  * url for retreive all registered attendees: http://localhost:5000/api/v1/attendees/
  */
 
-package com.YomiOluwadara.conferencedemo.controllers;
+package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.models.Attendee;
 import com.YomiOluwadara.conferencedemo.services.AttendeeService;
