@@ -13,6 +13,7 @@
  * <p>
  * url for all sessions: http://localhost:5000/api/v1/sessions/
  * url for fetching a session id of 2 : http://localhost:5000/api/v1/sessions/2
+ * url for creating new session :  http://localhost:5000/api/v1/sessions/ (POST request needing no session id passed in)
  */
 package com.YomiOluwadara.conferencedemo;
 
