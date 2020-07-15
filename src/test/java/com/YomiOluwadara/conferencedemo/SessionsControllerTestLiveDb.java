@@ -1,9 +1,12 @@
 package com.YomiOluwadara.conferencedemo;
 
 import ch.qos.logback.core.util.CloseUtil;
+import com.YomiOluwadara.conferencedemo.Config.DataSourceConfig;
 import com.YomiOluwadara.conferencedemo.models.Session;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
 import java.io.Closeable;
@@ -17,11 +20,12 @@ import static org.aspectj.bridge.MessageUtil.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
+@SpringBootTest(classes = {DataSourceConfig.class,ConferenceDemoApplication.class})
 public class SessionsControllerTestLiveDb {
-	static DataSource dataSource;
+	@Autowired
+	 DataSource dataSource;
 	static Connection connection;
-	static SessionsService sessionsService;
+	static SessionsService sessionsService = new SessionsService();
 
 	//set values for variables that will be inserted into the live db
 	private static final int session_id = 100;
@@ -40,18 +44,18 @@ public class SessionsControllerTestLiveDb {
 
 	public List<Session> listAllSessions = new ArrayList<Session>(); //holds the list of all sessions
 
-	@BeforeAll
-	public static void insertDataIntoSessionsTable() throws SQLException {
-		//dataSource = EODDataSource.getDataSource();
-		connection = dataSource.getConnection();
-		try (PreparedStatement statement = connection.prepareStatement(sessionTableInsertionStatement)) {
-			statement.setInt(1, session_id);
-			statement.setString(2, session_name);
-			statement.setString(3, session_description);
-			statement.setInt(4, session_length);
-			statement.executeUpdate();
-		}
-	}
+//	@BeforeAll
+//	public static void insertDataIntoSessionsTable() throws SQLException {
+//			 dataSource = getDataSource();
+//			 connection = dataSource.getConnection();
+//		try (PreparedStatement statement = connection.prepareStatement(sessionTableInsertionStatement)) {
+//			statement.setInt(1, session_id);
+//			statement.setString(2, session_name);
+//			statement.setString(3, session_description);
+//			statement.setInt(4, session_length);
+//			statement.executeUpdate();
+//		}
+//	}
 
 	@AfterAll
 	public static void deleteQuery() throws SQLException {
@@ -66,21 +70,35 @@ public class SessionsControllerTestLiveDb {
 	}
 
 	@BeforeEach
-	public void setup() {
-		session.setSession_id(session_id);
-		session.setSession_description(session_description);
-		session.setSession_name(session_name);
-		session.setSession_length(session_length);
+	public void setup() throws SQLException {
+
+		connection = dataSource.getConnection();
+		try (PreparedStatement statement = connection.prepareStatement(sessionTableInsertionStatement)) {
+			statement.setInt(1, session_id);
+			statement.setString(2, session_name);
+			statement.setString(3, session_description);
+			statement.setInt(4, session_length);
+			statement.executeUpdate();
+
+
+			session.setSession_id(session_id);
+			session.setSession_description(session_description);
+			session.setSession_name(session_name);
+			session.setSession_length(session_length);
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
 	}
 
-	@AfterEach   //check if listAllSessions.clear(); is needed
-	public void cleanUp() {
-		listAllSessions.clear();
-	}
+//		@AfterEach   //check if listAllSessions.clear(); is needed
+//	public void cleanUp() {
+//		listAllSessions.clear();
+//	}
 
-	@DisplayName("Test to verify that content of the the controller class is same as that inserted into live db")
+	@DisplayName("Test to verify that listAll from controller class has the same content as what was inserted into db")
 	@Test
 	public void verifyControllerAndDbMatches() throws SQLException {
+//		SessionsController sessionsController = new SessionsController(sessionsService);
 		List<Session> fetchedResultFromLiveDb = sessionsController.listAllSessions(); //for sessionController
 		session.getSession_id();
 		session.getSession_description();
