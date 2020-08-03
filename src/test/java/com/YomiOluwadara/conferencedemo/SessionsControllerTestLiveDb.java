@@ -20,10 +20,10 @@ import static org.aspectj.bridge.MessageUtil.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@SpringBootTest(classes = {DataSourceConfig.class,ConferenceDemoApplication.class})
+@SpringBootTest(classes = {DataSourceConfig.class, ConferenceDemoApplication.class})
 public class SessionsControllerTestLiveDb {
 	@Autowired
-	 DataSource dataSource;
+	DataSource dataSource;
 	static Connection connection;
 	static SessionsService sessionsService = new SessionsService();
 
@@ -41,7 +41,6 @@ public class SessionsControllerTestLiveDb {
 	private static CloseUtil DbUtils;
 	public Session session = new Session();
 	public SessionsController sessionsController = new SessionsController(sessionsService);
-
 	public List<Session> listAllSessions = new ArrayList<Session>(); //holds the list of all sessions
 
 //	@BeforeAll
@@ -71,7 +70,6 @@ public class SessionsControllerTestLiveDb {
 
 	@BeforeEach
 	public void setup() throws SQLException {
-
 		connection = dataSource.getConnection();
 		try (PreparedStatement statement = connection.prepareStatement(sessionTableInsertionStatement)) {
 			statement.setInt(1, session_id);
@@ -79,7 +77,6 @@ public class SessionsControllerTestLiveDb {
 			statement.setString(3, session_description);
 			statement.setInt(4, session_length);
 			statement.executeUpdate();
-
 
 			session.setSession_id(session_id);
 			session.setSession_description(session_description);
