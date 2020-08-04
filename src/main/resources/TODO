@@ -13,8 +13,6 @@
         **Note, if user attempt to login the secound time, thier login creds should be added to cache and fetch from
         cache memory
 
-
-
         create user table
             CREATE TABLE user
             (
@@ -29,4 +27,4 @@
                 phone_number varchar(20) NULL
             );
 3.  Registering conference
-        Let user be abke to search conferences, but when they click the "register buttom", the login page is called.
+        Let user be able to search conferences, but when they click the "register buttom", the login page is called.
