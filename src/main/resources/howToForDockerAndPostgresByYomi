@@ -36,13 +36,17 @@ Create the Database:
 --  \l
 --  \c       to connect to db via terminal
 
-*********************************************
-***______________________________________________________________________________
+
+**********************************************************************************************************
+**********************************************************************************************************
 STARING UP POSTGRESS IN DOCKER AFTER FIRST INSTALLATION
+**********************************************************************************************************
+*********************************************************************************************************
 
   CONNECT TO DOCKER INSTANCE FIRST VIA GITBASH, THEN CONNECT TO DB
 
-  -- follow steps above ( do not start from declaring another)
+  -- follow steps above (do not start from declaring another)
+
    (Starting the db server in DOCKER)
   >   docker start postgres-demo
   > docker ps
@@ -58,6 +62,11 @@ launch pgadmin4 app from local machine ( it will open with the below uri)
   master password : password
 username: postgres
 password: mysecretpassword
+
+
+
+
+
 
 *******************************************************************************8
 ********************************************************************************

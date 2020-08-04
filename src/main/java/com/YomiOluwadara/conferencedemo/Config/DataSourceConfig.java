@@ -30,7 +30,6 @@ public class DataSourceConfig {
 		dataSourceBuilder.password(properties.getPassword());
 		return dataSourceBuilder.build();
 	}
-
 	@Bean(name = "java.sql.Connection")
 	public Connection getConnection() throws SQLException {
 		return getDataSource().getConnection();
