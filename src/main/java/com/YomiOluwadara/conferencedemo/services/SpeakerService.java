@@ -1,5 +1,5 @@
 /**
- * 
+ * @author OO046152
  */
 package com.YomiOluwadara.conferencedemo.services;
 
@@ -14,43 +14,51 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.YomiOluwadara.conferencedemo.models.Speaker;
 import com.YomiOluwadara.conferencedemo.repositories.SpeakerDAO;
 
-/**
- * @author OO046152
- *
- */
-
 @Service
 public class SpeakerService {
 
 	@Autowired
 	private SpeakerDAO speakerDAO;
 
-//method that returns the list of all speakers
+	/**
+	 * @return a list of all speakers
+	 */
 	public List<Speaker> allSpeakers() {
 		return speakerDAO.findAll();
 	}
 
-//method that returns a specific speaker given their id
-	public Speaker findOnespeaker(@PathVariable Long id) {
+	/**
+	 * @param id sepaker id
+	 * @return a specific speaker given their id
+	 */
+	public Speaker findOneSpeaker(@PathVariable Long id) {
 		return speakerDAO.getOne(id);
 	}
 
-//creates a new speaker with all its attributes
+	/**
+	 * @param speaker to be added
+	 * @return newly added speaker
+	 */
 	public Speaker addNewSpeaker(@RequestBody Speaker speaker) {
 		return speakerDAO.saveAndFlush(speaker);
 	}
 
-//method that deletes a speaker given their id
+	/**
+	 * @param id speaker id to be deleted
+	 */
 	public void deleteOneSpeaker(@PathVariable Long id) {
-		// ADD LOGIC to check for children method before deleting
+		// TODO ADD LOGIC to check for children method before deleting
 		speakerDAO.deleteById(id);
 	}
 
-//method that updates/patch certain attributes of a speaker 
+	/**
+	 * @param id to be uodated
+	 * @param speaker speaker to be uodated
+	 * @return updated speaker
+	 */
 	public Speaker updateSpeakerInfo(@PathVariable Long id, @RequestBody Speaker speaker) {
 		Speaker existingSpeaker = speakerDAO.getOne(id);
 		BeanUtils.copyProperties(speaker, existingSpeaker, "speaker_id");
 		return speakerDAO.saveAndFlush(existingSpeaker);
 	}
-
 }

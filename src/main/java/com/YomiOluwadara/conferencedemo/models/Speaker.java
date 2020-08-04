@@ -1,6 +1,10 @@
 /**
- * 
+ * @author OO046152:Yomi Oluwadara
+ * Tables in the model package depicts the tables in the DB. Each class is
+ * mapped to a database tables: class variable are mapped to database columns
+ * @JsonIgnore : helps with serialization
  */
+
 package com.YomiOluwadara.conferencedemo.models;
 
 import java.util.List;
@@ -17,18 +21,8 @@ import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/*
- * @author OO046152:Yomi Oluwadara
- * Tables in the model package depicts the tables in the DB. Each class is 
- * mapped to a database tables: class variable are mapped to database columns
- * 
- * @JsonIgnore : helps with serialization
- */
-
-//@Entity
-//@Table(name = "speakers")
 @Entity(name = "speakers")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Speaker {
 
 	@Id
@@ -117,14 +111,12 @@ public class Speaker {
 		this.speaker_id = speaker_id;
 	}
 
-	// default constructor
 	public Speaker() {
 
 	}
 
-	// parameterized constructor
 	public Speaker(Long speaker_id, String first_name, String last_name, String title, String company,
-			String speaker_bio, byte[] speaker_photo, List<Session> sessions) {
+				   String speaker_bio, byte[] speaker_photo, List<Session> sessions) {
 		super();
 		this.speaker_id = speaker_id;
 		this.first_name = first_name;

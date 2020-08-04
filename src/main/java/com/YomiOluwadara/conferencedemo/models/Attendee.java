@@ -1,5 +1,6 @@
+
 /**
- * 
+ * @author OO046152 :: Yomi Oluwadara
  */
 package com.YomiOluwadara.conferencedemo.models;
 
@@ -14,14 +15,11 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * @author OO046152 :: Yomi Oluwadara
- *
- */
-
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "attendees")
 public class Attendee {
+
+	//TODO: change column names to use the camel case pattern, use the @column annotation
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
