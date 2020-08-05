@@ -66,11 +66,9 @@ password: mysecretpassword
 
 
 
-
-
 *******************************************************************************8
 ********************************************************************************
-if spring boot failed to connect to db therby throwing pqsl autentication error, check out
+if spring boot failed to connect to db thereby throwing pqsl authentication error, check out
 https://stackoverflow.com/questions/38427407/caused-by-org-postgresql-util-psqlexception-fatal-password-authentication-fai
 **************************************************************************************
 ***************************************************************************************
@@ -78,7 +76,8 @@ https://stackoverflow.com/questions/38427407/caused-by-org-postgresql-util-psqle
 **note: you will have to create and install data into database tables as part of set up in postgresql****
 
 note: sql scripts are in git repository
- git repo for SQL : https://github.com/dlbunker/ps-first-spring-boot-app/tree/master/database/postgresql
+
+ git repo for SQL : https://github.com/dlbunker/ps-first-spring-boot-app/tree/master/database/
 
  IN git GITBASH:
 docker start postgres-demo        : to start the db again once
