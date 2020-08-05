@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.YomiOluwadara.conferencedemo.models.Session;
+import com.YomiOluwadara.conferencedemo.model.Session;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
 
 

@@ -2,15 +2,11 @@
 /**
  * @author OO046152 :: Yomi Oluwadara
  */
-package com.YomiOluwadara.conferencedemo.models;
+package com.YomiOluwadara.conferencedemo.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,13 +19,17 @@ public class Attendee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long attendee_id;
-	private String first_name;
-	private String last_name;
+	@Column(name = "attendee_id")
+	private long attendeeId;
+	@Column(name = "first_name")
+	private String firstName;
+	@Column(name = "last_name")
+	private String lastName;
 	private String title;
 	private String company;
 	private String email;
-	private String phone_number;
+	@Column(name = "phone_number")
+	private String phoneNumber;
 
 	@OneToMany(mappedBy = "attendees")
 	@JsonIgnore
@@ -41,28 +41,28 @@ public class Attendee {
 
 	}
 
-	public long getAttendee_id() {
-		return attendee_id;
+	public long getAttendeeId() {
+		return attendeeId;
 	}
 
-	public void setAttendee_id(long attendee_id) {
-		this.attendee_id = attendee_id;
+	public void setAttendeeId(long attendeeId) {
+		this.attendeeId = attendeeId;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getTitle() {
@@ -89,12 +89,12 @@ public class Attendee {
 		this.email = email;
 	}
 
-	public String getPhone_number() {
-		return phone_number;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public List<Session> getSessions() {

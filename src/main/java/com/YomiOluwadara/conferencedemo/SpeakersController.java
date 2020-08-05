@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.YomiOluwadara.conferencedemo.models.Speaker;
+import com.YomiOluwadara.conferencedemo.model.Speaker;
 import com.YomiOluwadara.conferencedemo.services.SpeakerService;
 
 

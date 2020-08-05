@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.YomiOluwadara.conferencedemo.models.Attendee;
-import com.YomiOluwadara.conferencedemo.repositories.AttendeeDAO;
+import com.YomiOluwadara.conferencedemo.model.Attendee;
+import com.YomiOluwadara.conferencedemo.dao.AttendeeDAO;
 
 @Service
 public class AttendeeService {

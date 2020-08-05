@@ -6,11 +6,11 @@
  * SessionRpository could be traditionally be called SessionDao
  */
 
-package com.YomiOluwadara.conferencedemo.repositories;
+package com.YomiOluwadara.conferencedemo.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.YomiOluwadara.conferencedemo.models.Session;
+import com.YomiOluwadara.conferencedemo.model.Session;
 
 public interface SessionDAO extends JpaRepository<Session, Long> {
 

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.YomiOluwadara.conferencedemo.models.Speaker;
-import com.YomiOluwadara.conferencedemo.repositories.SpeakerDAO;
+import com.YomiOluwadara.conferencedemo.model.Speaker;
+import com.YomiOluwadara.conferencedemo.dao.SpeakerDAO;
 
 @Service
 public class SpeakerService {
