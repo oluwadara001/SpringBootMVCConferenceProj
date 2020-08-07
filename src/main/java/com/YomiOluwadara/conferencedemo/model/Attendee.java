@@ -33,7 +33,6 @@ public class Attendee {
 
 	@OneToMany(mappedBy = "attendees")
 	@JsonIgnore
-
 	private List<Session> sessions; // pointing back to session class
 
 	// default constructor

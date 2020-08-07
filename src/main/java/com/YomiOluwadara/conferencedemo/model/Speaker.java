@@ -36,7 +36,7 @@ public class Speaker {
 	// @Type help hibernate deal with binary data that could be large
 	@Lob
 	@Type(type = "org.hibernate.type.BinaryType")
-	@Column(name = "speaker_bio")
+	@Column(name = "speaker_photo")
 	private byte[] speakerPhoto;
 
 	@ManyToMany(mappedBy = "speakers")
