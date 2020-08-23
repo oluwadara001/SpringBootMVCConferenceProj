@@ -1,9 +1,9 @@
+
 package com.YomiOluwadara.conferencedemo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.xml.bind.v2.TODO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -40,7 +40,8 @@ public class User {
     public long getUserId() {
         return userId;
     }
-//   TODO: add java docs for setters and getters
+
+    //   TODO: add java docs for setters and getters
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -133,7 +134,7 @@ public class User {
         this.users = users;
     }
 
-    public  User(){
+    public User() {
     }
 
 }
