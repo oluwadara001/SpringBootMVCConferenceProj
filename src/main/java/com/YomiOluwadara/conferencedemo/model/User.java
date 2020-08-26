@@ -16,20 +16,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
     private long userId;
+
     @Column(name = "username")
     private String userName;
+
     private String password;
+
     @Column(name = "firstname")
     private String firstName;
+
     @Column(name = "lastname")
     private String lastName;
+
     @Column(name = "middlename")
     private String middleName;
+
     private String title;
     private String company;
     private String email;
+
     @Column(name = "passphrase")
     private String passPhrase;
+
     @Column(name = "phonenumber")
     private String phoneNumber;
 
@@ -135,6 +143,21 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(long userId, String userName, String password, String firstName, String lastName, String middleName, String title, String company, String email, String passPhrase, String phoneNumber, List<User> users) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.title = title;
+        this.company = company;
+        this.email = email;
+        this.passPhrase = passPhrase;
+        this.phoneNumber = phoneNumber;
+        this.users = users;
     }
 
 }
