@@ -1,5 +1,5 @@
 /*
-This class....
+Add content here
  */
 package com.YomiOluwadara.conferencedemo.model;
 
