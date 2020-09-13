@@ -7,7 +7,7 @@ package com.YomiOluwadara.conferencedemo;
 
 import ch.qos.logback.core.util.CloseUtil;
 import com.YomiOluwadara.conferencedemo.Config.DataSourceConfig;
-import com.YomiOluwadara.conferencedemo.models.Session;
+import com.YomiOluwadara.conferencedemo.model.Session;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,10 +86,10 @@ public class SessionsControllerTestLiveDb {
             statement.setInt(4, session_length);
             statement.executeUpdate();
 
-            session.setSession_id(session_id);
-            session.setSession_description(session_description);
-            session.setSession_name(session_name);
-            session.setSession_length(session_length);
+            session.setSessionId(session_id);
+            session.setSessionDescription(session_description);
+            session.setSessionName(session_name);
+            session.setSessionLength(session_length);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -105,10 +105,10 @@ public class SessionsControllerTestLiveDb {
     public void verifyControllerAndDbMatches() throws SQLException {
 //		SessionsController sessionsController = new SessionsController(sessionsService);
         List<Session> fetchedResultFromLiveDb = sessionsController.listAllSessions(); //for sessionController
-        session.getSession_id();
-        session.getSession_description();
-        session.getSession_name();
-        session.getSession_length();
+        session.getSessionId();
+        session.getSessionDescription();
+        session.getSessionName();
+        session.getSessionLength();
         fetchedResultFromLiveDb.add(session);
         assertThat(fetchedResultFromLiveDb.size(), is(sessionsController.listAllSessions().size()));
     }

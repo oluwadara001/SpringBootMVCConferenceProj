@@ -9,7 +9,7 @@
 
 package com.YomiOluwadara.conferencedemo;
 
-import com.YomiOluwadara.conferencedemo.models.Attendee;
+import com.YomiOluwadara.conferencedemo.model.Attendee;
 import com.YomiOluwadara.conferencedemo.services.AttendeeService;
 import org.springframework.web.bind.annotation.*;
 

@@ -29,18 +29,11 @@
  * to match the data into and out of JSON
  */
 
-package com.YomiOluwadara.conferencedemo.models;
+package com.YomiOluwadara.conferencedemo.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -53,10 +46,14 @@ public class Session {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long session_id;
-	private String session_name;
-	private String session_description;
-	private int session_length;
+	@Column(name = "session_id")
+	private long sessionId;
+	@Column(name = "session_name")
+	private String sessionName;
+	@Column(name = "session_description")
+	private String sessionDescription;
+	@Column(name = "session_length")
+	private int sessionLength;
 	@JsonIgnore // helps with serialization issues : ignores nested json pay loads
 	@ManyToMany
 	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"),
@@ -69,36 +66,36 @@ public class Session {
 	// @JoinColumn(name = "attendee_id")
 	private List<Attendee> attendees;
 
-	public long getSession_id() {
-		return session_id;
+	public long getSessionId() {
+		return sessionId;
 	}
 
-	public void setSession_id(long session_id) {
-		this.session_id = session_id;
+	public void setSessionId(long sessionId) {
+		this.sessionId = sessionId;
 	}
 
-	public String getSession_name() {
-		return session_name;
+	public String getSessionName() {
+		return sessionName;
 	}
 
-	public void setSession_name(String session_name) {
-		this.session_name = session_name;
+	public void setSessionName(String sessionName) {
+		this.sessionName = sessionName;
 	}
 
-	public String getSession_description() {
-		return session_description;
+	public String getSessionDescription() {
+		return sessionDescription;
 	}
 
-	public void setSession_description(String session_description) {
-		this.session_description = session_description;
+	public void setSessionDescription(String sessionDescription) {
+		this.sessionDescription = sessionDescription;
 	}
 
-	public int getSession_length() {
-		return session_length;
+	public int getSessionLength() {
+		return sessionLength;
 	}
 
-	public void setSession_length(int session_length) {
-		this.session_length = session_length;
+	public void setSessionLength(int sessionLength) {
+		this.sessionLength = sessionLength;
 	}
 
 	public List<Speaker> getSpeakers() {
@@ -121,13 +118,13 @@ public class Session {
 
 	}
 
-	public Session(long session_id, String session_name, String session_description, int session_length,
+	public Session(long sessionId, String sessionName, String sessionDescription, int sessionLength,
 				   List<Speaker> speakers, List<Attendee> attendees) {
 		super();
-		this.session_id = session_id;
-		this.session_name = session_name;
-		this.session_description = session_description;
-		this.session_length = session_length;
+		this.sessionId = sessionId;
+		this.sessionName = sessionName;
+		this.sessionDescription = sessionDescription;
+		this.sessionLength = sessionLength;
 		this.speakers = speakers;
 		this.attendees = attendees;
 	}

@@ -5,16 +5,11 @@
  * @JsonIgnore : helps with serialization
  */
 
-package com.YomiOluwadara.conferencedemo.models;
+package com.YomiOluwadara.conferencedemo.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
 
@@ -27,52 +22,57 @@ public class Speaker {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long speaker_id;
-	private String first_name;
-	private String last_name;
+	@Column(name = "speaker_id")
+	private Long speakerId;
+	@Column(name = "first_name")
+	private String firstName;
+	@Column(name = "last_name")
+	private String lastName;
 	private String title;
 	private String company;
-	private String speaker_bio;
+	@Column(name = "speaker_bio")
+	private String speakerBio;
 	// using byte type for photo @lob = large object
 	// @Type help hibernate deal with binary data that could be large
 	@Lob
 	@Type(type = "org.hibernate.type.BinaryType")
-	private byte[] speaker_photo;
+	@Column(name = "speaker_photo")
+	private byte[] speakerPhoto;
 
 	@ManyToMany(mappedBy = "speakers")
 	@JsonIgnore
 	private List<Session> sessions; // pointing back to session class
 
-	public String getSpeaker_bio() {
-		return speaker_bio;
+	public String getSpeakerBio() {
+		return speakerBio;
 	}
 
-	public void setSpeaker_bio(String speaker_bio) {
-		this.speaker_bio = speaker_bio;
+	public void setSpeakerBio(String speakerBio) {
+		this.speakerBio = speakerBio;
 	}
 
 	public Long getSpeaker_id() {
-		return speaker_id;
+		return speakerId;
 	}
 
 	public void setSpeaker_id(long speaker_id) {
-		this.speaker_id = speaker_id;
+		this.speakerId = speaker_id;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getTitle() {
@@ -99,32 +99,32 @@ public class Speaker {
 		this.sessions = sessions;
 	}
 
-	public byte[] getSpeaker_photo() {
-		return speaker_photo;
+	public byte[] getSpeakerPhoto() {
+		return speakerPhoto;
 	}
 
-	public void setSpeaker_photo(byte[] speaker_photo) {
-		this.speaker_photo = speaker_photo;
+	public void setSpeakerPhoto(byte[] speakerPhoto) {
+		this.speakerPhoto = speakerPhoto;
 	}
 
 	public void setSpeaker_id(Long speaker_id) {
-		this.speaker_id = speaker_id;
+		this.speakerId = speaker_id;
 	}
 
 	public Speaker() {
 
 	}
 
-	public Speaker(Long speaker_id, String first_name, String last_name, String title, String company,
-				   String speaker_bio, byte[] speaker_photo, List<Session> sessions) {
+	public Speaker(Long speaker_id, String firstName, String lastName, String title, String company,
+				   String speakerBio, byte[] speakerPhoto, List<Session> sessions) {
 		super();
-		this.speaker_id = speaker_id;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.speakerId = speaker_id;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.title = title;
 		this.company = company;
-		this.speaker_bio = speaker_bio;
-		this.speaker_photo = speaker_photo;
+		this.speakerBio = speakerBio;
+		this.speakerPhoto = speakerPhoto;
 		this.sessions = sessions;
 	}
 

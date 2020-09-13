@@ -4,7 +4,8 @@
  * This class contains the services related to "home" /* implementing
  * application version using maps.
  * @GetMapping
- * @RequestMapping("/") // http://localhost:5000 public Map
+ * home : http://localhost:5000/home
+ * see app version : http://localhost:5000/
  *
  */
 package com.YomiOluwadara.conferencedemo.services;
@@ -18,7 +19,7 @@ public class HomeService {
 	 * @return the application welcome message
 	 */
 	public String welcomeMessage() {
-		return "Hello, welcome to the conference app project for big dummies";
+		return "Hello, welcome to the conference app project for big dummies" ;
 	}
 
 	/**

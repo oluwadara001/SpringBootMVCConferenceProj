@@ -26,8 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.YomiOluwadara.conferencedemo.models.Session;
-import com.YomiOluwadara.conferencedemo.repositories.SessionDAO;
+import com.YomiOluwadara.conferencedemo.model.Session;
+import com.YomiOluwadara.conferencedemo.dao.SessionDAO;
 
 
 @Service
