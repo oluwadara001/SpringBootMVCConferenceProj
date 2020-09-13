@@ -1,4 +1,6 @@
-
+/*
+This class....
+ */
 package com.YomiOluwadara.conferencedemo.model;
 
 
