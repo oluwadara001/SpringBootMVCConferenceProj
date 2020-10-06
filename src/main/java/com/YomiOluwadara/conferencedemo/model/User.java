@@ -10,156 +10,156 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.List;
 
-
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
-    private long userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "userid")
+	private long userId;
 
-    @Column(name = "username")
-    private String userName;
+	@Column(name = "username")
+	private String userName;
 
-    private String password;
+	private String password;
 
-    @Column(name = "firstname")
-    private String firstName;
+	@Column(name = "firstname")
+	private String firstName;
 
-    @Column(name = "lastname")
-    private String lastName;
+	@Column(name = "lastname")
+	private String lastName;
 
-    @Column(name = "middlename")
-    private String middleName;
+	@Column(name = "middlename")
+	private String middleName;
 
-    private String title;
-    private String company;
-    private String email;
+	private String title;
+	private String company;
+	private String email;
 
-    @Column(name = "passphrase")
-    private String passPhrase;
+	@Column(name = "passphrase")
+	private String passPhrase;
 
-    @Column(name = "phonenumber")
-    private String phoneNumber;
+	@Column(name = "phonenumber")
+	private String phoneNumber;
 
-    @OneToMany(mappedBy = "users")
-    @JsonIgnore
-    private List<User> users;
+	@OneToMany(mappedBy = "users")
+	@JsonIgnore
 
-    public long getUserId() {
-        return userId;
-    }
+	private List<User> users;
 
-    //   TODO: add java docs for setters and getters
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
+	public long getUserId() {
+		return userId;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getMiddleName() {
-        return middleName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getMiddleName() {
+		return middleName;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
 
-    public String getCompany() {
-        return company;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getCompany() {
+		return company;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setCompany(String company) {
+		this.company = company;
+	}
 
-    public String getPassPhrase() {
-        return passPhrase;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setPassPhrase(String passPhrase) {
-        this.passPhrase = passPhrase;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public String getPassPhrase() {
+		return passPhrase;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public void setPassPhrase(String passPhrase) {
+		this.passPhrase = passPhrase;
+	}
 
-    public List<User> getUsers() {
-        return users;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public User() {
-    }
+	public List<User> getUsers() {
+		return users;
+	}
 
-    public User(long userId, String userName, String password, String firstName, String lastName, String middleName, String title, String company, String email, String passPhrase, String phoneNumber, List<User> users) {
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.middleName = middleName;
-        this.title = title;
-        this.company = company;
-        this.email = email;
-        this.passPhrase = passPhrase;
-        this.phoneNumber = phoneNumber;
-        this.users = users;
-    }
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public User() {
+	}
+
+	public User(long userId, String userName, String password, String firstName, String lastName, String middleName, String title, String company, String email, String passPhrase, String phoneNumber, List<User> users) {
+		this.userId = userId;
+		this.userName = userName;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.title = title;
+		this.company = company;
+		this.email = email;
+		this.passPhrase = passPhrase;
+		this.phoneNumber = phoneNumber;
+		this.users = users;
+	}
 
 }

@@ -48,10 +48,13 @@ public class Session {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "session_id")
 	private long sessionId;
+
 	@Column(name = "session_name")
 	private String sessionName;
+
 	@Column(name = "session_description")
 	private String sessionDescription;
+
 	@Column(name = "session_length")
 	private int sessionLength;
 	@JsonIgnore // helps with serialization issues : ignores nested json pay loads
@@ -63,7 +66,6 @@ public class Session {
 
 	@JsonIgnore
 	@OneToMany
-	// @JoinColumn(name = "attendee_id")
 	private List<Attendee> attendees;
 
 	public long getSessionId() {
