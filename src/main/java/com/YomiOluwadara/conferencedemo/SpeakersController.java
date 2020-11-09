@@ -69,8 +69,7 @@ public class SpeakersController {
 	 */
 	//TODO : test if the PUT operation generates another id for the user
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public @ResponseBody
-	Speaker updateSpeaker(@PathVariable Long id, @RequestBody Speaker speaker) {
+	public @ResponseBody Speaker updateSpeaker(@PathVariable Long id, @RequestBody Speaker speaker) {
 		return speakerService.updateSpeakerInfo(id, speaker);
 	}
 
