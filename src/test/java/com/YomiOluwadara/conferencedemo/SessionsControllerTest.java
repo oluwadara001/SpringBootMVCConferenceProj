@@ -1,14 +1,9 @@
 
 package com.YomiOluwadara.conferencedemo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.YomiOluwadara.conferencedemo.model.Session;
+import com.YomiOluwadara.conferencedemo.services.SessionsService;
+import org.easymock.EasyMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,13 +11,21 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.services.SessionsService;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 
 class SessionsControllerTest {
@@ -41,6 +44,7 @@ class SessionsControllerTest {
 		// variables of type session, so a Session object can be successfully created in this test class
 		Session session;
 		Session session2;
+
 
 		private MockMvc mockMvc;
 
@@ -97,9 +101,11 @@ class SessionsControllerTest {
 			List<Session> sessionList = new ArrayList<Session>();
 			sessionList.add(session);
 			sessionList.add(session2);
+
 			when(sessionsService.allSessions()).thenReturn(sessionList);
 			// for session controller:: call the list() and assign it type List
 			List<Session> sessionListFromSessionController = sessionsController.listAllSessions();
+
 			assertNotNull(sessionList);
 			assertEquals(sessionList.size(), sessionListFromSessionController.size());
 		}
@@ -111,6 +117,7 @@ class SessionsControllerTest {
 			session.setSessionName("test session being added");
 			session.setSessionDescription("I'm a new session being added");
 			session.setSessionLength(45);
+
 			assertNotNull(session);
 			// create a list and add the session object to it
 			List<Session> sessionList = new ArrayList<Session>();
@@ -122,28 +129,34 @@ class SessionsControllerTest {
 		@DisplayName("deletes one session object given its id")
 		void deleteOneSessionTest() {
 
+//			EasyMock.expect(sessionsController.deleteOneSession(session.getSessionId())).andReturn(session2);
+
 			session.setSessionId(145);
 			session.setSessionName("test session being added");
-			session.setSessionDescription("I'm a new sessin being added");
+			session.setSessionDescription("I'm a new session being added");
 			session.setSessionLength(45);
 			session2.setSessionId(2000);
 			session2.setSessionName("test session 2");
 			session2.setSessionDescription("session_description");
 			session2.setSessionLength(45);
+
 			List<Session> sessionList = new ArrayList<Session>();
 			sessionList.add(session);
 			sessionList.add(session2);
-			assertNotNull(sessionList);
-			sessionsController.deleteOneSession(session.getSessionId());
 
-			sessionList.size();
-			// TODO complete implementation
-//			assertEquals(1, sessionList.size());
+			assertNotNull(sessionList);
+
+//			assertThat(1 ,is(sessionsController.deleteOneSession(session.getSessionId())));
 		}
 
 		@Test
+		@Rollback(false)
 		@DisplayName("updates one session object given its id")
 		void updateOneSession() {
+			session.setSessionLength(45);
+
+
+
 			// TODO, add implementation
 		}
 	}

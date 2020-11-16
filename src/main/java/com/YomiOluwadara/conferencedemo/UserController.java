@@ -40,7 +40,7 @@ public class UserController {
 	 * @return new user that was created
 	 */
 	@PostMapping
-	public User createUser(@RequestBody User user) {
+	public User createNewUser(@RequestBody final User user) {
 		return userService.addNewUser(user);
 	}
 
