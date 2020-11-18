@@ -91,28 +91,55 @@ public class UserService {
 		return size() > CODE_CACHE_MAX_SIZE;
 	}
 
-	;
-
 
 	/**
 	 * @param userId of a user to be used to fetch and add userDao to cache
 	 */
-	public void addUserDaoToCache(long userId) {
+	public User addUserDaoToCache(long userId) {
 		if (!userDaoCache.containsKey(userId)) {
 			userDaoCache.put(userId, findOneUser(userId));
+			return userDaoCache.get(userId);
 		} else
-			homeService.addUserDaoToCacheErrorMsg();
+			return null;
 	}
-
 
 	/**
-	 * @param userName supplied by the  user
-	 * @param password supplied by the user
+	 * This method takes in user login credentials, checks if it has a match in the userDaoCache. if it does, it calls
+	 * the login method, otherwise, calls the fail method
+	 *
+	 * @param inputUserId   supplied by the  user
+	 * @param inputPassword supplied by the user
 	 * @return
 	 */
-	public String userLogin(@PathVariable String userName, @PathVariable String password) {
-		//TODO://add logic that takes user i/p, validate it, checks against db, then if match
-		return "Login successful ";
+	public void getUserLoginCred(@PathVariable Long inputUserId, @PathVariable String inputPassword) {
+		Long userId = 0l;
+		String password = "";
+
+		if (!userDaoCache.isEmpty()) {
+			if (userDaoCache.containsKey(inputUserId)) {
+				userId = userDaoCache.get(inputUserId).getUserId();
+				password = userDaoCache.get(inputPassword).getPassword();
+				if (inputUserId == userId && inputPassword.equals(password)) {
+					loginSuccessful();
+				} else
+					loginFailedMessage();
+			}
+		}
 	}
+
+	/**
+	 * This method prompts the user of their next action- find a session, then register for the session.
+	 */
+	public void loginSuccessful() {
+		//placeholder methodd
+	}
+
+	/**
+	 * @return the login fail message.
+	 */
+	public String loginFailedMessage() {
+		return "Login has failed, check  usr credentials and try again";
+	}
+
 
 }

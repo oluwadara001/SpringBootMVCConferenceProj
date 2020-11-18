@@ -64,5 +64,15 @@ public class UserController {
 
 	}
 
+	/*
+	 LEARN ABOUT THE RIGHT ANNOTATION THEN TRY AGAIN
+	@GetMapping
+	@RequestMapping(value = "{inputPassword}")
+	public void getUserLoginInfo(@PathVariable Long inputUserId, @PathVariable String inputPassword){
+		userService.getUserLoginCred(inputUserId,inputPassword);
+	}
+
+*/
+
 
 }
