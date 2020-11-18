@@ -1,0 +1,49 @@
+
+
+1   Write unit test for existing functionalities
+   1a   use enterprise standards- beforeAll, beforeEach, afterEach,afterAll as needed
+   1b   make sure that the tests are interacting with the database - jdbc template and all
+            use former tests in the data mig dao
+
+2.   Implement a login
+    2a  Determine where to leverage a third party login service like Auth{0} or code it
+    2b  If coded, implement login credentials validation (ensure all tests are running against a live database)
+    2c  To login, ask if user is "existing", then check if user credentials is already inside the cache memory
+            (see datamig dao for examples)
+            if user name and password are not in cache, fetch from database and add to cache
+    2d  if user is a "new user", call "create new user" , and insert user login credentials into the db table
+        **Note, if user attempt to login the secound time, thier login creds should be added to cache and fetch from
+        cache memory
+
+<<<<<<< milestone_1.0_implement_login
+        create user table using the SQl query below
+
+            CREATE TABLE users
+                    (
+                        userId  SERIAL PRIMARY KEY,
+                        userName        varchar(60) NOT NULL,
+                        password        varchar(60) NOT NULL,
+                        firstName       varchar(50) NOT NULL,
+                        lastName        varchar(50) NOT NULL,
+                        middleName      varchar(50) NULL,
+                        title           varchar(40) NULL,
+                        company         varchar(50) NULL,
+                        email           varchar(80) NOT NULL,
+                        phoneNumber     varchar(20) NULL,
+                        passPhrase      varchar(80) NOT NULL
+                    );
+
+        Insert sample data into the users table
+
+ INSERT INTO users (userId,userName,password,firstName,lastName,middleName,title,company,email,phoneNumber,passPhrase)
+ VALUES (1,'testUserName','password','testFirstName','testLastName','testMiddleName','testTitle','testCompany','testEmail','testPhoneNumber','testPassPhrase'),
+        (2,'amy_wag','sketchy101#','Amy','Prettywag','','','Wagoner services LLC','amy@wagservices.biz','253-122-1283',' pet name'),
+        (3,'spedoo101!','myPassword','Bob','Guy','spenser','Dr','GMT co','a@b.com','817-122-1283','street name'),
+        (4,'seun','seundara','','range10','','','slim company','slim@yahoo.com','1236351233','city name');
+
+
+=======
+       use
+       SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;
+
+       when error with : Duplicate key violates unique constraint

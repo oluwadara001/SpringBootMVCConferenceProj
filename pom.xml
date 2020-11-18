@@ -58,6 +58,13 @@
 			<artifactId>mockito-junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- EasyMock extension that i added for JUnit testing with Mocito -->
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>4.2</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>com.YomiOluwadara</groupId>
             <artifactId>conference-demo</artifactId>

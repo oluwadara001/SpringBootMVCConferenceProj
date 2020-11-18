@@ -5,12 +5,15 @@ docker and progress DB. md
 FIRST INSTALLATION
 ***********************************************************************************************************
 ***********************************************************************************************************
+set up database first
+
 
 pre- steps
 1  Download docker
 2  Download progress image into local machine
 
 SPINNING UP POSTGRESS IN DOCKER
+
 Downloads the alpine version of postgres
   >docker pull postgres:alpine
 

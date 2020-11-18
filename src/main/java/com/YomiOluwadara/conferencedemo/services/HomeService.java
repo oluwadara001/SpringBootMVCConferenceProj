@@ -3,10 +3,8 @@
  * <p>
  * This class contains the services related to "home" /* implementing
  * application version using maps.
- * @GetMapping
- * home : http://localhost:5000/home
+ * @GetMapping home : http://localhost:5000/home
  * see app version : http://localhost:5000/
- *
  */
 package com.YomiOluwadara.conferencedemo.services;
 
@@ -19,7 +17,7 @@ public class HomeService {
 	 * @return the application welcome message
 	 */
 	public String welcomeMessage() {
-		return "Hello, welcome to the conference app project for big dummies" ;
+		return "Hello, welcome to the conference app project for big dummies";
 	}
 
 	/**
@@ -27,6 +25,10 @@ public class HomeService {
 	 */
 	public String appVersion() {
 		return "1.0.0";
+	}
+
+	public String addUserDaoToCacheErrorMsg() {
+		return "User is already in uer cache";
 	}
 
 }

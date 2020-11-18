@@ -9,19 +9,11 @@
  */
 package com.YomiOluwadara.conferencedemo;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.YomiOluwadara.conferencedemo.model.Speaker;
 import com.YomiOluwadara.conferencedemo.services.SpeakerService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -77,8 +69,7 @@ public class SpeakersController {
 	 */
 	//TODO : test if the PUT operation generates another id for the user
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public @ResponseBody
-	Speaker updateSpeaker(@PathVariable Long id, @RequestBody Speaker speaker) {
+	public @ResponseBody Speaker updateSpeaker(@PathVariable Long id, @RequestBody Speaker speaker) {
 		return speakerService.updateSpeakerInfo(id, speaker);
 	}
 
