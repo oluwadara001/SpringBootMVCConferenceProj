@@ -42,6 +42,19 @@
         (4,'seun','seundara','','range10','','','slim company','slim@yahoo.com','1236351233','city name');
 
 
+ INSERT INTO attendees (attendee_id,first_name,last_name,title,company,email,phone_number)
+ VALUES		(3,'seun','Kelsey Jones','dr','Tempus Company','ab@c.com','1-213-939-2311'),
+ (4,'avier','Maggy Welch','eget metus eu erat semper rutrum','Nunc Ullamcorper Eu Industries','my@email.com','1-630-963-3291'),
+ (5,'Daniel','Jemima Riggs','sapien. Aenean massa. Integer vitae nibh','Dictum Proin Industries','abc@hotvoice.com','1-794-757-3524'),
+ (6,'Herman','Fay Peck','Cras sed leo. Cras vehicula','Dolor LLP','alpha@email.com','1-603-639-8022'),
+ (7,'Malcolm','Ulla Maynard','Curabitur egestas','Velit PC','homa@email.com','1-664-946-9732'),
+ (8,'Marcus','Ulla','Curabitur egestas','Velit PC','abc@email.com','1-664-946-9732'),
+ (9,'Connor','Tamara Kim','metus. Vivamus','Ultricies Incorporated','algbawi@yomi.com','1-787-118-8704'),
+ (10,'Macon','Grace Frost','vel sapien imperdiet','Augue Industries','alpba@bba.net','1-588-664-1735'),
+ (11,'Octavius','Iliana Howell','aliquam adipiscing lacus. Ut nec','Magna Inc','c@agro.ng','1-986-966-4458'),
+ (12,'Burke','Leigh Chaney','vitae risus. Duis a mi','Vivamus Limited','dhdh@hhd.ca','1-255-440-3544');
+
+
 =======
        use
        SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;
