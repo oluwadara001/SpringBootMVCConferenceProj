@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,6 +77,10 @@ public class UserService {
 		return userDao.saveAndFlush(existingUser);
 	}
 
+	public UserService(Connection connection) {
+		super();
+	}
+
 	/**
 	 * Method adds an object of CustomerDao to the cache memory if not already existing in cache.
 	 * it holds the first 5000 records. Typically, it serves as a temporary database- holding table
@@ -96,7 +101,7 @@ public class UserService {
 	 * @param userId of a user to be used to fetch and add userDao to cache
 	 */
 	public User addUserDaoToCache(long userId) {
-		if (!userDaoCache.containsKey(userId)) {
+		if (userId > 0 && !userDaoCache.containsKey(userId)) {
 			userDaoCache.put(userId, findOneUser(userId));
 			return userDaoCache.get(userId);
 		} else
@@ -131,7 +136,7 @@ public class UserService {
 	 * This method prompts the user of their next action- find a session, then register for the session.
 	 */
 	public void loginSuccessful() {
-		//placeholder methodd
+		//placeholder method
 	}
 
 	/**
