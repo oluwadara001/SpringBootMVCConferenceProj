@@ -3,6 +3,7 @@
         xmlns="http://maven.apache.org/POM/4.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -16,19 +17,23 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>conference-demo</name>
     <description>Demo project for Spring Boot</description>
+
     <properties>
         <java.version>1.8</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <!--added dependency for jpa that helps with postgres db connection -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <!--added the postgres jdbc driver dependency data so we can connect to
             the db -->
         <dependency>
@@ -36,6 +41,7 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -50,15 +56,16 @@
                     <groupId>com.vaadin.external.google</groupId>
                     <artifactId>android-json</artifactId>
                 </exclusion>
-
             </exclusions>
         </dependency>
+
         <!-- Mockito extension that i added for JUnit testing with Mocito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!-- EasyMock extension that i added for JUnit testing with Mocito -->
         <dependency>
             <groupId>org.easymock</groupId>
@@ -66,12 +73,14 @@
             <version>4.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
-            	<groupId>com.YomiOluwadara</groupId>
-            	<artifactId>conference-demo</artifactId>
-            	<version>0.0.1-SNAPSHOT</version>
+            <groupId>com.YomiOluwadara</groupId>
+            <artifactId>conference-demo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <!-- commons-dbutils is an Apache JDBC lib used it to ensure that JDBC connections are properly closed -->
             <groupId>com.sop4j</groupId>
@@ -92,6 +101,7 @@
             </exclusions>
             -->
         </dependency>
+
         <dependency>
             <groupId>com.ecfront</groupId>
             <artifactId>ez-dbutils</artifactId>
@@ -99,6 +109,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
