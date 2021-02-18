@@ -132,8 +132,9 @@ public class UserService {
 		}
 	}
 
+
 	/**
-	 * This method prompts the user of their next action- find a session, then register for the session.
+	 *
 	 */
 	public void loginSuccessful() {
 		//placeholder method
