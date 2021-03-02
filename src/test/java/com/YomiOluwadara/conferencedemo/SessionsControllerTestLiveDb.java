@@ -1,9 +1,12 @@
 
 /*
+
+/*
 The test here has nit passed, due to multiple json found in class path
 https://stackoverflow.com/questions/56560826/found-multiple-occurrences-of-org-json-jsonobject-on-the-class-path/56562534
  */
 package com.YomiOluwadara.conferencedemo;
+
 
 import ch.qos.logback.core.util.CloseUtil;
 import com.YomiOluwadara.conferencedemo.Config.DataSourceConfig;
@@ -27,6 +30,7 @@ import java.util.List;
 import static org.aspectj.bridge.MessageUtil.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
 
 @SpringBootTest(classes = {DataSourceConfig.class, ConferenceDemoApplication.class})
 public class SessionsControllerTestLiveDb {
@@ -113,3 +117,5 @@ public class SessionsControllerTestLiveDb {
         assertThat(fetchedResultFromLiveDb.size(), is(sessionsController.listAllSessions().size()));
     }
 }
+
+

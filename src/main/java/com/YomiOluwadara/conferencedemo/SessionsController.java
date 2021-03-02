@@ -43,8 +43,6 @@ public class SessionsController {
 		this.sessionsService = sessionsService;
 	}
 
-//	@Autowired
-//	 SessionDAO sessionDAO;
 
 	/**
 	 * @return a list of all sessions in the database
