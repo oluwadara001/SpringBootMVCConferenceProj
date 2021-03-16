@@ -47,3 +47,15 @@
        SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;
 
        when error with : Duplicate key violates unique constraint
+
+ **********************************************************************
+ STORIES FOR NEXT SPRING
+ **********************************************************************
+ 1. Fix SessionsControllerLiveDb test
+ 2. Begin SpeakerController Test
+ 3. Begin speakerControllerLoveDb test
+ 4. Begin UserController test
+ 5. Begin HomeControllerTestLiveDb test
+ 6. Begin HomeController test
+ 7. Begin UserController test
+ 8. Begin UserControllerTestLive Db
