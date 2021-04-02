@@ -28,7 +28,7 @@ public class HomeService {
 	}
 
 	public String addUserDaoToCacheErrorMsg() {
-		return "User is already in uer cache";
+		return "User is already in user cache";
 	}
 
 }
