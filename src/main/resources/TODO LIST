@@ -12,7 +12,7 @@
             (see datamig dao for examples)
             if user name and password are not in cache, fetch from database and add to cache
     2d  if user is a "new user", call "create new user" , and insert user login credentials into the db table
-        **Note, if user attempt to login the secound time, thier login creds should be added to cache and fetch from
+        **Note, if user attempt to login the second time, thier login creds should be added to cache and fetch from
         cache memory
 
 <<<<<<< milestone_1.0_implement_login
@@ -51,11 +51,12 @@
  **********************************************************************
  STORIES FOR NEXT SPRING
  **********************************************************************
+ controller tests
  1. Fix SessionsControllerLiveDb test
  2. Begin SpeakerController Test
  3. Begin speakerControllerLoveDb test
  4. Begin UserController test
  5. Begin HomeControllerTestLiveDb test
- 6. Begin HomeController test
+ 6. Begin HomeController test - COMPLETED
  7. Begin UserController test
  8. Begin UserControllerTestLive Db
