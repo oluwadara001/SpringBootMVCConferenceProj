@@ -2,8 +2,10 @@
 package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.model.Session;
+import com.YomiOluwadara.conferencedemo.model.User;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
 import org.easymock.EasyMock;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -26,6 +28,9 @@ import static org.mockito.Mockito.when;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.aspectj.bridge.MessageUtil.fail;
+import static org.hamcrest.CoreMatchers.is;
+
 
 
 class SessionsControllerTest {
@@ -41,10 +46,10 @@ class SessionsControllerTest {
 		// mocks an instance of the SessionService that will be used to call methods in the SessionService class
 		@Mock
 		SessionsService sessionsService;
+
 		// variables of type session, so a Session object can be successfully created in this test class
 		Session session;
 		Session session2;
-
 
 		private MockMvc mockMvc;
 
@@ -84,6 +89,9 @@ class SessionsControllerTest {
 			assertEquals(session.getSessionName(), sessionRestControllerActual.getSessionName());
 			assertEquals(session.getSessionDescription(), sessionRestControllerActual.getSessionDescription());
 			assertEquals(session.getSessionLength(), sessionRestControllerActual.getSessionLength());
+
+			//using asserThat notation
+			assertThat(session.getSessionId(), CoreMatchers.is(sessionRestControllerActual.getSessionId()));
 		}
 
 		@Test
@@ -93,6 +101,7 @@ class SessionsControllerTest {
 			session.setSessionName("test session 1");
 			session.setSessionDescription("session description one");
 			session.setSessionLength(60);
+
 			session2.setSessionId(2000);
 			session2.setSessionName("test session 2");
 			session2.setSessionDescription("session_description");
@@ -135,6 +144,7 @@ class SessionsControllerTest {
 			session.setSessionName("test session being added");
 			session.setSessionDescription("I'm a new session being added");
 			session.setSessionLength(45);
+
 			session2.setSessionId(2000);
 			session2.setSessionName("test session 2");
 			session2.setSessionDescription("session_description");
@@ -145,7 +155,9 @@ class SessionsControllerTest {
 			sessionList.add(session2);
 
 			assertNotNull(sessionList);
+			sessionsController.deleteOneSession(session2.getSessionId());
 
+//			assertThat(sessionList.size(),is(1));
 //			assertThat(1 ,is(sessionsController.deleteOneSession(session.getSessionId())));
 		}
 
@@ -154,7 +166,6 @@ class SessionsControllerTest {
 		@DisplayName("updates one session object given its id")
 		void updateOneSession() {
 			session.setSessionLength(45);
-
 
 
 			// TODO, add implementation
