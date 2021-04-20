@@ -2,9 +2,7 @@
 package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.model.User;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
-import org.easymock.EasyMock;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,24 +11,20 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.aspectj.bridge.MessageUtil.fail;
-import static org.hamcrest.CoreMatchers.is;
-
 
 
 class SessionsControllerTest {
@@ -136,29 +130,17 @@ class SessionsControllerTest {
 
 		@Test
 		@DisplayName("deletes one session object given its id")
-		void deleteOneSessionTest() {
+		void deleteOneSessionTest() throws Exception {
 
-//			EasyMock.expect(sessionsController.deleteOneSession(session.getSessionId())).andReturn(session2);
+			session.setSessionId(1);
+			String uri = "/api/v1/sessions/";
+			MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(uri,session.getSessionId())).andReturn();
+			int status = mvcResult.getResponse().getStatus();
+			assertEquals(200, status);
+			String content = mvcResult.getResponse().getContentAsString();
+			assertEquals(content, "Deletion was successful");
 
-			session.setSessionId(145);
-			session.setSessionName("test session being added");
-			session.setSessionDescription("I'm a new session being added");
-			session.setSessionLength(45);
 
-			session2.setSessionId(2000);
-			session2.setSessionName("test session 2");
-			session2.setSessionDescription("session_description");
-			session2.setSessionLength(45);
-
-			List<Session> sessionList = new ArrayList<Session>();
-			sessionList.add(session);
-			sessionList.add(session2);
-
-			assertNotNull(sessionList);
-			sessionsController.deleteOneSession(session2.getSessionId());
-
-//			assertThat(sessionList.size(),is(1));
-//			assertThat(1 ,is(sessionsController.deleteOneSession(session.getSessionId())));
 		}
 
 		@Test

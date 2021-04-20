@@ -19,6 +19,11 @@ IMPLEMENTATION DETAILS::
 
 3.  implement loginFailedMessage()
 
+<<<<<<<<<<<passing tests >>>>>>>>>>>>>>>>>
+1.HomeControllerTest
+2.
+
+
 <<<<<<<<<<<<<Failing test>>>>>>>>>>>>>>>>>>>
 1-ConferenceDemoApplicationTest
 

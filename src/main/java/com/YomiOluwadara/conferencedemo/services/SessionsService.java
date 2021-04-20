@@ -18,16 +18,15 @@
 
 package com.YomiOluwadara.conferencedemo.services;
 
-import java.util.List;
-
+import com.YomiOluwadara.conferencedemo.dao.SessionDAO;
+import com.YomiOluwadara.conferencedemo.model.Session;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.dao.SessionDAO;
+import java.util.List;
 
 
 @Service
@@ -62,9 +61,10 @@ public class SessionsService {
 	/**
 	 * @param id session id to be deleted
 	 */
-	public void deleteOneSession(@PathVariable Long id) {
+	public String deleteOneSession(@PathVariable Long id) {
 		// TODO : add logic that allows for the deleting of children records
 		sessionDAO.deleteById(id);
+		return "Deletion was successful";
 	}
 
 	/**
