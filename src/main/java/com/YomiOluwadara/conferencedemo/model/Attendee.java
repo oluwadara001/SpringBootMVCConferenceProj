@@ -4,12 +4,11 @@
  */
 package com.YomiOluwadara.conferencedemo.model;
 
-import java.util.List;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "attendees")
@@ -21,13 +20,17 @@ public class Attendee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "attendee_id")
 	private long attendeeId;
+
 	@Column(name = "first_name")
 	private String firstName;
+
 	@Column(name = "last_name")
 	private String lastName;
+
 	private String title;
 	private String company;
 	private String email;
+
 	@Column(name = "phone_number")
 	private String phoneNumber;
 

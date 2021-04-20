@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.*;
 
 import static sun.plugin2.os.windows.OVERLAPPED.size;
 
@@ -81,21 +80,27 @@ public class UserService {
 		super();
 	}
 
+
 	/**
 	 * Method adds an object of CustomerDao to the cache memory if not already existing in cache.
 	 * it holds the first 5000 records. Typically, it serves as a temporary database- holding table
-	 * <p>
 	 * <p>
 	 * use wrapper class for long- see https://www.w3schools.com/java/java_wrapper_classes.asp
 	 * map.entry : https://www.geeksforgeeks.org/map-entry-interface-java-example/
 	 * LinkedHashMap --> https://www.geeksforgeeks.org/linkedhashmap-class-java-examples/
 	 */
-	private static final HashMap<Long, User> userDaoCache = new LinkedHashMap<Long, User>(5, 0.75f, true);
+	private static final HashMap<Long, User> userDaoCache =
+			new LinkedHashMap<Long, User>(5, 0.75f, true);
 
+
+	/**
+	 * @param eldest This is the oldest UserDao object that will be removed from the map once the mao.entry inteface
+	 *               gives access to the map
+	 * @return size/count of the cache
+	 */
 	protected boolean removeEldestEntry(Map.Entry<Long, UserDao> eldest) {
 		return size() > CODE_CACHE_MAX_SIZE;
 	}
-
 
 	/**
 	 * @param userId of a user to be used to fetch and add userDao to cache
@@ -116,28 +121,38 @@ public class UserService {
 	 * @param inputPassword supplied by the user
 	 * @return
 	 */
-	public void getUserLoginCred(@PathVariable Long inputUserId, @PathVariable String inputPassword) {
+
+	//TODO: refactor method as needed - especially because of userType
+	public void getUserLoginCred(@PathVariable Long inputUserId, @PathVariable String inputPassword, String userType) {
 		Long userId = 0l;
 		String password = "";
 
 		if (!userDaoCache.isEmpty()) {
-			if (userDaoCache.containsKey(inputUserId)) {
+			if (userDaoCache.containsKey(inputUserId)){
 				userId = userDaoCache.get(inputUserId).getUserId();
 				password = userDaoCache.get(inputPassword).getPassword();
-				if (inputUserId == userId && inputPassword.equals(password)) {
-					loginSuccessful();
-				} else
-					loginFailedMessage();
-			}
-		}
+				if ((inputUserId == userId) && (inputPassword.equals(password)) && (userType == "user" || userType == "USER")){
+					loginSuccessfulForRegularUsers();
+				}
+			} else if ((inputUserId == userId) && (inputPassword.equals(password)) && (userType == "admin" || userType == "ADMIN"))
+				loginSuccessfulForAdminUsers();
+		} else
+			addUserDaoToCache(userId);
 	}
-
 
 	/**
 	 *
 	 */
-	public void loginSuccessful() {
+	public void loginSuccessfulForRegularUsers() {
 		//placeholder method
+	}
+
+	/**
+	 *
+	 */
+	public void loginSuccessfulForAdminUsers() {
+		//placeholder
+
 	}
 
 	/**
@@ -146,6 +161,5 @@ public class UserService {
 	public String loginFailedMessage() {
 		return "Login has failed, check  usr credentials and try again";
 	}
-
-
+	
 }

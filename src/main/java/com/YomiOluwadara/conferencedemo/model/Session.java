@@ -31,12 +31,11 @@
 
 package com.YomiOluwadara.conferencedemo.model;
 
-import java.util.List;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "sessions")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -57,11 +56,11 @@ public class Session {
 
 	@Column(name = "session_length")
 	private int sessionLength;
+
 	@JsonIgnore // helps with serialization issues : ignores nested json pay loads
 	@ManyToMany
 	@JoinTable(name = "session_speakers", joinColumns = @JoinColumn(name = "session_id"),
 			inverseJoinColumns = @JoinColumn(name = "speaker_id"))
-
 	private List<Speaker> speakers;
 
 	@JsonIgnore
