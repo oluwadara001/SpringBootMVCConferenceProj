@@ -61,10 +61,9 @@ public class SessionsService {
 	/**
 	 * @param id session id to be deleted
 	 */
-	public String deleteOneSession(@PathVariable Long id) {
+	public void deleteOneSession(@PathVariable Long id) {
 		// TODO : add logic that allows for the deleting of children records
 		sessionDAO.deleteById(id);
-		return "Deletion was successful";
 	}
 
 	/**

@@ -4,6 +4,8 @@ package com.YomiOluwadara.conferencedemo;
 import com.YomiOluwadara.conferencedemo.model.Session;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
 import org.hamcrest.CoreMatchers;
+import org.hibernate.tool.schema.spi.CommandAcceptanceException;
+import org.hibernate.tool.schema.spi.ExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,10 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -25,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 class SessionsControllerTest {
@@ -55,7 +61,17 @@ class SessionsControllerTest {
 			session = new Session();
 			session2 = new Session();
 			SessionsController controller = new SessionsController(sessionsService);
-			mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+//			mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+			mockMvc = MockMvcBuilders.standaloneSetup(controller)
+							  .setControllerAdvice(new ExceptionHandler() {
+								  @Override
+								  public void handleException(CommandAcceptanceException exception) {
+
+								  }
+							  })
+							  .alwaysExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+							  .build();
 		}
 
 		@Test
@@ -131,15 +147,9 @@ class SessionsControllerTest {
 		@Test
 		@DisplayName("deletes one session object given its id")
 		void deleteOneSessionTest() throws Exception {
-
-			session.setSessionId(1);
-			String uri = "/api/v1/sessions/";
-			MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.delete(uri,session.getSessionId())).andReturn();
-			int status = mvcResult.getResponse().getStatus();
-			assertEquals(200, status);
-			String content = mvcResult.getResponse().getContentAsString();
-			assertEquals(content, "Deletion was successful");
-
+			mockMvc.perform(delete("/api/v1/sessions/13").contentType(MediaType.APPLICATION_JSON)
+					.accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
 
 		}
 

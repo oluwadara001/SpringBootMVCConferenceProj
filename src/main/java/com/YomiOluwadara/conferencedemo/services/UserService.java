@@ -161,5 +161,5 @@ public class UserService {
 	public String loginFailedMessage() {
 		return "Login has failed, check  usr credentials and try again";
 	}
-	
+
 }
