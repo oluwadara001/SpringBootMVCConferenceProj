@@ -67,7 +67,6 @@ class SessionsControllerTest {
 							  .setControllerAdvice(new ExceptionHandler() {
 								  @Override
 								  public void handleException(CommandAcceptanceException exception) {
-
 								  }
 							  })
 							  .alwaysExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
@@ -147,10 +146,7 @@ class SessionsControllerTest {
 		@Test
 		@DisplayName("deletes one session object given its id")
 		void deleteOneSessionTest() throws Exception {
-			mockMvc.perform(delete("/api/v1/sessions/13").contentType(MediaType.APPLICATION_JSON)
-					.accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-
+			mockMvc.perform(delete("/api/v1/sessions/13").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		}
 
 		@Test
@@ -159,13 +155,8 @@ class SessionsControllerTest {
 		void updateOneSession() {
 			session.setSessionLength(45);
 
-
 			// TODO, add implementation
 		}
 	}
 
 }
-
-
-
-

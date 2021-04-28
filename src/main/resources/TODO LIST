@@ -18,6 +18,7 @@ IMPLEMENTATION DETAILS::
             - update session info ((only admin user can)
 
 3.  implement loginFailedMessage()
+4. Find a front-end API that can be hoooked to my backend application
 
 <<<<<<<<<<<passing tests >>>>>>>>>>>>>>>>>
 1.HomeControllerTest
@@ -26,6 +27,7 @@ IMPLEMENTATION DETAILS::
 
 <<<<<<<<<<<<<Failing test>>>>>>>>>>>>>>>>>>>
 1-ConferenceDemoApplicationTest
+
 
 
 
@@ -71,3 +73,8 @@ IMPLEMENTATION DETAILS::
        SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;
 
        when error with : Duplicate key violates unique constraint
+
+ <<<<<<<<<<<<<Notes to keep>>>>>>>>>>>>>>>>>>>
+ 1- To test the update method in postman
+    - click on the "Body" tab , edit the needed field, then click on "send"
+    - if the update method succeeds, you wil notice it in the json body below, also you will get status 200 ok.
