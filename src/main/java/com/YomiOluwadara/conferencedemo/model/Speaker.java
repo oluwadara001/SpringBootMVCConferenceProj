@@ -7,14 +7,12 @@
 
 package com.YomiOluwadara.conferencedemo.model;
 
-import java.util.List;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.Type;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "speakers")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -30,8 +28,10 @@ public class Speaker {
 
 	@Column(name = "last_name")
 	private String lastName;
+
 	private String title;
 	private String company;
+
 	@Column(name = "speaker_bio")
 	private String speakerBio;
 	// using byte type for photo @lob = large object

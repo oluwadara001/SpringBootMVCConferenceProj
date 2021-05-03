@@ -18,16 +18,15 @@
 
 package com.YomiOluwadara.conferencedemo.services;
 
-import java.util.List;
-
+import com.YomiOluwadara.conferencedemo.dao.SessionDAO;
+import com.YomiOluwadara.conferencedemo.model.Session;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.dao.SessionDAO;
+import java.util.List;
 
 
 @Service

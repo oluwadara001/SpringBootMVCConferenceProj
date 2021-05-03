@@ -75,10 +75,10 @@ public class SessionsController {
 	}
 
 	/**
+	 *  method that deletes a session given its id, provided no children sessions
+	 * 	return method is void because record is being deleted
 	 * @param id id of session that needs to be deleted
 	 */
-	// method that deletes a session given its id, provided no children sessions
-	// return method is void because record is being deleted
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public @ResponseBody
 	void deleteOneSession(@PathVariable Long id) {
@@ -86,12 +86,13 @@ public class SessionsController {
 	}
 
 	/**
+	 * method that updates a specified record find a session given its id,then stores
+	 * that id in Session variable (session)
+	 *
 	 * @param id      session id to be updated
 	 * @param session specific session that will be updated
 	 * @return updated session
 	 */
-	// method that updates a specified record find a session given its id,then stores
-	// that id in Session variable (session)
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public @ResponseBody
 	Session updateSession(@PathVariable Long id, @RequestBody Session session) {

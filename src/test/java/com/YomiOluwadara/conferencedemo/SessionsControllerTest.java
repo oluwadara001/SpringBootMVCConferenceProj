@@ -3,7 +3,9 @@ package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.model.Session;
 import com.YomiOluwadara.conferencedemo.services.SessionsService;
-import org.easymock.EasyMock;
+import org.hamcrest.CoreMatchers;
+import org.hibernate.tool.schema.spi.CommandAcceptanceException;
+import org.hibernate.tool.schema.spi.ExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,21 +13,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 class SessionsControllerTest {
@@ -41,10 +46,10 @@ class SessionsControllerTest {
 		// mocks an instance of the SessionService that will be used to call methods in the SessionService class
 		@Mock
 		SessionsService sessionsService;
+
 		// variables of type session, so a Session object can be successfully created in this test class
 		Session session;
 		Session session2;
-
 
 		private MockMvc mockMvc;
 
@@ -56,7 +61,16 @@ class SessionsControllerTest {
 			session = new Session();
 			session2 = new Session();
 			SessionsController controller = new SessionsController(sessionsService);
-			mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+//			mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+			mockMvc = MockMvcBuilders.standaloneSetup(controller)
+							  .setControllerAdvice(new ExceptionHandler() {
+								  @Override
+								  public void handleException(CommandAcceptanceException exception) {
+								  }
+							  })
+							  .alwaysExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+							  .build();
 		}
 
 		@Test
@@ -84,6 +98,9 @@ class SessionsControllerTest {
 			assertEquals(session.getSessionName(), sessionRestControllerActual.getSessionName());
 			assertEquals(session.getSessionDescription(), sessionRestControllerActual.getSessionDescription());
 			assertEquals(session.getSessionLength(), sessionRestControllerActual.getSessionLength());
+
+			//using asserThat notation
+			assertThat(session.getSessionId(), CoreMatchers.is(sessionRestControllerActual.getSessionId()));
 		}
 
 		@Test
@@ -93,6 +110,7 @@ class SessionsControllerTest {
 			session.setSessionName("test session 1");
 			session.setSessionDescription("session description one");
 			session.setSessionLength(60);
+
 			session2.setSessionId(2000);
 			session2.setSessionName("test session 2");
 			session2.setSessionDescription("session_description");
@@ -127,26 +145,8 @@ class SessionsControllerTest {
 
 		@Test
 		@DisplayName("deletes one session object given its id")
-		void deleteOneSessionTest() {
-
-//			EasyMock.expect(sessionsController.deleteOneSession(session.getSessionId())).andReturn(session2);
-
-			session.setSessionId(145);
-			session.setSessionName("test session being added");
-			session.setSessionDescription("I'm a new session being added");
-			session.setSessionLength(45);
-			session2.setSessionId(2000);
-			session2.setSessionName("test session 2");
-			session2.setSessionDescription("session_description");
-			session2.setSessionLength(45);
-
-			List<Session> sessionList = new ArrayList<Session>();
-			sessionList.add(session);
-			sessionList.add(session2);
-
-			assertNotNull(sessionList);
-
-//			assertThat(1 ,is(sessionsController.deleteOneSession(session.getSessionId())));
+		void deleteOneSessionTest() throws Exception {
+			mockMvc.perform(delete("/api/v1/sessions/13").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		}
 
 		@Test
@@ -155,12 +155,8 @@ class SessionsControllerTest {
 		void updateOneSession() {
 			session.setSessionLength(45);
 
-
-
 			// TODO, add implementation
 		}
 	}
 
 }
-
-

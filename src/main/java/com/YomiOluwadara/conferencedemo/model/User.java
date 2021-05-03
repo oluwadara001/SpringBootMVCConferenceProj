@@ -1,5 +1,5 @@
 /*
-Add content hereeee
+Add content here
  */
 package com.YomiOluwadara.conferencedemo.model;
 
@@ -13,6 +13,7 @@ import java.util.List;
 @Entity(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userid")

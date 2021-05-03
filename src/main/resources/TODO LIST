@@ -1,22 +1,35 @@
+SPRINT:: conference_app_sprint_04022021_to_040162021
 
 
-1   Write unit test for existing functionalities
+BACKLOG :: AS AT 4/2/2021 - see white board
+
+1  Write unit test for existing functionalities
    1a   use enterprise standards- beforeAll, beforeEach, afterEach,afterAll as needed
    1b   make sure that the tests are interacting with the database - jdbc template and all
             use former tests in the data mig dao
 
-2.   Implement a login
-    2a  Determine where to leverage a third party login service like Auth{0} or code it
-    2b  If coded, implement login credentials validation (ensure all tests are running against a live database)
-    2c  To login, ask if user is "existing", then check if user credentials is already inside the cache memory
-            (see datamig dao for examples)
-            if user name and password are not in cache, fetch from database and add to cache
-    2d  if user is a "new user", call "create new user" , and insert user login credentials into the db table
-        **Note, if user attempt to login the secound time, thier login creds should be added to cache and fetch from
-        cache memory
+IMPLEMENTATION DETAILS::
+2.  implement loginSuccessful()  (this is the user and not the admin login)
+        -present landing page with options of
+            - listing all sessions (available to user) > controller> call listAllSessions()
+            - find one session  (available to user) > controller >getOneSession
+            - add new session (only admin user can)
+            - delete one session (only admin user can)
+            - update session info ((only admin user can)
 
-<<<<<<< milestone_1.0_implement_login
-        create user table using the SQl query below
+3.  implement loginFailedMessage()
+4. Find a front-end API that can be hoooked to my backend application
+
+<<<<<<<<<<<passing tests >>>>>>>>>>>>>>>>>
+1.HomeControllerTest
+2.
+
+
+<<<<<<<<<<<<<Failing test>>>>>>>>>>>>>>>>>>>
+1-ConferenceDemoApplicationTest
+
+
+
 
             CREATE TABLE users
                     (
@@ -60,3 +73,8 @@
        SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;
 
        when error with : Duplicate key violates unique constraint
+
+ <<<<<<<<<<<<<Notes to keep>>>>>>>>>>>>>>>>>>>
+ 1- To test the update method in postman
+    - click on the "Body" tab , edit the needed field, then click on "send"
+    - if the update method succeeds, you wil notice it in the json body below, also you will get status 200 ok.
