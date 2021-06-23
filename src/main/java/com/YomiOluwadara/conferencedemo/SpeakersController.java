@@ -10,7 +10,7 @@
 package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.model.Speaker;
-import com.YomiOluwadara.conferencedemo.services.SpeakerService;
+import com.YomiOluwadara.conferencedemo.controller.SpeakerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

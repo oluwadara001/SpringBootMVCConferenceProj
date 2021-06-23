@@ -5,17 +5,17 @@
 The test here has nit passed, due to multiple json found in class path
 https://stackoverflow.com/questions/56560826/found-multiple-occurrences-of-org-json-jsonobject-on-the-class-path/56562534
  */
-package com.YomiOluwadara.conferencedemo;
+package com.YomiOluwadara.conferencedemo.liveDatabase.controller;
 
 
 import ch.qos.logback.core.util.CloseUtil;
+import com.YomiOluwadara.conferencedemo.ConferenceDemoApplication;
 import com.YomiOluwadara.conferencedemo.Config.DataSourceConfig;
+import com.YomiOluwadara.conferencedemo.SessionsController;
 import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.services.SessionsService;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.YomiOluwadara.conferencedemo.controller.AttendeeService;
+import com.YomiOluwadara.conferencedemo.controller.SessionsService;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -115,6 +115,41 @@ public class SessionsControllerTestLiveDb {
         session.getSessionLength();
         fetchedResultFromLiveDb.add(session);
         assertThat(fetchedResultFromLiveDb.size(), is(sessionsController.listAllSessions().size()));
+    }
+
+    @SpringBootTest(classes = {DataSourceConfig.class, ConferenceDemoApplication.class})
+    public static class AttendeeServiceLiveDbTest {
+
+        @Autowired
+        static DataSource dataSource;
+        static Connection connection;
+        static String selectAllStatement = "select session_id," +
+                                         "session_name," +
+                                         "session_description," +
+                                         "session_length," +
+                                         "attendees_attendee_id"+
+                                         "from sessions";
+
+        static String selectCountStatement = "select count(*) from attendees";
+
+        @BeforeAll
+        public static void setUp() throws SQLException {
+            connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectAllStatement);
+            PreparedStatement preparedStatement1= connection.prepareStatement(selectCountStatement);
+            preparedStatement.execute();
+            preparedStatement1.execute();
+        }
+
+        @Test
+        @DisplayName("All users in users table should be returned")
+        void testAllAttendees(){
+            AttendeeService attendeeService = new AttendeeService();
+            assertThat(attendeeService.allAttendees().size(),is(selectCountStatement));
+
+
+        }
+
     }
 }
 

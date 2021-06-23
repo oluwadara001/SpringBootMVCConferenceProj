@@ -5,7 +5,7 @@
  * This class contains the CRUD and logic credential functions as it relates to users.
  */
 
-package com.YomiOluwadara.conferencedemo.services;
+package com.YomiOluwadara.conferencedemo.controller;
 
 import com.YomiOluwadara.conferencedemo.dao.UserDao;
 import com.YomiOluwadara.conferencedemo.model.User;

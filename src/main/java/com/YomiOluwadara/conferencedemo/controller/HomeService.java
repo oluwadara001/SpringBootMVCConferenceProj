@@ -6,7 +6,7 @@
  * @GetMapping home : http://localhost:5000/home
  * see app version : http://localhost:5000/
  */
-package com.YomiOluwadara.conferencedemo.services;
+package com.YomiOluwadara.conferencedemo.controller;
 
 import org.springframework.stereotype.Service;
 

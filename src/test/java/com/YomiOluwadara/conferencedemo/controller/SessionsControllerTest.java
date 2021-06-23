@@ -1,8 +1,8 @@
 
-package com.YomiOluwadara.conferencedemo;
+package com.YomiOluwadara.conferencedemo.controller;
 
+import com.YomiOluwadara.conferencedemo.SessionsController;
 import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.services.SessionsService;
 import org.hamcrest.CoreMatchers;
 import org.hibernate.tool.schema.spi.CommandAcceptanceException;
 import org.hibernate.tool.schema.spi.ExceptionHandler;
@@ -16,8 +16,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 

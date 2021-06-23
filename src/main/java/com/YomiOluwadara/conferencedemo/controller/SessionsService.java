@@ -16,7 +16,7 @@
  * all CRUD methods implemented
  */
 
-package com.YomiOluwadara.conferencedemo.services;
+package com.YomiOluwadara.conferencedemo.controller;
 
 import com.YomiOluwadara.conferencedemo.dao.SessionDAO;
 import com.YomiOluwadara.conferencedemo.model.Session;

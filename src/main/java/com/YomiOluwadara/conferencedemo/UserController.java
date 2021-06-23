@@ -1,7 +1,7 @@
 package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.model.User;
-import com.YomiOluwadara.conferencedemo.services.UserService;
+import com.YomiOluwadara.conferencedemo.controller.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
