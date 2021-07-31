@@ -1,4 +1,4 @@
-package com.YomiOluwadara.conferencedemo;
+package com.YomiOluwadara.conferencedemo.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

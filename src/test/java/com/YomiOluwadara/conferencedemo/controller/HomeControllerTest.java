@@ -2,8 +2,9 @@
  * @author OO046152 : Yomi Oluwadara
  *
  */
-package com.YomiOluwadara.conferencedemo;
+package com.YomiOluwadara.conferencedemo.controller;
 
+import com.YomiOluwadara.conferencedemo.HomeController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

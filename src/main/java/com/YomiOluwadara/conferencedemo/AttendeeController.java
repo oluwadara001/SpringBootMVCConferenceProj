@@ -10,7 +10,7 @@
 package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.model.Attendee;
-import com.YomiOluwadara.conferencedemo.services.AttendeeService;
+import com.YomiOluwadara.conferencedemo.controller.AttendeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

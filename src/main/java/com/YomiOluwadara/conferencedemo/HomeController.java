@@ -14,7 +14,7 @@
  */
 package com.YomiOluwadara.conferencedemo;
 
-import com.YomiOluwadara.conferencedemo.services.HomeService;
+import com.YomiOluwadara.conferencedemo.controller.HomeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +45,7 @@ public class HomeController {
 	}
 
 	/**
-	 * @return the applications app version stored in applications.properties
+	 * @return the applications' app version stored in applications.properties
 	 */
 	@GetMapping
 	@RequestMapping("/")

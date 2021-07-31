@@ -6,7 +6,7 @@
  * access the CRUD methods in the JPA repository
  */
 
-package com.YomiOluwadara.conferencedemo.services;
+package com.YomiOluwadara.conferencedemo.controller;
 
 import java.util.List;
 

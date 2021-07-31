@@ -1,7 +1,7 @@
 /**
  * @author OO046152
  */
-package com.YomiOluwadara.conferencedemo.services;
+package com.YomiOluwadara.conferencedemo.controller;
 
 import java.util.List;
 
