@@ -45,7 +45,7 @@ public class HomeController {
 	}
 
 	/**
-	 * @return the applications app version stored in applications.properties
+	 * @return the applications' app version stored in applications.properties
 	 */
 	@GetMapping
 	@RequestMapping("/")
