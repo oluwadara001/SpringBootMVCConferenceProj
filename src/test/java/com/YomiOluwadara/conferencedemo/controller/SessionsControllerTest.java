@@ -51,10 +51,14 @@ class SessionsControllerTest {
 
 		private MockMvc mockMvc;
 
+		/**
+		 * @throws Exception
+		 * needed for mockito API to initialize mocks and make them available in
+		 * 	 SessionController and SessionService classes where they will be used
+		 */
 		@BeforeEach
 		void setup() throws Exception {
-			// needed for mockito API to initialize mocks and make them available in
-			// SessionController and SessionService classes where they will be used
+
 			MockitoAnnotations.initMocks(this);
 			session = new Session();
 			session2 = new Session();
@@ -80,25 +84,25 @@ class SessionsControllerTest {
 			session.setSessionDescription("I'm being tested");
 			session.setSessionLength(60);
 
-			// testing the "actual" result in the SessionsService class )- a session object
+			// testing the "actual" result in the SessionsService class)- a session object
 			// ( having all the expected session attributes)
 			when(sessionsService.findOneSession(anyLong())).thenReturn(session);
 
 			//call the getOneSession from the sessionController class
-			Session sessionRestControllerActual = sessionsController.getOneSession(session.getSessionId());
+			Session sessionReturnedFromSessionClass = sessionsController.getOneSession(this.session.getSessionId());
 
 			// test that user id that is being passed is not null
-			assertNotNull(sessionRestControllerActual.getSessionId());
+			assertNotNull(session.getSessionId());
 
 			// assert that other Session variable from the session service are also equal to
-			// the values returned in the session controller
-			assertEquals(session.getSessionId(), sessionRestControllerActual.getSessionId());
-			assertEquals(session.getSessionName(), sessionRestControllerActual.getSessionName());
-			assertEquals(session.getSessionDescription(), sessionRestControllerActual.getSessionDescription());
-			assertEquals(session.getSessionLength(), sessionRestControllerActual.getSessionLength());
+			// the values returned to the session controller
+			assertEquals(this.session.getSessionId(), session.getSessionId());
+			assertEquals(this.session.getSessionName(), session.getSessionName());
+			assertEquals(this.session.getSessionDescription(), session.getSessionDescription());
+			assertEquals(this.session.getSessionLength(), session.getSessionLength());
 
-			//using asserThat notation
-			assertThat(session.getSessionId(), CoreMatchers.is(sessionRestControllerActual.getSessionId()));
+			//using assertThat notation
+			assertThat(this.session.getSessionId(), CoreMatchers.is(session.getSessionId()));
 		}
 
 		@Test
@@ -144,7 +148,8 @@ class SessionsControllerTest {
 		@Test
 		@DisplayName("deletes one session object given its id")
 		void deleteOneSessionTest() throws Exception {
-			mockMvc.perform(delete("/api/v1/sessions/13").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+			mockMvc.perform(delete("/api/v1/sessions/13").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+					.andExpect(status().isOk());
 		}
 
 		@Test

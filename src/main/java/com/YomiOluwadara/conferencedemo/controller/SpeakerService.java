@@ -28,7 +28,7 @@ public class SpeakerService {
 	}
 
 	/**
-	 * @param id sepaker id
+	 * @param id speaker id
 	 * @return a specific speaker given their id
 	 */
 	public Speaker findOneSpeaker(@PathVariable Long id) {
@@ -52,8 +52,8 @@ public class SpeakerService {
 	}
 
 	/**
-	 * @param id to be uodated
-	 * @param speaker speaker to be uodated
+	 * @param id to be updated
+	 * @param speaker speaker to be updated
 	 * @return updated speaker
 	 */
 	public Speaker updateSpeakerInfo(@PathVariable Long id, @RequestBody Speaker speaker) {

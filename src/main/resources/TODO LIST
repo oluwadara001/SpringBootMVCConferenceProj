@@ -78,3 +78,6 @@ IMPLEMENTATION DETAILS::
  1- To test the update method in postman
     - click on the "Body" tab , edit the needed field, then click on "send"
     - if the update method succeeds, you wil notice it in the json body below, also you will get status 200 ok.
+
+  <<<<<<<<<<<<<Sprints>>>>>>>>>>>>>>>>>>>
+    conference_app_sprint_09102021_to_101062021
