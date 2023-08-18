@@ -13,5 +13,4 @@ public class ConferenceDemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConferenceDemoApplication.class, args);
 	}
-
 }
