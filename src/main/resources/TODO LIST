@@ -20,16 +20,6 @@ IMPLEMENTATION DETAILS::
 3.  implement loginFailedMessage()
 4. Find a front-end API that can be hoooked to my backend application
 
-<<<<<<<<<<<passing tests >>>>>>>>>>>>>>>>>
-1.HomeControllerTest
-2.
-
-
-<<<<<<<<<<<<<Failing test>>>>>>>>>>>>>>>>>>>
-1-ConferenceDemoApplicationTest
-
-
-
 
             CREATE TABLE users
                     (

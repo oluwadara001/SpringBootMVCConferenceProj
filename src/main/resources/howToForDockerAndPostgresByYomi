@@ -1,3 +1,7 @@
+using port 8080, launch the app's home page
+http://localhost:8080/
+for example to see the users: http://localhost:8080/api/v1/users
+
 docker and progress DB. md
 
 ***********************************************************************************************************
@@ -14,7 +18,7 @@ pre- steps
 
 SPINNING UP POSTGRESS IN DOCKER
 
-Downloads the alpine version of postgres
+Downloads the alpine version of postgres (might need to login into docker hub with docker login cmd)
   >docker pull postgres:alpine
 
 then run> (shows you the progress image you just downloaded)
@@ -26,8 +30,8 @@ run a docker instance
 run below to see if the above was successful
 >  docker ps
 
-bash into container
->  winpty docker exec -it postgres-demo bash
+bash into container ( if on windows machine)
+>  winpty docker exec -it postgres-demo bash ( this is a windows and not a linus cmd)
   if you are using  git bash
 
 get root access
@@ -53,18 +57,25 @@ STARING UP POSTGRESS IN DOCKER AFTER FIRST INSTALLATION
    (Starting the db server in DOCKER)
   >   docker start postgres-demo
   > docker ps
-  > winpty docker exec -it postgres-demo bash
-  > psql -U postgres
-  >  \c
+  > winpty docker exec -it postgres-demo bash ( this is a windows and not a linus cmd)
+  > psql -U postgres ( this is a windows and not a linus cmd)
+  >  \c  ( this is a windows and not a linus cmd)
 
---once the connection has been established to the db in docker, then connect to the db utility, follow the following steps
+--once the connection has been established to the db in docker,
+then connect to the db utility, follow the following steps
 
 3 LAUNCH PGADMING4 - DB UTILTIY
-launch pgadmin4 app from local machine ( it will open with the below uri)
+launch pgadmin4 app from local machine ( it will open with the below uri or launch the pgadmin4 app)
   http://127.0.0.1:52147/browser/
-  master password : password
+master password : password
 username: postgres
 password: mysecretpassword
+
+ONCE CONTAINER HAS STARTED RUUNING IN DOCKER, START THE APPLICATION, THEN TEST BY NAVIGATING TO AN ENDPOINT:
+http://localhost:8080/api/v1/users
+
+
+
 
 
 
@@ -131,10 +142,6 @@ SPRING BOOT COMMON APPLICATION PROPERTIES
 https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#transaction-properties
 
 setting environment variables in eclipse
-
-***********************************************************************
- PostGres port on mac 5432
- ***********************************************************************
 
 
 Kindness in thought leads to wisdom.
