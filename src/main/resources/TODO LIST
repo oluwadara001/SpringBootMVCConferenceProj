@@ -58,6 +58,82 @@ IMPLEMENTATION DETAILS::
  (12,'Burke','Leigh Chaney','vitae risus. Duis a mi','Vivamus Limited','dhdh@hhd.ca','1-255-440-3544');
 
 
+ CREATE TABLE attendees
+                     (
+                         attendee_id       SERIAL PRIMARY KEY,
+                         first_name        varchar(60) NOT NULL,
+                         last_name         varchar(60) NOT NULL,
+                         title             varchar(40) NULL,
+                         company           varchar(50) NULL,
+                         email             varchar(80) NOT NULL,
+                         phone_number      varchar(80) NOT NULL
+                     );
+
+  INSERT INTO attendees (attendee_id,first_name,last_name,title,company,email,phone_number)
+  VALUES
+  (1,'seun','Kelsey Jones','dr','Tempus Company','ab@c.com','1-213-939-2311'),
+  (2,'avier','Maggy Welch','eget metus eu erat semper rutrum','Nunc Ullamcorper Eu Industries','my@email.com','1-630-963-3291'),
+  (3,'Daniel','Jemima Riggs','sapien. Aenean massa. Integer vitae nibh','Dictum Proin Industries','abc@hotvoice.com','1-794-757-3524'),
+  (4,'Herman','Fay Peck','Cras sed leo. Cras vehicula','Dolor LLP','alpha@email.com','1-603-639-8022'),
+  (5,'Malcolm','Ulla Maynard','Curabitur egestas','Velit PC','homa@email.com','1-664-946-9732'),
+  (6,'Marcus','Ulla','Curabitur egestas','Velit PC','abc@email.com','1-664-946-9732'),
+  (7,'Connor','Tamara Kim','metus. Vivamus','Ultricies Incorporated','algbawi@yomi.com','1-787-118-8704'),
+  (8,'Macon','Grace Frost','vel sapien imperdiet','Augue Industries','alpba@bba.net','1-588-664-1735'),
+  (9,'Octavius','Iliana Howell','aliquam adipiscing lacus. Ut nec','Magna Inc','c@agro.ng','1-986-966-4458'),
+  (10,'Burke','Leigh Chaney','vitae risus. Duis a mi','Vivamus Limited','dhdh@hhd.ca','1-255-440-3544');
+
+
+
+ CREATE TABLE sessions
+                     (
+                         session_id          SERIAL PRIMARY KEY,
+                         session_name        varchar(60) NOT NULL,
+                         session_description varchar(60) NOT NULL,
+                         session_length       int NOT NULL
+                     );
+
+
+  INSERT INTO sessions (session_id,session_name,session_description,session_length)
+  VALUES
+     (1,'intro to UI path','Foundation course for RPA devs','60'),
+     (2,'Java class','Java fro beginners','80'),
+     (3,'Rust class','Lets get Rusty!!','60'),
+     (4,'intro Python','This is for python devs','60'),
+     (5,'intro to UI path 2','Foundation course for RPA devs','20'),
+     (6,'lets code robots','Advanced course for RPA devs','60'),
+     (7,'RPA dev meet up','Devs talking Robots','60'),
+     (8,'PDF automation','Scarping text out of pdf is kinda cool','40'),
+     (9,'Java Springboot','Spring boot framework and java is cool','60'),
+     (10,'UI path','CICD integration with UIP','60');
+
+
+
+ INSERT INTO speakers (speaker_id,company,first_name,last_name,speaker_bio,speaker_photo,title)
+  VALUES
+     (1,'testCompany','testFname','testLName','testSpeakerBio','','testTitle'),
+     (2,'Oracle','Steve','Falkner','follower of God','','Lead SWE'),
+     (3,'Cerner','Sanket','Kor','PIA','','Snr SWE'),
+     (4,'Rehoboth','Odara','Dayo','variance troubleshoter','','Dentist'),
+     (5,'ETSU','Phil','Pfeiffer','Torough','','Professor'),
+     (6,'East Tn State','Tony','Ptarressse','the best ever','','Dean'),
+     (7,'yORobo','Yomi','o''dara','opolo','','founder'),
+     (8,'yOrobo','Stacey','Adman','COO','','Cheif Operating Officer'),
+     (9,'Deloit','Samantha','Mascary','hottie','','Lead Recruiter'),
+     (10,'Holla Cream','Tootsie','Rootsie','Bio','','Cheif Chef');
+
+  INSERT INTO session_speakers (session_id,speaker_id)
+  VALUES
+     (1,1),
+     (2,2),
+     (3,3),
+     (4,4),
+     (5,5),
+     (6,6),
+     (7,7),
+     (8,8),
+     (9,9),
+     (10,10);
+ 
 =======
        use
        SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;

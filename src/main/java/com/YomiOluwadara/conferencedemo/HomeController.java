@@ -10,7 +10,9 @@
  * <p>
  * HEROKU link: https://yomi-conferenc-eapp.herokuapp.com/
  * home url :http://localhost:5000/home
+ * 			http://localhost:8080/home
  * version :http://localhost:5000/
+ * version http://localhost:8080/ : Note- copy the port number in use in the application.properties file.
  */
 package com.YomiOluwadara.conferencedemo;
 

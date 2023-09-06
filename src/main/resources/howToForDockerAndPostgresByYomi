@@ -54,8 +54,8 @@ STARING UP POSTGRESS IN DOCKER AFTER FIRST INSTALLATION
 
   -- follow steps above (do not start from declaring another)
 
-   (Starting the db server in DOCKER)
-  >   docker start postgres-demo
+   (Starting the db server in DOCKER) - use the docker cmd below or start the container (postgres:11.5-alpine ) from the docker app
+  >  docker start postgres-demo
   > docker ps
   > winpty docker exec -it postgres-demo bash ( this is a windows and not a linus cmd)
   > psql -U postgres ( this is a windows and not a linus cmd)
@@ -66,8 +66,8 @@ then connect to the db utility, follow the following steps
 
 3 LAUNCH PGADMING4 - DB UTILTIY
 launch pgadmin4 app from local machine ( it will open with the below uri or launch the pgadmin4 app)
-  http://127.0.0.1:52147/browser/
-master password : password
+  http://127.0.0.1:52147/browser/ (WEB NOT NEEDED IF THE APP IS THE PG ADMIN 4 APP IS RUNNIG)
+    master password : password
 username: postgres
 password: mysecretpassword
 

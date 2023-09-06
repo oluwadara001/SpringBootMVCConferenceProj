@@ -41,6 +41,7 @@ public class SpeakersController {
 	 */
 	@GetMapping
 	@RequestMapping("/{id}")
+	// example :: http://localhost:8080/api/v1/speakers/5
 	public Speaker findOneSpeaker(@PathVariable Long id) {
 		return speakerService.findOneSpeaker(id);
 	}
