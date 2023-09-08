@@ -133,7 +133,7 @@ IMPLEMENTATION DETAILS::
      (8,8),
      (9,9),
      (10,10);
- 
+
 =======
        use
        SELECT setval(pg_get_serial_sequence('users', 'userid'), coalesce(max(id)+1, 1), false) FROM users;

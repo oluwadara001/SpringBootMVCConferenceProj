@@ -143,6 +143,11 @@ https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-applicat
 
 setting environment variables in eclipse
 
+***********************************************************************
+if docker container wont start, do the following.
+***********************************************************************
+sudo lsof -i :5432
+sudo kill <pid>
 
 Kindness in thought leads to wisdom.
 Kindness in speech leads to eloquence.
