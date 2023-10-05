@@ -54,7 +54,5 @@ public class HomeController {
 	public @ResponseBody
 	String getAppVersion() {
 		return homeService.appVersion();
-
 	}
-
 }

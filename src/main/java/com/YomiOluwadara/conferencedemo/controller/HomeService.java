@@ -16,7 +16,7 @@ public class HomeService {
 	 * @return the app version
 	 */
 	public String appVersion() {
-		return "1.0.0";
+		return "The current version is BETA 1.0.0";
 	}
 
 	public String addUserDaoToCacheErrorMsg() {

@@ -73,5 +73,4 @@ public class SpeakersController {
 	public @ResponseBody Speaker updateSpeaker(@PathVariable Long id, @RequestBody Speaker speaker) {
 		return speakerService.updateSpeakerInfo(id, speaker);
 	}
-
 }
