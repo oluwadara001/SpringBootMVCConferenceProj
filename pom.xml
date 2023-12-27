@@ -81,6 +81,12 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
             <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
+        <!-- Dependency for thymeleaf-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
 
         <dependency>
             <!-- commons-dbutils is an Apache JDBC lib used it to ensure that JDBC connections are properly closed -->

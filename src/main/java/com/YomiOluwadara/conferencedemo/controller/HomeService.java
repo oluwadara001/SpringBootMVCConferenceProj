@@ -11,6 +11,9 @@ public class HomeService {
 	public String welcomeMessage() {
 		return "Hello, welcome to the conference app project for big dummies";
 	}
+	public String getUserType()  {
+		return "hey";
+	}
 
 	/**
 	 * @return the app version
