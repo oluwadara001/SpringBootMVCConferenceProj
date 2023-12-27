@@ -9,7 +9,7 @@ public class HomeService {
 	 * @return the application welcome message
 	 */
 	public String welcomeMessage() {
-		return "Hello, welcome to the conference app project for big dummies";
+		return "Hello, welcome to the conference app project for big dummies- it's a WIP!";
 	}
 	public String getUserType()  {
 		return "hey";

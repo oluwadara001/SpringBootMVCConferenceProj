@@ -17,7 +17,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/speakers")
+//@RequestMapping("/api/v1/speakers")
+@RequestMapping("/speakers")
 public class SpeakersController {
 
 	SpeakerService speakerService;

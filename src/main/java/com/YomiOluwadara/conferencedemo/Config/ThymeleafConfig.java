@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+
 /**
  * This is an optional class because Spring Boot will automatically configure Thymeleaf with sensible defaults.
  * However, if you need to customize Thymeleaf configuration,

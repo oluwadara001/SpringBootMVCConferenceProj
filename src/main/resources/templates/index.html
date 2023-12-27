@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset = "ISO-8859-1">
     <title>My Spring Boot Thymeleaf App</title>
 </head>
 <body>
 <h1 th:text="${message}">Hello, World!</h1>
+
+<!-- Adding links to main application element. -->
+<div align="center">
+    <a th:href="@{users}">users</a> |
+    <a th:href="@{attendees}">attendees</a> |
+    <a th:href="@{sessions}">sessions</a> |
+    <a th:href="@{speakers}">speakers</a>
+</div>
+
 </body>
 </html>

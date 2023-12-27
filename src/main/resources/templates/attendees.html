@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset = "ISO-8859-1">
+    <title>My Spring Boot Thymeleaf App</title>
+</head>
+<body>
+
+<h2> Attendees Page</h2>
+
+<!-- Adding links to main application element. -->
+<div align="center">
+    <a th:href="@{users}">users</a> |
+    <a th:href="@{attendees}">attendees</a> |
+    <a th:href="@{sessions}">sessions</a> |
+    <a th:href="@{speakers}">speakers</a>
+</div>
+
+
+<ul>
+    <li th:each="attendees : ${attendees}">
+        <span th:text="${attendees.attendeeId}">Default</span>
+        <span th:text="${attendees.firstName}">Default</span>
+        <span th:text="${attendees.lastName}">Default</span>
+        <span th:text="${attendees.title}">Default</span>
+        <span th:text="${attendees.company}">Default</span>
+        <span th:text="${attendees.email}">Default</span>
+        <span th:text="${attendees.phoneNumber}">Default</span>
+    </li>
+</ul>
+
+</body>
+</html>

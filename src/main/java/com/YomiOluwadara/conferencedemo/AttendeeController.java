@@ -9,15 +9,21 @@
 
 package com.YomiOluwadara.conferencedemo;
 
-import com.YomiOluwadara.conferencedemo.model.Attendee;
 import com.YomiOluwadara.conferencedemo.controller.AttendeeService;
+import com.YomiOluwadara.conferencedemo.model.Attendee;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@RestController
-@RequestMapping("/api/v1/attendees")
+//@RestController // for returning json
+@Controller //For returning a web view
+//@RequestMapping("/api/v1/attendees")
+
+//@RequestMapping("/attendees")
+
 public class AttendeeController {
 
 	AttendeeService attendeeService;
@@ -32,10 +38,19 @@ public class AttendeeController {
 	/**
 	 * @return a list of all attendees
 	 */
-	@GetMapping
-	public @ResponseBody
-	List<Attendee> listAllAttendees() {
-		return attendeeService.allAttendees();
+//	@GetMapping
+//	public @ResponseBody
+//	List<Attendee> listAllAttendees() {
+//		return attendeeService.allAttendees();
+//	}
+
+
+	@RequestMapping(value = "/attendees")
+	String listAllAttendees(Model model) {
+		List <Attendee> attendees = attendeeService.allAttendees();
+		//attendee object os passed to the view
+		model.addAttribute("attendees", attendees);
+		return "attendees";
 	}
 
 	/**

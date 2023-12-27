@@ -77,7 +77,7 @@ public class HomeController {
          */
         @GetMapping("/home")
         public String home(Model model) {
-            model.addAttribute("message", homeService.welcomeMessage() + " take me out later");
+            model.addAttribute("message", homeService.welcomeMessage());
             return "index";
         }
     }
