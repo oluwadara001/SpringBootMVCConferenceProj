@@ -1,10 +1,8 @@
 /**
  * @author OO046152
- * <p>
  * creating a class member of AttendeeService so will can call the
  * methods in that class inside this class- controller class
- * <p>
- * url for retreive all registered attendees: http://localhost:5000/api/v1/attendees/
+ * url for retreive all registered attendees: http://localhost:8080/home/attendees
  */
 
 package com.YomiOluwadara.conferencedemo;
@@ -17,79 +15,74 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-//@RestController // for returning json
-@Controller //For returning a web view
-//@RequestMapping("/api/v1/attendees")
-
-//@RequestMapping("/attendees")
-
+@Controller //Need this for returning a web view
 public class AttendeeController {
 
-	AttendeeService attendeeService;
+    AttendeeService attendeeService;
 
-	/**
-	 * @param attendeeService variable for class constructor
-	 */
-	public AttendeeController(AttendeeService attendeeService) {
-		this.attendeeService = attendeeService;
-	}
+    /**
+     * @param attendeeService variable for class constructor
+     */
+    public AttendeeController(AttendeeService attendeeService) {
+        this.attendeeService = attendeeService;
+    }
 
-	/**
-	 * @return a list of all attendees
-	 */
-//	@GetMapping
-//	public @ResponseBody
-//	List<Attendee> listAllAttendees() {
-//		return attendeeService.allAttendees();
-//	}
+    /**
+     * @return a list of all attendees
+     */
+    @RequestMapping(value = "/attendees")
+    String listAllAttendees(Model model) {
+        List<Attendee> attendees = attendeeService.allAttendees();
+        //attendee object is passed to the view using the model
+        model.addAttribute("attendees", attendees);
+        return "attendees";
+    }
 
+    /**
+     * @param id id of a given attendee
+     * @return the record of the attendee that was passed in
+     */
+    @GetMapping
+    @RequestMapping("/{id}")
+    public @ResponseBody
+    Attendee listAttendeeById(@PathVariable Long id) {
+        return attendeeService.findOneAttendee(id);
+    }
 
-	@RequestMapping(value = "/attendees")
-	String listAllAttendees(Model model) {
-		List <Attendee> attendees = attendeeService.allAttendees();
-		//attendee object os passed to the view
-		model.addAttribute("attendees", attendees);
-		return "attendees";
-	}
+//    @RequestMapping(value = "/attendees/id")
+//    //public @ResponseBody
+//    String listAttendeeById(@PathVariable Long id, Model model) {
+//        Attendee attendee = attendeeService.findOneAttendee(id);
+//        model.addAttribute("attendees", attendee);
+//        return "attendees";
+//        //return attendeeService.findOneAttendee(id);
+//    }
 
-	/**
-	 * @param id id of a given attendee
-	 * @return the record of the attendee that was passed in
-	 */
-	@GetMapping
-	@RequestMapping("/{id}")
-	public @ResponseBody
-	Attendee listAttendeeById(@PathVariable Long id) {
-		return attendeeService.findOneAttendee(id);
-	}
+    /**
+     * @param attendee an attendee that would be added
+     * @return the record of the newly added attendee
+     */
+    @PostMapping
+    public Attendee createNewAttendee(Attendee attendee) {
+        return attendeeService.addNewAttendee(attendee);
+    }
 
-	/**
-	 * @param attendee an attendee that would be added
-	 * @return the record of the newly added attendee
-	 */
-	@PostMapping
-	public Attendee createNewAttendee(Attendee attendee) {
-		return attendeeService.addNewAttendee(attendee);
-	}
+    /**
+     * @param id attendee id to be deleted
+     */
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public void deleteOneAttendee(@PathVariable Long id) {
+        attendeeService.deleteOneAttendee(id);
+    }
 
-	/**
-	 * @param id attendee id to be deleted
-	 */
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	public void deleteOneAttendee(@PathVariable Long id) {
-		attendeeService.deleteOneAttendee(id);
-	}
-
-	/**
-	 * @param id attendee id that will be updated
-	 * @param attendee attendee that would be updates
-	 * @return the updated information of the attendee
-	 */
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public @ResponseBody
-	Attendee updateAttendeeInfo(@PathVariable Long id, Attendee attendee) {
-		return attendeeService.updateAttendeeInfo(id, attendee);
-	}
-
+    /**
+     * @param id       attendee id that will be updated
+     * @param attendee attendee that would be updates
+     * @return the updated information of the attendee
+     */
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public @ResponseBody
+    Attendee updateAttendeeInfo(@PathVariable Long id, Attendee attendee) {
+        return attendeeService.updateAttendeeInfo(id, attendee);
+    }
 }

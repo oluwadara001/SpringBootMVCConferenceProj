@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset = "ISO-8859-1">
-    <title>My Spring Boot Thymeleaf App</title>
-</head>
+    <head>
+        <style>
+            /* CSS styles for the div element */
+            .custom-div {
+                width: 1400px; /* Set the width to 1400 pixels */
+                height: 750 px; /* Set the height to 750 pixels */
+                background-color: lightblue; /* Set a background color for visibility */
+                border: 2px solid darkblue; /* Add a border for visibility */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+        <meta charset="ISO-8859-1">
+        <title>Conference App </title>
+    </head>
 <body>
-<h1 th:text="${message}">Hello, World!</h1>
+    <h1 th:text="${message}">Hello, World!</h1>
 
-<!-- Adding links to main application element. -->
-<div align="center">
-    <a th:href="@{users}">users</a> |
-    <a th:href="@{attendees}">attendees</a> |
-    <a th:href="@{sessions}">sessions</a> |
-    <a th:href="@{speakers}">speakers</a>
-</div>
+    <!-- Adding links to main application element. -->
 
-</body>
+    <div align="center">
+    </div>
+    <!-- Your div element with a specific size -->
+        <div class="custom-div">
+            <!-- Content goes here -->
+            <a th:href="@{users}" style="font-size: 28px;" >users</a> |
+            <a th:href="@{attendees}"style="font-size: 28px;" >attendees</a> |
+            <a th:href="@{sessions}" style="font-size: 28px;">sessions</a> |
+            <a th:href="@{speakers}" style="font-size: 28px;">speakers</a>
+        </div>
+    </body>
 </html>

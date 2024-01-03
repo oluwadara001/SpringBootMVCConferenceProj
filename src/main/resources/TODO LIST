@@ -56,6 +56,7 @@ IMPLEMENTATION DETAILS::
  (10,'Macon','Grace Frost','vel sapien imperdiet','Augue Industries','alpba@bba.net','1-588-664-1735'),
  (11,'Octavius','Iliana Howell','aliquam adipiscing lacus. Ut nec','Magna Inc','c@agro.ng','1-986-966-4458'),
  (12,'Burke','Leigh Chaney','vitae risus. Duis a mi','Vivamus Limited','dhdh@hhd.ca','1-255-440-3544');
+ (13,'Oyin','Bamife','Owner','Bamife hair and beard care','oyin@bam.us','1-255-440-3544');
 
 
  CREATE TABLE attendees

@@ -68,10 +68,9 @@ public class HomeController {
         return homeService.appVersion();
     }
 
-
     @Controller
     public class TymeLeafController {
-        /**
+        /** This is the method that renders the home/landing page.
          * @param model
          * @return
          */

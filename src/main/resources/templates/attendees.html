@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset = "ISO-8859-1">
-    <title>My Spring Boot Thymeleaf App</title>
+    <meta charset="ISO-8859-1">
+    <title>Conference App</title>
+    <style>
+        /* Apply styles to center the content within h2 */
+        h2 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
-<h2> Attendees Page</h2>
+<h2> Attendees Page </h2>
 
 <!-- Adding links to main application element. -->
 <div align="center">
-    <a th:href="@{users}">users</a> |
-    <a th:href="@{attendees}">attendees</a> |
-    <a th:href="@{sessions}">sessions</a> |
-    <a th:href="@{speakers}">speakers</a>
+    <a th:href="@{users}" style="font-size: 20px;">users</a> |
+    <a th:href="@{attendees}"style="font-size: 20px;">attendees</a> |
+    <a th:href="@{sessions}" style="font-size: 20px;">sessions</a> |
+    <a th:href="@{speakers}" style="font-size: 20px;">speakers</a>
 </div>
 
-
+<!-- capture the attendee object that has been passed as on ordered list. -->
 <ul>
     <li th:each="attendees : ${attendees}">
         <span th:text="${attendees.attendeeId}">Default</span>
