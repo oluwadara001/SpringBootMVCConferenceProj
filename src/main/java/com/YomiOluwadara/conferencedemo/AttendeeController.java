@@ -32,14 +32,13 @@ public class AttendeeController {
      */
     @RequestMapping(value = "/attendees")
     String listAllAttendees(Model model) {
-        List<Attendee> attendees = attendeeService.allAttendees();
-        //attendee object is passed to the view using the model
-        model.addAttribute("attendees", attendees);
+        List<Attendee> attendees = attendeeService.allAttendees(); //store all attendees from allAttendees() in attendees
+        model.addAttribute("attendees", attendees); //attendee object is passed to the view using the model
         return "attendees";
     }
 
     /**
-     * @param id id of a given attendee
+     * @param id id of a given atten
      * @return the record of the attendee that was passed in
      */
     @GetMapping
