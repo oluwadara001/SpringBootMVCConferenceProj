@@ -84,7 +84,6 @@ public class UserService {
 	/**
 	 * Method adds an object of CustomerDao to the cache memory if not already existing in cache.
 	 * it holds the first 5000 records. Typically, it serves as a temporary database- holding table
-	 * <p>
 	 * use wrapper class for long- see https://www.w3schools.com/java/java_wrapper_classes.asp
 	 * map.entry : https://www.geeksforgeeks.org/map-entry-interface-java-example/
 	 * LinkedHashMap --> https://www.geeksforgeeks.org/linkedhashmap-class-java-examples/

@@ -1,7 +1,7 @@
 /**
  * @author OO046152
- * creating a class member of AttendeeService so will can call the
- * methods in that class inside this class- controller class
+ * creating a class member of AttendeeService so will, can call the
+ * methods in that class inside this class-controller class
  * url for retreive all registered attendees: http://localhost:8080/home/attendees
  */
 
@@ -61,7 +61,7 @@ public class AttendeeController {
      * @param attendee an attendee that would be added
      * @return the record of the newly added attendee
      */
-    @PostMapping
+    @PostMapping  
     public Attendee createNewAttendee(Attendee attendee) {
         return attendeeService.addNewAttendee(attendee);
     }
