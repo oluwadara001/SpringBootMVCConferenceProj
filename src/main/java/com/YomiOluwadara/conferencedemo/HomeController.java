@@ -31,21 +31,22 @@ public class HomeController {
     HomeService homeService;
 
     /**
+     * Constructor- implements dependency injection through constructor injection
      * @param homeService variable of type HomeService
      */
     public HomeController(HomeService homeService) {
         this.homeService = homeService;
     }
 
-
     /**
      * @return returns the application welcome message
      */
-    @GetMapping
+    //@GetMapping()
     @RequestMapping("/home")
     public @ResponseBody
     String welcomeMessage() {
-        return homeService.welcomeMessage();// + homeService.getUserType();
+        //use the homeService object to invoke the welcomeMessage method from the HomeService class.
+        return homeService.welcomeMessage();
     }
 
     /**
