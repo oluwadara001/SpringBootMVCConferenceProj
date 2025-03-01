@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
-
+    //Declare an instance variable of type HomeService, so it can be used to access the methods in the HomeService class
     HomeService homeService;
 
     /**
