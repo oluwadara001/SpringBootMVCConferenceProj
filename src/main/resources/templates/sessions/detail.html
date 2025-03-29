@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title th:text="${session.sessionName}">Session Details</title>
+</head>
+<body>
+    <!-- Page title -->
+    <div layout:fragment="page-title">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/sessions}">Sessions</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" th:text="${session.sessionName}">Session Name</li>
+                    </ol>
+                </nav>
+                <h1 class="display-5" th:text="${session.sessionName}">Session Name</h1>
+                <p class="lead text-muted" th:text="${session.sessionLength + ' minute session'}">60 minute session</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="btn-group">
+                    <a th:href="@{/sessions/{id}/edit(id=${session.sessionId})}" class="btn btn-outline-primary">
+                        <i class="fas fa-edit me-1"></i> Edit
+                    </a>
+                    <a th:href="@{/sessions/{id}/delete(id=${session.sessionId})}" class="btn btn-outline-danger btn-delete">
+                        <i class="fas fa-trash-alt me-1"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div layout:fragment="content">
+        <div class="row">
+            <!-- Session details -->
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Session Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="text-uppercase text-muted small mb-2">Description</h6>
+                        <p class="mb-4" th:text="${session.sessionDescription}">
+                            Session description goes here.
+                        </p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h6 class="text-uppercase text-muted small mb-2">Duration</h6>
+                                <p class="mb-0">
+                                    <span class="badge bg-primary">
+                                        <i class="fas fa-clock me-1"></i>
+                                        <span th:text="${session.sessionLength + ' minutes'}">60 minutes</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-uppercase text-muted small mb-2">Session ID</h6>
+                                <p class="mb-0" th:text="${session.sessionId}">1</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Speakers section -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-microphone me-2"></i>Speakers</h5>
+                        <a th:href="@{/sessions/{id}/edit(id=${session.sessionId})}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus-circle me-1"></i>Add Speakers
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div th:if="${session.speakers == null || session.speakers.empty}" class="p-4 text-center text-muted">
+                            <i class="fas fa-user-slash fa-2x mb-3"></i>
+                            <p class="mb-0">No speakers assigned to this session.</p>
+                        </div>
+                        <div th:if="${session.speakers != null && !session.speakers.empty}" class="list-group list-group-flush">
+                            <div th:each="speaker : ${session.speakers}" class="list-group-item d-flex align-items-center">
+                                <div class="avatar rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3"
+                                     style="width: 48px; height: 48px;">
+                                    <span th:text="${#strings.substring(speaker.firstName, 0, 1) + #strings.substring(speaker.lastName, 0, 1)}">JS</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0" th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</h6>
+                                    <p class="small text-muted mb-0" th:text="${speaker.company}">Company Name</p>
+                                </div>
+                                <a th:href="@{/speakers/{id}(id=${speaker.speakerId})}" class="btn btn-sm btn-outline-secondary ms-auto">
+                                    <i class="fas fa-eye me-1"></i>View Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attendees section -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-users me-2"></i>Attendees</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div th:if="${session.attendees == null || session.attendees.empty}" class="p-4 text-center text-muted">
+                            <i class="fas fa-user-friends fa-2x mb-3"></i>
+                            <p class="mb-0">No attendees registered for this session yet.</p>
+                        </div>
+                        <div th:if="${session.attendees != null && !session.attendees.empty}" class="list-group list-group-flush">
+                            <div th:each="attendee : ${session.attendees}" class="list-group-item d-flex align-items-center">
+                                <div class="avatar rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3"
+                                     style="width: 40px; height: 40px;">
+                                    <span th:text="${#strings.substring(attendee.firstName, 0, 1) + #strings.substring(attendee.lastName, 0, 1)}">AT</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0" th:text="${attendee.firstName + ' ' + attendee.lastName}">Attendee Name</h6>
+                                    <p class="small text-muted mb-0" th:text="${attendee.email}">attendee@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-md-4">
+                <!-- Quick actions -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/sessions/{id}/edit(id=${session.sessionId})}" class="btn btn-outline-primary">
+                                <i class="fas fa-edit me-1"></i>Edit Session
+                            </a>
+                            <a href="#" class="btn btn-outline-success">
+                                <i class="fas fa-user-plus me-1"></i>Add Attendees
+                            </a>
+                            <a th:href="@{/sessions/{id}/delete(id=${session.sessionId})}" class="btn btn-outline-danger btn-delete">
+                                <i class="fas fa-trash-alt me-1"></i>Delete Session
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Related sessions -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-link me-2"></i>Related Sessions</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <a th:href="@{/sessions/1}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Introduction to Spring Boot</h6>
+                                    <small>60 min</small>
+                                </div>
+                                <small class="text-muted">John Smith</small>
+                            </a>
+                            <a th:href="@{/sessions/2}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Advanced Java Concepts</h6>
+                                    <small>90 min</small>
+                                </div>
+                                <small class="text-muted">Jane Doe</small>
+                            </a>
+                            <a th:href="@{/sessions/3}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">RESTful API Design</h6>
+                                    <small>45 min</small>
+                                </div>
+                                <small class="text-muted">Michael Johnson</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

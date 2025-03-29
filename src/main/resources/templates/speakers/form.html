@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title th:text="${speaker.speakerId == null ? 'New Speaker' : 'Edit Speaker'}">Speaker Form</title>
+</head>
+<body>
+    <!-- Page title -->
+    <div layout:fragment="page-title">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-5" th:text="${speaker.speakerId == null ? 'Create New Speaker' : 'Edit Speaker'}">Speaker Form</h1>
+                <p class="lead text-muted" th:text="${speaker.speakerId == null ? 'Add a new conference speaker' : 'Update existing speaker details'}">Speaker form description</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a th:href="@{/speakers}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Speakers
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div layout:fragment="content">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <!-- Form errors if any -->
+                        <div th:if="${#fields.hasErrors('${speaker}')}" class="alert alert-danger mb-4">
+                            <h5 class="alert-heading">Please fix the following errors:</h5>
+                            <ul class="mb-0">
+                                <li th:each="err : ${#fields.errors('${speaker}')}" th:text="${err}">Error message</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Speaker Form -->
+                        <form th:action="${speaker.speakerId == null ? @{/speakers/save} : @{/speakers/update}}" 
+                              th:object="${speaker}" method="post" class="needs-validation" novalidate>
+                            
+                            <!-- Hidden ID field for updates -->
+                            <input type="hidden" th:field="*{speakerId}" />
+                            
+                            <!-- Personal Information section -->
+                            <div class="mb-4">
+                                <h5 class="mb-3 border-bottom pb-2">Personal Information</h5>
+                                
+                                <div class="row g-3">
+                                    <!-- First Name -->
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="firstName" th:field="*{firstName}" 
+                                               required placeholder="Enter first name">
+                                        <div class="invalid-feedback">First name is required</div>
+                                    </div>
+                                    
+                                    <!-- Last Name -->
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="lastName" th:field="*{lastName}" 
+                                               required placeholder="Enter last name">
+                                        <div class="invalid-feedback">Last name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Professional Information section -->
+                            <div class="mb-4">
+                                <h5 class="mb-3 border-bottom pb-2">Professional Information</h5>
+                                
+                                <div class="row g-3">
+                                    <!-- Title -->
+                                    <div class="col-md-6">
+                                        <label for="title" class="form-label">Job Title <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="title" th:field="*{title}" 
+                                               required placeholder="Enter job title">
+                                        <div class="invalid-feedback">Job title is required</div>
+                                    </div>
+                                    
+                                    <!-- Company -->
+                                    <div class="col-md-6">
+                                        <label for="company" class="form-label">Company <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="company" th:field="*{company}" 
+                                               required placeholder="Enter company name">
+                                        <div class="invalid-feedback">Company is required</div>
+                                    </div>
+                                    
+                                    <!-- Speaker Bio -->
+                                    <div class="col-12">
+                                        <label for="speakerBio" class="form-label">Speaker Bio <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="speakerBio" th:field="*{speakerBio}" 
+                                                  rows="4" required placeholder="Enter speaker biography"></textarea>
+                                        <div class="invalid-feedback">Speaker bio is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Contact Information section -->
+                            <div class="mb-4">
+                                <h5 class="mb-3 border-bottom pb-2">Contact Information</h5>
+                                
+                                <div class="row g-3">
+                                    <!-- Email -->
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" th:field="*{email}" 
+                                               required placeholder="Enter email address">
+                                        <div class="invalid-feedback">Valid email is required</div>
+                                    </div>
+                                    
+                                    <!-- Phone Number -->
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control phone-input" id="phone" 
+                                               placeholder="(123) 456-7890" th:field="*{phoneNumber}">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Social Media section -->
+                            <div class="mb-4">
+                                <h5 class="mb-3 border-bottom pb-2">Social Media</h5>
+                                
+                                <div class="row g-3">
+                                    <!-- Twitter -->
+                                    <div class="col-md-6">
+                                        <label for="twitter" class="form-label">Twitter</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light">@</span>
+                                            <input type="text" class="form-control" id="twitter" 
+                                                   placeholder="twitter_handle" th:field="*{twitter}">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- LinkedIn -->
+                                    <div class="col-md-6">
+                                        <label for="linkedin" class="form-label">LinkedIn URL</label>
+                                        <input type="url" class="form-control" id="linkedin" 
+                                               placeholder="https://linkedin.com/in/username" th:field="*{linkedin}">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div class="d-flex justify-content-end gap-2 mt-4">
+                                <a th:href="@{/speakers}" class="btn btn-light">Cancel</a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save me-1"></i> 
+                                    <span th:text="${speaker.speakerId == null ? 'Create Speaker' : 'Update Speaker'}">Save</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Help panel -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Creating an Effective Speaker Profile</h6>
+                        <ul class="small text-muted mb-0">
+                            <li>Use a professional title that accurately reflects the speaker's expertise</li>
+                            <li>Write a bio that highlights the speaker's experience and qualifications</li>
+                            <li>Include social media profiles to help attendees connect with the speaker</li>
+                            <li>Make sure to associate the speaker with their sessions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Session assignments card, shown only when editing -->
+                <div class="card border-0 shadow-sm" th:if="${speaker.speakerId != null}">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-chalkboard-teacher me-2"></i>Assigned Sessions</h5>
+                        <a href="#" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus-circle me-1"></i>Assign
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div th:if="${speaker.sessions == null || speaker.sessions.empty}" class="p-4 text-center text-muted">
+                            <p class="mb-0">No sessions assigned to this speaker yet.</p>
+                        </div>
+                        <div th:if="${speaker.sessions != null && !speaker.sessions.empty}" class="list-group list-group-flush">
+                            <div th:each="session : ${speaker.sessions}" class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-0" th:text="${session.sessionName}">Session Name</h6>
+                                        <small class="text-muted" th:text="${session.sessionLength + ' minutes'}">60 minutes</small>
+                                    </div>
+                                    <a th:href="@{/sessions/{id}(id=${session.sessionId})}" class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

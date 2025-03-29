@@ -17,6 +17,9 @@
 package com.YomiOluwadara.conferencedemo;
 
 import com.YomiOluwadara.conferencedemo.controller.HomeService;
+import com.YomiOluwadara.conferencedemo.model.Session;
+import com.YomiOluwadara.conferencedemo.model.Speaker;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +27,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-@RestController
+@Controller
 public class HomeController {
     //Declare an instance variable of type HomeService, so it can be used to access the methods in the HomeService class
-    HomeService homeService;
+    private final HomeService homeService;
+    
+    @Value("${yomi.app.version}")
+    private String appVersion;
 
     /**
      * Constructor- implements dependency injection through constructor injection
@@ -39,46 +44,44 @@ public class HomeController {
     }
 
     /**
-     * @return returns the application welcome message
+     * This method renders the home/landing page.
+     * @param model Spring Model to add attributes
+     * @return The index view name
      */
-    //@GetMapping()
-    @RequestMapping("/home")
-    public @ResponseBody
-    String welcomeMessage() {
-        //use the homeService object to invoke the welcomeMessage method from the HomeService class.
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("message", homeService.welcomeMessage());
+        model.addAttribute("appVersion", appVersion);
+        return "index";
+    }
+    
+    /**
+     * API endpoint to return the application welcome message
+     * @return The welcome message as a String
+     */
+    @GetMapping("/api/welcome")
+    @ResponseBody
+    public String welcomeMessageApi() {
         return homeService.welcomeMessage();
     }
 
     /**
-     * @return
+     * API endpoint to return the user type
+     * @return The user type as a String
      */
-    @GetMapping
-    @RequestMapping("/home/usertype")
-    public @ResponseBody
-    String getUserTypeFromHomePage() {
+    @GetMapping("/api/usertype")
+    @ResponseBody
+    public String getUserTypeApi() {
         return homeService.getUserType();
     }
 
     /**
-     * @return the applications' app version stored in applications.properties
+     * API endpoint to return the application version
+     * @return The app version as a String
      */
-    @GetMapping
-    @RequestMapping("/")
-    public @ResponseBody
-    String getAppVersion() {
+    @GetMapping("/api/version")
+    @ResponseBody
+    public String getAppVersionApi() {
         return homeService.appVersion();
-    }
-
-    @Controller
-    public class TymeLeafController {
-        /** This is the method that renders the home/landing page.
-         * @param model
-         * @return
-         */
-        @GetMapping("/home")
-        public String home(Model model) {
-            model.addAttribute("message", homeService.welcomeMessage());
-            return "index";
-        }
     }
 }

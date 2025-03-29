@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Speakers</title>
+</head>
+<body>
+    <!-- Page title -->
+    <div layout:fragment="page-title">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-5">Speakers</h1>
+                <p class="lead text-muted">Manage conference speakers and presenters</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <a th:href="@{/speakers/new}" class="btn btn-success">
+                    <i class="fas fa-plus-circle me-1"></i> New Speaker
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div layout:fragment="content">
+        <!-- Search and filter bar -->
+        <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="fas fa-search text-muted"></i>
+                            </span>
+                            <input type="text" id="searchInput" class="form-control border-start-0" 
+                                   placeholder="Search speakers by name, company, title...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" id="companyFilter">
+                            <option value="">Filter by company</option>
+                            <option value="Microsoft">Microsoft</option>
+                            <option value="Google">Google</option>
+                            <option value="Amazon">Amazon</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Speakers grid view -->
+        <div class="row" id="speakerGrid">
+            <div class="col-md-6 col-lg-4 mb-4" th:if="${speakers == null || speakers.empty}">
+                <div class="card h-100 border-0 shadow-sm text-center p-4">
+                    <div class="text-muted my-5">
+                        <i class="fas fa-user-slash fa-3x mb-3"></i>
+                        <h5>No speakers found</h5>
+                        <p>Add new speakers to get started</p>
+                        <a th:href="@{/speakers/new}" class="btn btn-success mt-2">
+                            <i class="fas fa-plus-circle me-1"></i>Add Speaker
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Speaker Card (repeated for each speaker) -->
+            <div class="col-md-6 col-lg-4 mb-4" th:each="speaker : ${speakers}" th:if="${speakers != null && !speakers.empty}">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="speaker-avatar rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center bg-success text-white"
+                             style="width: 80px; height: 80px; font-size: 2rem;">
+                            <span th:text="${#strings.substring(speaker.firstName, 0, 1) + #strings.substring(speaker.lastName, 0, 1)}">JS</span>
+                        </div>
+                        <h5 class="card-title" th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</h5>
+                        <p class="card-subtitle mb-2 text-muted" th:text="${speaker.title}">Job Title</p>
+                        <p class="small mb-3" th:text="${speaker.company}">Company</p>
+                        
+                        <div class="d-flex justify-content-center mb-3">
+                            <a th:if="${speaker.twitter != null && !speaker.twitter.isEmpty()}" th:href="${'https://twitter.com/' + speaker.twitter}" 
+                               class="social-icon me-2 btn btn-sm btn-outline-primary rounded-circle"
+                               target="_blank" data-bs-toggle="tooltip" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a th:if="${speaker.linkedin != null && !speaker.linkedin.isEmpty()}" th:href="${speaker.linkedin}" 
+                               class="social-icon me-2 btn btn-sm btn-outline-primary rounded-circle"
+                               target="_blank" data-bs-toggle="tooltip" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a th:if="${speaker.company != null && !speaker.company.isEmpty()}" href="#" 
+                               class="social-icon btn btn-sm btn-outline-primary rounded-circle"
+                               data-bs-toggle="tooltip" title="Company website">
+                                <i class="fas fa-building"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a th:href="@{/speakers/{id}(id=${speaker.speakerId})}" class="btn btn-outline-success btn-sm me-1">
+                                <i class="fas fa-eye me-1"></i>View
+                            </a>
+                            <a th:href="@{/speakers/{id}/edit(id=${speaker.speakerId})}" class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </a>
+                            <a th:href="@{/speakers/{id}/delete(id=${speaker.speakerId})}" class="btn btn-outline-danger btn-sm btn-delete">
+                                <i class="fas fa-trash me-1"></i>Delete
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        <span th:if="${speaker.sessions != null && !speaker.sessions.empty}" 
+                              class="badge bg-success me-1" th:text="${speaker.sessions.size() + ' sessions'}">
+                            2 sessions
+                        </span>
+                        <span th:if="${speaker.sessions == null || speaker.sessions.empty}" 
+                              class="badge bg-light text-dark">
+                            No sessions
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toggle view buttons -->
+        <div class="my-4 text-center">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active" id="gridViewBtn">
+                    <i class="fas fa-th me-1"></i> Grid View
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="tableViewBtn">
+                    <i class="fas fa-list me-1"></i> Table View
+                </button>
+            </div>
+        </div>
+        
+        <!-- Table view (hidden by default) -->
+        <div class="card border-0 shadow-sm d-none" id="speakerTable">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px">#</th>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th>Company</th>
+                                <th>Sessions</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${speakers == null || speakers.empty}">
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-info-circle me-2"></i>No speakers found
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:each="speaker : ${speakers}" th:if="${speakers != null && !speakers.empty}">
+                                <td>
+                                    <span class="fw-bold" th:text="${speaker.speakerId}">1</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-2"
+                                             style="width: 36px; height: 36px; font-size: 0.9rem;">
+                                            <span th:text="${#strings.substring(speaker.firstName, 0, 1) + #strings.substring(speaker.lastName, 0, 1)}">JS</span>
+                                        </div>
+                                        <div>
+                                            <span th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:text="${speaker.title}">Speaker Title</span>
+                                </td>
+                                <td>
+                                    <span th:text="${speaker.company}">Company</span>
+                                </td>
+                                <td>
+                                    <span th:if="${speaker.sessions != null && !speaker.sessions.empty}" 
+                                          class="badge bg-success" th:text="${speaker.sessions.size()}">
+                                        2
+                                    </span>
+                                    <span th:if="${speaker.sessions == null || speaker.sessions.empty}" 
+                                          class="badge bg-light text-dark">
+                                        0
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group btn-group-sm">
+                                        <a th:href="@{/speakers/{id}(id=${speaker.speakerId})}" class="btn btn-outline-success"
+                                           data-bs-toggle="tooltip" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a th:href="@{/speakers/{id}/edit(id=${speaker.speakerId})}" class="btn btn-outline-primary"
+                                           data-bs-toggle="tooltip" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a th:href="@{/speakers/{id}/delete(id=${speaker.speakerId})}" class="btn btn-outline-danger btn-delete"
+                                           data-bs-toggle="tooltip" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add JavaScript for this page -->
+    <th:block layout:fragment="js">
+        <script>
+            // Toggle between grid and table view
+            document.getElementById('gridViewBtn').addEventListener('click', function() {
+                document.getElementById('speakerGrid').classList.remove('d-none');
+                document.getElementById('speakerTable').classList.add('d-none');
+                this.classList.add('active');
+                document.getElementById('tableViewBtn').classList.remove('active');
+            });
+            
+            document.getElementById('tableViewBtn').addEventListener('click', function() {
+                document.getElementById('speakerGrid').classList.add('d-none');
+                document.getElementById('speakerTable').classList.remove('d-none');
+                this.classList.add('active');
+                document.getElementById('gridViewBtn').classList.remove('active');
+            });
+            
+            // Filter by company
+            document.getElementById('companyFilter').addEventListener('change', function() {
+                const company = this.value.toLowerCase();
+                const cards = document.querySelectorAll('#speakerGrid .col-md-6');
+                const rows = document.querySelectorAll('#speakerTable tbody tr');
+                
+                if (company === '') {
+                    cards.forEach(card => card.style.display = '');
+                    rows.forEach(row => row.style.display = '');
+                    return;
+                }
+                
+                cards.forEach(function(card) {
+                    const companyText = card.querySelector('.small.mb-3')?.textContent.toLowerCase();
+                    if (companyText && companyText.includes(company)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                rows.forEach(function(row) {
+                    const companyCell = row.querySelector('td:nth-child(4)');
+                    if (companyCell && companyCell.textContent.toLowerCase().includes(company)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</body>
+</html> 

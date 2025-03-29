@@ -1,0 +1,168 @@
+/* Custom styles for Conference Management App */
+
+/* General styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Button styling */
+.btn {
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2653d4;
+}
+
+/* Table styling */
+.table {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fc;
+    border-bottom: 2px solid #e3e6f0;
+    color: #5a5c69;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+
+/* Form styling */
+.form-control {
+    border-radius: 4px;
+    padding: 10px 15px;
+    border: 1px solid #d1d3e2;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+    border-color: #bac8f3;
+}
+
+label {
+    font-weight: 600;
+    color: #5a5c69;
+    margin-bottom: 0.5rem;
+}
+
+/* Custom badge colors */
+.badge-pending {
+    background-color: #f6c23e;
+    color: #fff;
+}
+
+.badge-confirmed {
+    background-color: #36b9cc;
+    color: #fff;
+}
+
+.badge-completed {
+    background-color: #1cc88a;
+    color: #fff;
+}
+
+.badge-cancelled {
+    background-color: #e74a3b;
+    color: #fff;
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* For sticky footer */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* Dashboard specific styles */
+.dashboard-card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .lead {
+        font-size: 1rem;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Animation for alerts */
+.alert {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+} 

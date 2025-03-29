@@ -1,5 +1,3 @@
-
-
 /**
  * @author OO046152 : Yomi Oluwadara
  * This class contains the CRUD and logic credential functions as it relates to users.
@@ -20,9 +18,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static sun.plugin2.os.windows.OVERLAPPED.size;
-
 
 @Service
 public class UserService {
@@ -91,6 +86,12 @@ public class UserService {
 	private static final HashMap<Long, User> userDaoCache =
 			new LinkedHashMap<Long, User>(5, 0.75f, true);
 
+	/**
+	 * @return the size of the userDaoCache
+	 */
+	public int size() {
+		return userDaoCache.size();
+	}
 
 	/**
 	 * @param eldest This is the oldest UserDao object that will be removed from the map once the mao.entry inteface
