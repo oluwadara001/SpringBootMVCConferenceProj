@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title th:text="${speaker.name + ' - Conference Management System'}">Speaker Details</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Page Header -->
+        <div class="bg-light py-4 mb-4">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0" th:text="${speaker.name}">Speaker Name</h1>
+                    <div>
+                        <a th:href="@{/speakers/{id}/edit(id=${speaker.id})}" class="btn btn-primary me-2">
+                            <i class="fas fa-edit me-2"></i>Edit Speaker
+                        </a>
+                        <a href="/speakers" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Speakers
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speaker Details -->
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <!-- Profile Card -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="flex-shrink-0">
+                                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 120px; height: 120px;">
+                                        <i class="fas fa-user fa-3x text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-4">
+                                    <h2 class="h4 mb-1" th:text="${speaker.name}">Speaker Name</h2>
+                                    <p class="text-muted mb-2" th:text="${speaker.title}">Professional Title</p>
+                                    <div class="d-flex gap-2">
+                                        <a th:if="${speaker.twitter != null && !speaker.twitter.isEmpty()}" 
+                                           th:href="${'https://twitter.com/' + speaker.twitter}" 
+                                           class="btn btn-sm btn-outline-primary" target="_blank">
+                                            <i class="fab fa-twitter me-1"></i>Twitter
+                                        </a>
+                                        <a th:if="${speaker.linkedin != null && !speaker.linkedin.isEmpty()}" 
+                                           th:href="${speaker.linkedin}" 
+                                           class="btn btn-sm btn-outline-primary" target="_blank">
+                                            <i class="fab fa-linkedin-in me-1"></i>LinkedIn
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bio -->
+                            <div class="mb-4">
+                                <h5 class="text-muted mb-3">Biography</h5>
+                                <p class="lead" th:text="${speaker.bio}">Speaker bio goes here...</p>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="mb-4">
+                                <h5 class="text-muted mb-3">Contact Information</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <small class="text-muted d-block mb-1">Email</small>
+                                            <a th:href="${'mailto:' + speaker.email}" th:text="${speaker.email}" class="text-decoration-none">email@example.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <small class="text-muted d-block mb-1">Phone</small>
+                                            <span th:text="${speaker.phone}">+1 (555) 123-4567</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sessions -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h2 class="h4 mb-4">Sessions</h2>
+                            <div class="list-group list-group-flush">
+                                <a th:each="session : ${speaker.sessions}" 
+                                   th:href="@{/sessions/{id}(id=${session.id})}" 
+                                   class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1" th:text="${session.title}">Session Title</h6>
+                                        <small class="text-muted" th:text="${#temporals.format(session.startTime, 'MMM dd, HH:mm')}">Jan 01, 10:00</small>
+                                    </div>
+                                    <p class="mb-1 small text-muted" th:text="${session.description}">Session description goes here...</p>
+                                    <small class="text-muted">
+                                        <i class="fas fa-users me-1"></i>
+                                        <span th:text="${session.capacity + ' seats'}">50 seats</span>
+                                    </small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Quick Actions -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Quick Actions</h5>
+                            <div class="d-grid gap-2">
+                                <a th:href="@{/speakers/{id}/edit(id=${speaker.id})}" class="btn btn-outline-primary">
+                                    <i class="fas fa-edit me-2"></i>Edit Speaker
+                                </a>
+                                <form th:action="@{/speakers/{id}(id=${speaker.id})}" method="post" class="d-grid">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this speaker?')">
+                                        <i class="fas fa-trash me-2"></i>Delete Speaker
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Statistics</h5>
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <div class="p-3 bg-light rounded text-center">
+                                        <h3 class="mb-0" th:text="${speaker.sessions.size()}">3</h3>
+                                        <small class="text-muted">Sessions</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 bg-light rounded text-center">
+                                        <h3 class="mb-0" th:text="${speaker.sessions.stream().mapToInt(s -> s.capacity).sum()}">150</h3>
+                                        <small class="text-muted">Total Seats</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

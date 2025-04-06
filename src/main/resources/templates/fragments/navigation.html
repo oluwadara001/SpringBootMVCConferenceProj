@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation Fragment</title>
+</head>
+<body>
+    <!-- Navigation Buttons Fragment -->
+    <div th:fragment="nav-buttons">
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn back-btn" onclick="if(window.history.length>1){window.history.back()}else{window.location.href='/'}">
+                <i class="fas fa-arrow-left"></i>
+                <span class="nav-btn-tooltip">Back</span>
+            </a>
+            <a href="/" class="nav-btn">
+                <i class="fas fa-home"></i>
+                <span class="nav-btn-tooltip">Home</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Navigation Buttons Styles Fragment -->
+    <div th:fragment="nav-buttons-styles">
+        <style>
+            /* Navigation Buttons */
+            .nav-buttons {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                z-index: 1000;
+            }
+            
+            .nav-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: rgba(31, 41, 55, 0.9);
+                color: #ffffff;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+                transition: all 0.3s ease;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            
+            .nav-btn:hover {
+                background: #6366f1;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+            }
+            
+            .nav-btn i {
+                font-size: 1rem;
+            }
+            
+            .nav-btn-tooltip {
+                position: absolute;
+                right: 50px;
+                background: rgba(31, 41, 55, 0.9);
+                color: #ffffff;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+            }
+            
+            .nav-btn:hover .nav-btn-tooltip {
+                opacity: 1;
+            }
+            
+            @media (max-width: 768px) {
+                .nav-buttons {
+                    bottom: 15px;
+                    right: 15px;
+                }
+            }
+        </style>
+    </div>
+
+    <!-- Back Button Fragment -->
+    <div th:fragment="back-button(url, text)" class="back-button-container">
+        <a th:href="${url}" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            <span th:text="${text}">Back</span>
+        </a>
+    </div>
+
+    <style th:fragment="back-button-styles">
+        .back-button-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .back-button {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: rgba(31, 41, 55, 1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</body>
+</html> 

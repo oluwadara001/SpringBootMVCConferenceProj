@@ -1,137 +1,235 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/main}">
+      layout:decorate="~{layout/default}">
     <head>
-    <title>Home</title>
+    <title>YomiDara ai Conferences</title>
+    <style>
+        .main-container {
+            height: calc(100vh - 52px);
+            display: flex;
+            align-items: center;
+            background: #111827; /* Dark background */
+            color: #ffffff; /* White text */
+            overflow: hidden;
+        }
+        
+        .image-panel {
+            flex: 0 0 300px;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background: rgba(17, 24, 39, 0.8);
+        }
+        
+        .slideshow {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 0.7;
+        }
+        
+        .conference-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.5));
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .title-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3rem;
+            z-index: 3;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .services-section {
+            width: 300px;
+            background: rgba(31, 41, 55, 0.8); /* Slightly lighter dark background */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100%;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .service-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background: rgba(55, 65, 81, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .service-link:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .service-link i {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .image-panel {
+                width: 100%;
+                flex: 0 0 200px;
+            }
+            
+            .title-section {
+                padding: 2rem 1rem;
+            }
+            
+            .services-section {
+                width: 100%;
+                padding: 2rem;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+    <script th:inline="javascript">
+        // Set dark theme by default when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            const icon = document.querySelector('#themeSwitch i');
+            if (icon) icon.className = 'fas fa-sun';
+            
+            // Generate timestamp for cache busting
+            const timestamp = new Date().getTime();
+            
+            // Update image sources with timestamp to prevent caching
+            document.querySelectorAll('.conference-image').forEach(img => {
+                const currentSrc = img.getAttribute('src');
+                img.setAttribute('src', currentSrc + '?t=' + timestamp);
+            });
+            
+            // Image slideshow functionality
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+            
+            if (slides.length > 0) {
+                // Show the first slide initially
+                slides[0].classList.add('active');
+                
+                // Function to change slides
+                function nextSlide() {
+                    // Remove active class from current slide
+                    slides[currentSlide].classList.remove('active');
+                    
+                    // Update current slide index
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    
+                    // Add active class to new current slide
+                    slides[currentSlide].classList.add('active');
+                    
+                    console.log('Changing to slide', currentSlide);
+                }
+                
+                // Change slide every 5 seconds
+                setInterval(nextSlide, 5000);
+                
+                console.log('Slideshow initialized with', slides.length, 'slides');
+            }
+        });
+    </script>
     </head>
 <body>
-    <!-- Page title -->
-    <div layout:fragment="page-title">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="display-4">Conference Dashboard</h1>
-                <p class="lead text-muted">Manage your conference sessions, speakers, and attendees</p>
+    <div layout:fragment="content">
+        <div class="main-container">
+            <div class="image-panel">
+                <div class="slideshow">
+                    <div class="slide active">
+                        <img src="/data/conference_image.jpeg" alt="Conference" class="conference-image">
+                    </div>
+                    <div class="slide">
+                        <img src="/data/image1.jpeg" alt="Conference 1" class="conference-image">
+                    </div>
+                    <div class="slide">
+                        <img src="/data/image2.jpeg" alt="Conference 2" class="conference-image">
+                    </div>
+                    <div class="slide">
+                        <img src="/data/image3.jpeg" alt="Conference 3" class="conference-image">
+                    </div>
+                    <div class="slide">
+                        <img src="/data/image4.jpeg" alt="Conference 4" class="conference-image">
+                    </div>
+                </div>
+                <div class="image-overlay"></div>
             </div>
-            <div class="col-md-4 text-md-end">
-                <a th:href="@{/sessions/new}" class="btn btn-primary">
-                    <i class="fas fa-plus-circle"></i> New Session
+            <div class="title-section">
+                <h1 class="title">YomiDara ai Conferences</h1>
+            </div>
+            <div class="services-section">
+                <a href="/sessions" class="service-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Sessions</span>
+                </a>
+                <a href="/speakers" class="service-link">
+                    <i class="fas fa-microphone"></i>
+                    <span>Speakers</span>
+                </a>
+                <a href="/attendees" class="service-link">
+                    <i class="fas fa-users"></i>
+                    <span>Attendees</span>
                 </a>
             </div>
         </div>
     </div>
-
-    <!-- Main content -->
-    <div layout:fragment="content">
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="alert alert-info" role="alert">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <span th:text="${message}">Welcome to the Conference Management Application!</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dashboard cards -->
-        <div class="row mb-4">
-            <!-- Sessions Card -->
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <div class="display-4 text-primary mb-3">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                        </div>
-                        <h5 class="card-title">Sessions</h5>
-                        <p class="card-text text-muted">Manage all conference sessions</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <a th:href="@{/sessions}" class="btn btn-outline-primary btn-sm">View All Sessions</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Speakers Card -->
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <div class="display-4 text-success mb-3">
-                            <i class="fas fa-microphone"></i>
-                        </div>
-                        <h5 class="card-title">Speakers</h5>
-                        <p class="card-text text-muted">Manage conference speakers</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <a th:href="@{/speakers}" class="btn btn-outline-success btn-sm">View All Speakers</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Attendees Card -->
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <div class="display-4 text-warning mb-3">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <h5 class="card-title">Attendees</h5>
-                        <p class="card-text text-muted">Manage conference attendees</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <a th:href="@{/attendees}" class="btn btn-outline-warning btn-sm">View All Attendees</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Users Card -->
-            <div class="col-md-6 col-lg-3 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <div class="display-4 text-danger mb-3">
-                            <i class="fas fa-user-cog"></i>
-                        </div>
-                        <h5 class="card-title">Users</h5>
-                        <p class="card-text text-muted">Manage system users</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <a th:href="@{/users}" class="btn btn-outline-danger btn-sm">View All Users</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Quick action buttons -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0">Quick Actions</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 mb-3 mb-md-0">
-                                <a th:href="@{/sessions/new}" class="btn btn-outline-primary w-100">
-                                    <i class="fas fa-plus-circle me-2"></i>New Session
-                                </a>
-                            </div>
-                            <div class="col-md-3 mb-3 mb-md-0">
-                                <a th:href="@{/speakers/new}" class="btn btn-outline-success w-100">
-                                    <i class="fas fa-plus-circle me-2"></i>New Speaker
-                                </a>
-                            </div>
-                            <div class="col-md-3 mb-3 mb-md-0">
-                                <a th:href="@{/attendees/new}" class="btn btn-outline-warning w-100">
-                                    <i class="fas fa-plus-circle me-2"></i>New Attendee
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a th:href="@{/users/new}" class="btn btn-outline-danger w-100">
-                                    <i class="fas fa-plus-circle me-2"></i>New User
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </body>
+</body>
 </html>

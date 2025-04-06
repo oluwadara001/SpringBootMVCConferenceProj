@@ -4,39 +4,44 @@
  */
 package com.YomiOluwadara.conferencedemo.controller;
 
-import com.YomiOluwadara.conferencedemo.HomeController;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import com.YomiOluwadara.conferencedemo.HomeController;
+import com.YomiOluwadara.conferencedemo.services.HomeService;
 
 class HomeControllerTest {
 
 	@Mock
-	static HomeController homeController;
+	private HomeService homeService;
 
-	// create mock for class that has method that will be tested
+	private HomeController homeController;
+
 	@BeforeEach
-	public  void setUp(){
-		 homeController = Mockito.mock(HomeController.class);
+	public void setUp() {
+		homeService = Mockito.mock(HomeService.class);
+		homeController = new HomeController(homeService, null, null, null);
 	}
-		@Test
-		@DisplayName("returns the hardcoded version of app")
-		void appVersionTest() {
-			when(homeController.getAppVersion()).thenReturn("1.0.0");
-			assertEquals(homeController.getAppVersion(), "1.0.0");
-		}
 
-		@Test
-		@DisplayName("returns welcome message")
-		void welcomeMessageTest() {
-			when(homeController.welcomeMessage())
-					.thenReturn("Hello, welcome to the conference app project for big dummies");
-			assertEquals(homeController.welcomeMessage(),
-					"Hello, welcome to the conference app project for big dummies");
-		}
+	@Test
+	@DisplayName("returns the hardcoded version of app")
+	void appVersionTest() {
+		when(homeService.getAppVersion()).thenReturn("1.0.0");
+		assertEquals(homeService.getAppVersion(), "1.0.0");
+	}
+
+	@Test
+	@DisplayName("returns welcome message")
+	void welcomeMessageTest() {
+		when(homeService.welcomeMessage())
+				.thenReturn("Hello, welcome to the conference app project for big dummies");
+		assertEquals(homeService.welcomeMessage(),
+				"Hello, welcome to the conference app project for big dummies");
+	}
 }

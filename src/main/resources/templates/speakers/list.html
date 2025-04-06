@@ -1,260 +1,389 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/main}">
+      layout:decorate="~{layout/default}">
 <head>
     <title>Speakers</title>
+    <style>
+        /* Global Styles */
+        body {
+            background: #111827;
+            color: #ffffff;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #ffffff;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" fill="none"/><circle cx="3" cy="3" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: rgba(31, 41, 55, 0.8);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+            background-color: rgba(55, 65, 81, 0.5);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Speaker Cards */
+        .speaker-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .speaker-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            background: rgba(31, 41, 55, 0.8);
+        }
+
+        .speaker-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        .speaker-header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            padding: 2rem 1rem;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .speaker-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1rem;
+            background-color: rgba(55, 65, 81, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .speaker-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .speaker-title {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .speaker-body {
+            padding: 1.5rem 1rem;
+        }
+
+        .speaker-bio {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .speaker-info {
+            margin-bottom: 1rem;
+        }
+
+        .speaker-info-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.25rem;
+        }
+
+        .speaker-info-value {
+            font-size: 0.875rem;
+            color: #ffffff;
+        }
+
+        .speaker-sessions {
+            background: rgba(55, 65, 81, 0.3);
+            border-radius: 0.25rem;
+            padding: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .speaker-sessions-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .speaker-session-item {
+            font-size: 0.8125rem;
+            padding: 0.375rem 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .speaker-session-item:last-child {
+            border-bottom: none;
+        }
+
+        .speaker-footer {
+            padding: 1rem;
+            background: rgba(17, 24, 39, 0.5);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: rgba(31, 41, 55, 0.8);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.5);
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 400px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(55, 65, 81, 0.3);
+        }
+
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(55, 65, 81, 0.5);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .speaker-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Page title -->
-    <div layout:fragment="page-title">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="display-5">Speakers</h1>
-                <p class="lead text-muted">Manage conference speakers and presenters</p>
+    <div layout:fragment="content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header-content">
+                    <h1>Speakers</h1>
+                    <p>Meet our expert speakers at the YomiDara ai Conference</p>
+                </div>
             </div>
-            <div class="col-md-4 text-md-end">
-                <a th:href="@{/speakers/new}" class="btn btn-success">
-                    <i class="fas fa-plus-circle me-1"></i> New Speaker
+        </section>
+
+        <div class="container">
+            <!-- Search and Filter Section -->
+            <div class="search-section">
+                <div class="row g-2">
+                    <div class="col-md-9">
+                        <input type="text" class="search-input" placeholder="Search speakers..." id="searchInput">
+                    </div>
+                    <div class="col-md-3">
+                        <a href="/speakers/new" class="btn btn-primary w-100">
+                            <i class="fas fa-plus me-1"></i> New Speaker
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Speaker List -->
+            <div class="speaker-list" th:if="${not #lists.isEmpty(speakers)}">
+                <div class="speaker-card" th:each="speaker : ${speakers}">
+                    <div class="speaker-header">
+                        <div class="speaker-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h2 class="speaker-name" th:text="${speaker.firstName + ' ' + speaker.lastName}">John Doe</h2>
+                        <div class="speaker-title" th:text="${speaker.title}">AI Researcher</div>
+                    </div>
+                    <div class="speaker-body">
+                        <p class="speaker-bio" th:text="${speaker.bio}">Distinguished speaker with expertise in artificial intelligence and machine learning. Has contributed to numerous research papers and innovations in the field.</p>
+                        
+                        <div class="speaker-info">
+                            <div class="speaker-info-label">Company</div>
+                            <div class="speaker-info-value" th:text="${speaker.company}">TechCorp AI</div>
+                        </div>
+                        
+                        <div class="speaker-info">
+                            <div class="speaker-info-label">Expertise</div>
+                            <div class="speaker-info-value">AI, Machine Learning</div>
+                        </div>
+                        
+                        <div class="speaker-sessions" th:if="${not #lists.isEmpty(speaker.sessions)}">
+                            <div class="speaker-sessions-title">Sessions</div>
+                            <div class="speaker-session-item" th:each="session : ${speaker.sessions}">
+                                <a th:href="@{/sessions/{id}(id=${session.id})}" class="text-white">
+                                    <span th:text="${session.title}">The Future of AI</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="speaker-footer">
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        </div>
+                        <a th:href="@{/speakers/{id}(id=${speaker.id})}" class="btn btn-outline-primary btn-sm">View Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" th:if="${#lists.isEmpty(speakers)}">
+                <div class="empty-state-icon">
+                    <i class="fas fa-user-slash"></i>
+                </div>
+                <h3 class="empty-state-title">No Speakers Found</h3>
+                <p class="empty-state-description">There are no speakers available right now. Check back later or add a new speaker.</p>
+                <a href="/speakers/new" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Add New Speaker
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Main content -->
-    <div layout:fragment="content">
-        <!-- Search and filter bar -->
-        <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-body">
-                <div class="row g-3">
-                    <div class="col-md-8">
-                        <div class="input-group">
-                            <span class="input-group-text bg-white border-end-0">
-                                <i class="fas fa-search text-muted"></i>
-                            </span>
-                            <input type="text" id="searchInput" class="form-control border-start-0" 
-                                   placeholder="Search speakers by name, company, title...">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select" id="companyFilter">
-                            <option value="">Filter by company</option>
-                            <option value="Microsoft">Microsoft</option>
-                            <option value="Google">Google</option>
-                            <option value="Amazon">Amazon</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Speakers grid view -->
-        <div class="row" id="speakerGrid">
-            <div class="col-md-6 col-lg-4 mb-4" th:if="${speakers == null || speakers.empty}">
-                <div class="card h-100 border-0 shadow-sm text-center p-4">
-                    <div class="text-muted my-5">
-                        <i class="fas fa-user-slash fa-3x mb-3"></i>
-                        <h5>No speakers found</h5>
-                        <p>Add new speakers to get started</p>
-                        <a th:href="@{/speakers/new}" class="btn btn-success mt-2">
-                            <i class="fas fa-plus-circle me-1"></i>Add Speaker
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Speaker Card (repeated for each speaker) -->
-            <div class="col-md-6 col-lg-4 mb-4" th:each="speaker : ${speakers}" th:if="${speakers != null && !speakers.empty}">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-4">
-                        <div class="speaker-avatar rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center bg-success text-white"
-                             style="width: 80px; height: 80px; font-size: 2rem;">
-                            <span th:text="${#strings.substring(speaker.firstName, 0, 1) + #strings.substring(speaker.lastName, 0, 1)}">JS</span>
-                        </div>
-                        <h5 class="card-title" th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</h5>
-                        <p class="card-subtitle mb-2 text-muted" th:text="${speaker.title}">Job Title</p>
-                        <p class="small mb-3" th:text="${speaker.company}">Company</p>
-                        
-                        <div class="d-flex justify-content-center mb-3">
-                            <a th:if="${speaker.twitter != null && !speaker.twitter.isEmpty()}" th:href="${'https://twitter.com/' + speaker.twitter}" 
-                               class="social-icon me-2 btn btn-sm btn-outline-primary rounded-circle"
-                               target="_blank" data-bs-toggle="tooltip" title="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a th:if="${speaker.linkedin != null && !speaker.linkedin.isEmpty()}" th:href="${speaker.linkedin}" 
-                               class="social-icon me-2 btn btn-sm btn-outline-primary rounded-circle"
-                               target="_blank" data-bs-toggle="tooltip" title="LinkedIn">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a th:if="${speaker.company != null && !speaker.company.isEmpty()}" href="#" 
-                               class="social-icon btn btn-sm btn-outline-primary rounded-circle"
-                               data-bs-toggle="tooltip" title="Company website">
-                                <i class="fas fa-building"></i>
-                            </a>
-                        </div>
-                        
-                        <div class="text-center mt-3">
-                            <a th:href="@{/speakers/{id}(id=${speaker.speakerId})}" class="btn btn-outline-success btn-sm me-1">
-                                <i class="fas fa-eye me-1"></i>View
-                            </a>
-                            <a th:href="@{/speakers/{id}/edit(id=${speaker.speakerId})}" class="btn btn-outline-primary btn-sm me-1">
-                                <i class="fas fa-edit me-1"></i>Edit
-                            </a>
-                            <a th:href="@{/speakers/{id}/delete(id=${speaker.speakerId})}" class="btn btn-outline-danger btn-sm btn-delete">
-                                <i class="fas fa-trash me-1"></i>Delete
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <span th:if="${speaker.sessions != null && !speaker.sessions.empty}" 
-                              class="badge bg-success me-1" th:text="${speaker.sessions.size() + ' sessions'}">
-                            2 sessions
-                        </span>
-                        <span th:if="${speaker.sessions == null || speaker.sessions.empty}" 
-                              class="badge bg-light text-dark">
-                            No sessions
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Toggle view buttons -->
-        <div class="my-4 text-center">
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary active" id="gridViewBtn">
-                    <i class="fas fa-th me-1"></i> Grid View
-                </button>
-                <button type="button" class="btn btn-outline-primary" id="tableViewBtn">
-                    <i class="fas fa-list me-1"></i> Table View
-                </button>
-            </div>
-        </div>
-        
-        <!-- Table view (hidden by default) -->
-        <div class="card border-0 shadow-sm d-none" id="speakerTable">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <thead>
-                            <tr>
-                                <th style="width: 60px">#</th>
-                                <th>Name</th>
-                                <th>Title</th>
-                                <th>Company</th>
-                                <th>Sessions</th>
-                                <th class="text-end">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:if="${speakers == null || speakers.empty}">
-                                <td colspan="6" class="text-center py-4">
-                                    <div class="text-muted">
-                                        <i class="fas fa-info-circle me-2"></i>No speakers found
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr th:each="speaker : ${speakers}" th:if="${speakers != null && !speakers.empty}">
-                                <td>
-                                    <span class="fw-bold" th:text="${speaker.speakerId}">1</span>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-2"
-                                             style="width: 36px; height: 36px; font-size: 0.9rem;">
-                                            <span th:text="${#strings.substring(speaker.firstName, 0, 1) + #strings.substring(speaker.lastName, 0, 1)}">JS</span>
-                                        </div>
-                                        <div>
-                                            <span th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span th:text="${speaker.title}">Speaker Title</span>
-                                </td>
-                                <td>
-                                    <span th:text="${speaker.company}">Company</span>
-                                </td>
-                                <td>
-                                    <span th:if="${speaker.sessions != null && !speaker.sessions.empty}" 
-                                          class="badge bg-success" th:text="${speaker.sessions.size()}">
-                                        2
-                                    </span>
-                                    <span th:if="${speaker.sessions == null || speaker.sessions.empty}" 
-                                          class="badge bg-light text-dark">
-                                        0
-                                    </span>
-                                </td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a th:href="@{/speakers/{id}(id=${speaker.speakerId})}" class="btn btn-outline-success"
-                                           data-bs-toggle="tooltip" title="View">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a th:href="@{/speakers/{id}/edit(id=${speaker.speakerId})}" class="btn btn-outline-primary"
-                                           data-bs-toggle="tooltip" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a th:href="@{/speakers/{id}/delete(id=${speaker.speakerId})}" class="btn btn-outline-danger btn-delete"
-                                           data-bs-toggle="tooltip" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Add JavaScript for this page -->
     <th:block layout:fragment="js">
         <script>
-            // Toggle between grid and table view
-            document.getElementById('gridViewBtn').addEventListener('click', function() {
-                document.getElementById('speakerGrid').classList.remove('d-none');
-                document.getElementById('speakerTable').classList.add('d-none');
-                this.classList.add('active');
-                document.getElementById('tableViewBtn').classList.remove('active');
-            });
-            
-            document.getElementById('tableViewBtn').addEventListener('click', function() {
-                document.getElementById('speakerGrid').classList.add('d-none');
-                document.getElementById('speakerTable').classList.remove('d-none');
-                this.classList.add('active');
-                document.getElementById('gridViewBtn').classList.remove('active');
-            });
-            
-            // Filter by company
-            document.getElementById('companyFilter').addEventListener('change', function() {
-                const company = this.value.toLowerCase();
-                const cards = document.querySelectorAll('#speakerGrid .col-md-6');
-                const rows = document.querySelectorAll('#speakerTable tbody tr');
-                
-                if (company === '') {
-                    cards.forEach(card => card.style.display = '');
-                    rows.forEach(row => row.style.display = '');
-                    return;
-                }
-                
-                cards.forEach(function(card) {
-                    const companyText = card.querySelector('.small.mb-3')?.textContent.toLowerCase();
-                    if (companyText && companyText.includes(company)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                
-                rows.forEach(function(row) {
-                    const companyCell = row.querySelector('td:nth-child(4)');
-                    if (companyCell && companyCell.textContent.toLowerCase().includes(company)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('searchInput');
+                const speakerCards = document.querySelectorAll('.speaker-card');
+
+                // Simple search functionality
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    
+                    speakerCards.forEach(card => {
+                        const name = card.querySelector('.speaker-name').textContent.toLowerCase();
+                        const title = card.querySelector('.speaker-title').textContent.toLowerCase();
+                        const bio = card.querySelector('.speaker-bio').textContent.toLowerCase();
+                        
+                        if (name.includes(searchTerm) || title.includes(searchTerm) || bio.includes(searchTerm)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
         </script>

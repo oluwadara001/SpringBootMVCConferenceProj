@@ -9,28 +9,31 @@
  * from the application.properties file
  * <p>
  * HEROKU link: https://yomi-conferenc-eapp.herokuapp.com/
- * home url :http://localhost:5000/home
- * http://localhost:8080/home
- * version :http://localhost:5000/
- * version http://localhost:8080/ : Note- copy the port number in use in the application.properties file.
+ * home url :http://localhost:8085/home
+ * http://localhost:8085/
+ * version :http://localhost:8085/home/api/version
+ * Note- port number is configured in the application.properties file.
  */
 package com.YomiOluwadara.conferencedemo;
 
-import com.YomiOluwadara.conferencedemo.controller.HomeService;
-import com.YomiOluwadara.conferencedemo.model.Session;
-import com.YomiOluwadara.conferencedemo.model.Speaker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.YomiOluwadara.conferencedemo.services.AttendeeService;
+import com.YomiOluwadara.conferencedemo.services.HomeService;
+import com.YomiOluwadara.conferencedemo.services.SessionService;
+import com.YomiOluwadara.conferencedemo.services.SpeakerService;
 
 @Controller
 public class HomeController {
     //Declare an instance variable of type HomeService, so it can be used to access the methods in the HomeService class
     private final HomeService homeService;
+    private final SessionService sessionService;
+    private final SpeakerService speakerService;
+    private final AttendeeService attendeeService;
     
     @Value("${yomi.app.version}")
     private String appVersion;
@@ -39,19 +42,28 @@ public class HomeController {
      * Constructor- implements dependency injection through constructor injection
      * @param homeService variable of type HomeService
      */
-    public HomeController(HomeService homeService) {
+    public HomeController(HomeService homeService, 
+                        SessionService sessionService,
+                        SpeakerService speakerService,
+                        AttendeeService attendeeService) {
         this.homeService = homeService;
+        this.sessionService = sessionService;
+        this.speakerService = speakerService;
+        this.attendeeService = attendeeService;
     }
 
     /**
-     * This method renders the home/landing page.
+     * This method renders the home/landing page for both root URL and /home endpoint.
      * @param model Spring Model to add attributes
      * @return The index view name
      */
-    @GetMapping("/")
+    @GetMapping({"/", "/home"})
     public String home(Model model) {
         model.addAttribute("message", homeService.welcomeMessage());
         model.addAttribute("appVersion", appVersion);
+        model.addAttribute("sessions", sessionService.findAll());
+        model.addAttribute("speakers", speakerService.findAll());
+        model.addAttribute("attendees", attendeeService.findAll());
         return "index";
     }
     

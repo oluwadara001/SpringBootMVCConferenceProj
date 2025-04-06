@@ -1,160 +1,119 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/main}">
+      layout:decorate="~{layout/default}">
 <head>
-    <title th:text="${session.sessionId == null ? 'New Session' : 'Edit Session'}">Session Form</title>
+    <title th:text="${session.id == null ? 'New Session' : 'Edit Session'} + ' - Conference Management System'">Session Form</title>
 </head>
 <body>
-    <!-- Page title -->
-    <div layout:fragment="page-title">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1 class="display-5" th:text="${session.sessionId == null ? 'Create New Session' : 'Edit Session'}">Session Form</h1>
-                <p class="lead text-muted" th:text="${session.sessionId == null ? 'Add a new conference session' : 'Update existing session details'}">Session form description</p>
+    <div layout:fragment="content">
+        <!-- Page Header -->
+        <div class="bg-light py-4 mb-4">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0" th:text="${session.id == null ? 'New Session' : 'Edit Session'}">Session Form</h1>
+                    <a href="/sessions" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Sessions
+                    </a>
+                </div>
             </div>
-            <div class="col-md-4 text-md-end">
-                <a th:href="@{/sessions}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-1"></i> Back to Sessions
-                </a>
+        </div>
+
+        <!-- Session Form -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <form th:action="@{/sessions}" th:object="${session}" method="post">
+                                <input type="hidden" th:field="*{id}">
+                                
+                                <!-- Title -->
+                                <div class="mb-4">
+                                    <label for="title" class="form-label">Session Title</label>
+                                    <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                                        Please provide a valid title.
+                                    </div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="mb-4">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" th:field="*{description}" rows="4" required></textarea>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                                        Please provide a valid description.
+                                    </div>
+                                </div>
+
+                                <!-- Room Number -->
+                                <div class="mb-4">
+                                    <label for="roomNumber" class="form-label">Room Number</label>
+                                    <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}" required>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}">
+                                        Please provide a valid room number.
+                                    </div>
+                                </div>
+
+                                <!-- Start Time -->
+                                <div class="mb-4">
+                                    <label for="startTime" class="form-label">Start Time</label>
+                                    <input type="datetime-local" class="form-control" id="startTime" th:field="*{startTime}" required>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">
+                                        Please provide a valid start time.
+                                    </div>
+                                </div>
+
+                                <!-- End Time -->
+                                <div class="mb-4">
+                                    <label for="endTime" class="form-label">End Time</label>
+                                    <input type="datetime-local" class="form-control" id="endTime" th:field="*{endTime}" required>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">
+                                        Please provide a valid end time.
+                                    </div>
+                                </div>
+
+                                <!-- Capacity -->
+                                <div class="mb-4">
+                                    <label for="capacity" class="form-label">Room Capacity</label>
+                                    <input type="number" class="form-control" id="capacity" th:field="*{capacity}" min="1" required>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">
+                                        Please provide a valid capacity.
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-save me-2"></i>
+                                        <span th:text="${session.id == null ? 'Create Session' : 'Update Session'}">Save Session</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Main content -->
-    <div layout:fragment="content">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <!-- Form errors if any -->
-                        <div th:if="${#fields.hasErrors('${session}')}" class="alert alert-danger mb-4">
-                            <h5 class="alert-heading">Please fix the following errors:</h5>
-                            <ul class="mb-0">
-                                <li th:each="err : ${#fields.errors('${session}')}" th:text="${err}">Error message</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Session Form -->
-                        <form th:action="${session.sessionId == null ? @{/sessions/save} : @{/sessions/update}}" 
-                              th:object="${session}" method="post" class="needs-validation" novalidate>
-                            
-                            <!-- Hidden ID field for updates -->
-                            <input type="hidden" th:field="*{sessionId}" />
-                            
-                            <!-- Session Name -->
-                            <div class="mb-4">
-                                <label for="sessionName" class="form-label">Session Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="sessionName" th:field="*{sessionName}" 
-                                       required placeholder="Enter session name">
-                                <div class="invalid-feedback">Session name is required</div>
-                            </div>
-                            
-                            <!-- Session Description -->
-                            <div class="mb-4">
-                                <label for="sessionDescription" class="form-label">Description <span class="text-danger">*</span></label>
-                                <textarea class="form-control" id="sessionDescription" th:field="*{sessionDescription}" 
-                                          rows="4" required placeholder="Enter session description"></textarea>
-                                <div class="invalid-feedback">Session description is required</div>
-                            </div>
-                            
-                            <!-- Session Length -->
-                            <div class="mb-4">
-                                <label for="sessionLength" class="form-label">Session Length (minutes) <span class="text-danger">*</span></label>
-                                <select class="form-select" id="sessionLength" th:field="*{sessionLength}" required>
-                                    <option value="" selected disabled>Select session length</option>
-                                    <option value="30">30 minutes</option>
-                                    <option value="45">45 minutes</option>
-                                    <option value="60">60 minutes</option>
-                                    <option value="90">90 minutes</option>
-                                    <option value="120">120 minutes</option>
-                                </select>
-                                <div class="invalid-feedback">Please select a session length</div>
-                            </div>
-                            
-                            <!-- Speakers Selection -->
-                            <div class="mb-4">
-                                <label class="form-label">Speakers</label>
-                                <div class="card">
-                                    <div class="card-body bg-light p-3">
-                                        <div th:if="${speakers == null || speakers.empty}" class="text-muted small">
-                                            <i class="fas fa-info-circle me-1"></i>
-                                            No speakers available. <a th:href="@{/speakers/new}">Add a speaker</a> first.
-                                        </div>
-                                        <div th:if="${speakers != null && !speakers.empty}" class="row g-3">
-                                            <div class="col-md-6" th:each="speaker : ${speakers}">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" 
-                                                           th:value="${speaker.speakerId}" 
-                                                           th:id="${'speaker-' + speaker.speakerId}"
-                                                           th:field="*{speakers}">
-                                                    <label class="form-check-label" 
-                                                           th:for="${'speaker-' + speaker.speakerId}"
-                                                           th:text="${speaker.firstName + ' ' + speaker.lastName}">
-                                                        Speaker Name
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Form Actions -->
-                            <div class="d-flex justify-content-end gap-2 mt-4">
-                                <a th:href="@{/sessions}" class="btn btn-light">Cancel</a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i> 
-                                    <span th:text="${session.sessionId == null ? 'Create Session' : 'Update Session'}">Save</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Help panel -->
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Tips</h5>
-                    </div>
-                    <div class="card-body">
-                        <h6>Creating an Effective Session</h6>
-                        <ul class="small text-muted mb-0">
-                            <li>Choose a descriptive, engaging name</li>
-                            <li>Write a clear and concise description</li>
-                            <li>Consider the appropriate length for your content</li>
-                            <li>Assign relevant speakers to the session</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Related sessions card, shown only when editing -->
-                <div class="card border-0 shadow-sm" th:if="${session.sessionId != null}">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0"><i class="fas fa-link me-2"></i>Related Sessions</h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                                <div>
-                                    <h6 class="mb-0">Introduction to Spring Boot</h6>
-                                    <small class="text-muted">60 minutes</small>
-                                </div>
-                                <span class="ms-auto badge bg-primary rounded-pill">Related</span>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                                <div>
-                                    <h6 class="mb-0">Advanced Java Concepts</h6>
-                                    <small class="text-muted">90 minutes</small>
-                                </div>
-                                <span class="ms-auto badge bg-primary rounded-pill">Related</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Form Validation Script -->
+    <th:block layout:fragment="js">
+        <script>
+            // Form validation
+            (function () {
+                'use strict'
+                var forms = document.querySelectorAll('.needs-validation')
+                Array.prototype.slice.call(forms).forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        </script>
+    </th:block>
 </body>
 </html> 

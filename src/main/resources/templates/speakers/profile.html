@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>Speaker Profile</title>
+    <!-- Include back button styles -->
+    <th:block th:replace="fragments/navigation :: back-button-styles"></th:block>
+    <style>
+        /* Profile Page Styles */
+        body {
+            background-color: #111827;
+            color: #ffffff;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #ffffff;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" fill="none"/><circle cx="3" cy="3" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .profile-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .profile-card {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .profile-card .card-title {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-card .card-text {
+            color: #d1d5db;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .speaker-photo {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .speaker-photo i {
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 1;
+        }
+        
+        .speaker-photo-placeholder {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            z-index: 1;
+        }
+
+        .session-list .list-group-item {
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #d1d5db;
+            transition: all 0.3s ease;
+            padding: 1.25rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .session-list .list-group-item:hover {
+            background: rgba(31, 41, 55, 0.8);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .session-list .list-group-item h6 {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .session-list .list-group-item p {
+            font-size: 1rem;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="profile-header">
+            <div class="container">
+                <div class="profile-header-content">
+                    <h1 class="mb-2" th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</h1>
+                    <p class="mb-0" th:text="${speaker.title + ' at ' + speaker.company}">Title at Company</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Back button at the top -->
+                    <div th:replace="fragments/navigation :: back-button('/speakers', 'Back to Speakers')"></div>
+                    
+                    <div class="speaker-photo">
+                        <i class="fas fa-user-circle"></i>
+                        <div class="speaker-photo-placeholder">
+                            <span th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <p class="card-text" th:text="${speaker.bio}">Bio</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sessions</h5>
+                            <div class="list-group session-list">
+                                <a th:each="session : ${speaker.sessions}"
+                                   th:href="@{/sessions/{id}(id=${session.id})}"
+                                   class="list-group-item list-group-item-action">
+                                    <h6 class="mb-1" th:text="${session.title}">Session Title</h6>
+                                    <p class="mb-1" th:text="${session.description}">Session Description</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Back button at the bottom -->
+                    <div th:replace="fragments/navigation :: back-button('/speakers', 'Back to Speakers')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

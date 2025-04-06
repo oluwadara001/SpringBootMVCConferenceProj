@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title th:text="${session.title + ' - Conference Management System'}">Session Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            background: #111827;
+            color: #ffffff;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(to right, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.7));
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/data/conference_image.jpeg') center/cover no-repeat;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .session-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .session-meta {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        /* Content Cards */
+        .content-card {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card-title {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .info-item {
+            background: rgba(55, 65, 81, 0.5);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+        
+        /* Speaker Section */
+        .speaker-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(55, 65, 81, 0.5);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .speaker-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #ffffff;
+        }
+        
+        .speaker-info h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .speaker-info p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0;
+        }
+        
+        /* Register Button */
+        .register-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: block;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            color: #ffffff;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 2rem 0;
+            }
+            
+            .session-title {
+                font-size: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .session-details {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .detail-section h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        .detail-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .detail-list li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .detail-list li:before {
+            content: "•";
+            color: #3498db;
+            position: absolute;
+            left: 0;
+        }
+        .additional-notes {
+            font-style: italic;
+            color: #666;
+            border-left: 3px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        /* Alert Styles */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #10b981;
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+        }
+    </style>
+    <!-- Include back button styles -->
+    <th:block th:replace="fragments/navigation :: back-button-styles"></th:block>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container mt-4">
+            <!-- Back button at the top -->
+            <div th:replace="fragments/navigation :: back-button('/sessions', 'Back to Sessions')"></div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${session.title}">Session Title</h2>
+                    <p class="card-text" th:text="${session.description}">Session Description</p>
+                    
+                    <div class="mt-4">
+                        <h4>Session Details</h4>
+                        <ul class="list-unstyled">
+                            <li><strong>Room:</strong> <span th:text="${session.room}">Room</span></li>
+                            <li><strong>Capacity:</strong> <span th:text="${session.capacity}">Capacity</span></li>
+                            <li><strong>Start Time:</strong> <span th:text="${#temporals.format(session.startTime, 'MMM dd, yyyy HH:mm')}">Start Time</span></li>
+                            <li><strong>End Time:</strong> <span th:text="${#temporals.format(session.endTime, 'MMM dd, yyyy HH:mm')}">End Time</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4>Speakers</h4>
+                        <div class="row">
+                            <div class="col-md-4" th:each="speaker : ${session.speakers}">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</h5>
+                                        <p class="card-text" th:text="${speaker.title + ' at ' + speaker.company}">Title at Company</p>
+                                        <a th:href="@{/speakers/{id}(id=${speaker.id})}" class="btn btn-primary">View Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Back button at the bottom -->
+            <div th:replace="fragments/navigation :: back-button('/sessions', 'Back to Sessions')"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> 

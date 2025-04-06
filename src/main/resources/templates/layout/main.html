@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Conference Management</title>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Conference App</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     
     <!-- Custom styles -->
     <link th:href="@{/css/styles.css}" rel="stylesheet">
@@ -19,66 +22,80 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" th:href="@{/}">
-                    <i class="fas fa-calendar-alt me-2"></i>Conference App
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                        <path d="M16 2L2 8V24L16 30L30 24V8L16 2Z" fill="#333" stroke="white" stroke-width="2"/>
+                        <path d="M16 16L2 8M16 16L30 8M16 16V30" stroke="white" stroke-width="2"/>
+                    </svg>
+                    Conference App
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/}">
-                                <i class="fas fa-home me-1"></i>Home
+                            <a class="nav-link" th:href="@{/home}">
+                                <i class="fas fa-home me-1"></i> Home
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/sessions}">
-                                <i class="fas fa-chalkboard-teacher me-1"></i>Sessions
+                            <a class="nav-link" th:href="@{/home/sessions}">
+                                <i class="fas fa-calendar-alt me-1"></i> Sessions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/speakers}">
-                                <i class="fas fa-microphone me-1"></i>Speakers
+                            <a class="nav-link" th:href="@{/home/speakers}">
+                                <i class="fas fa-microphone me-1"></i> Speakers
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/attendees}">
-                                <i class="fas fa-users me-1"></i>Attendees
+                            <a class="nav-link" th:href="@{/home/attendees}">
+                                <i class="fas fa-users me-1"></i> Attendees
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/users}">
-                                <i class="fas fa-user-cog me-1"></i>Users
+                            <a class="nav-link" th:href="@{/home/users}">
+                                <i class="fas fa-user-cog me-1"></i> Users
                             </a>
                         </li>
                     </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light rounded-circle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container my-4">
+    <main class="container my-5">
         <!-- Page title -->
-        <div class="row mb-4" layout:fragment="page-title">
-            <div class="col-12">
-                <h1 class="display-5">Default Title</h1>
-            </div>
+        <div class="mb-5" layout:fragment="page-title">
+            <h1 class="display-4 mb-3">Conference Management</h1>
+            <p class="lead text-muted">Manage your conference sessions, speakers, and attendees</p>
         </div>
         
         <!-- Alerts and notifications -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
-                    <span th:text="${successMessage}"></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
-                    <span th:text="${errorMessage}"></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
+        <div class="mb-4">
+            <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+                <span th:text="${successMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+                <span th:text="${errorMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         </div>
         
@@ -88,29 +105,31 @@
         </div>
     </main>
 
-    <footer class="bg-dark text-white py-4 mt-5">
+    <footer class="py-4 mt-auto">
         <div class="container">
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-md-6">
                     <h5>Conference Management App</h5>
-                    <p class="small">A comprehensive tool for managing conference events, speakers, and attendees.</p>
+                    <p class="small text-muted">Version <span th:text="${appVersion}">1.0.0</span></p>
                 </div>
                 <div class="col-md-3">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a class="text-white-50" th:href="@{/sessions}">Sessions</a></li>
-                        <li><a class="text-white-50" th:href="@{/speakers}">Speakers</a></li>
-                        <li><a class="text-white-50" th:href="@{/attendees}">Attendees</a></li>
+                        <li><a href="#" th:href="@{/home/sessions}">Sessions</a></li>
+                        <li><a href="#" th:href="@{/home/speakers}">Speakers</a></li>
+                        <li><a href="#" th:href="@{/home/attendees}">Attendees</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5>Version</h5>
-                    <p class="small text-white-50">BETA 1.0.0</p>
+                    <h5>API</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" th:href="@{/home/api/welcome}">API Info</a></li>
+                        <li><a href="#" th:href="@{/home/api/version}">Version Info</a></li>
+                    </ul>
                 </div>
             </div>
-            <hr class="my-2">
-            <div class="text-center small">
-                <p>&copy; 2025 Conference Management. All rights reserved.</p>
+            <div class="text-center small text-muted">
+                <p>&copy; 2025 Conference Management App. All rights reserved.</p>
             </div>
         </div>
     </footer>

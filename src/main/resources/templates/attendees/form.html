@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title th:text="${attendee.id == null ? 'New Attendee' : 'Edit Attendee'} + ' - Conference Management System'">Attendee Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Page Header -->
+        <div class="bg-light py-4 mb-4">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0" th:text="${attendee.id == null ? 'New Attendee' : 'Edit Attendee'}">Attendee Form</h1>
+                    <a href="/attendees" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Attendees
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendee Form -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <form th:action="@{/attendees}" th:object="${attendee}" method="post" class="needs-validation" novalidate>
+                                <input type="hidden" th:field="*{id}">
+                                
+                                <!-- Personal Information -->
+                                <div class="mb-4">
+                                    <h5 class="text-muted mb-3">Personal Information</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="firstName" th:field="*{firstName}" 
+                                                   required minlength="2" maxlength="50">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                                                Please provide a valid first name (2-50 characters).
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="lastName" th:field="*{lastName}" 
+                                                   required minlength="2" maxlength="50">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                                                Please provide a valid last name (2-50 characters).
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Information -->
+                                <div class="mb-4">
+                                    <h5 class="text-muted mb-3">Contact Information</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" th:field="*{email}" 
+                                                   required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                                Please provide a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" 
+                                                   required pattern="^\+?[1-9]\d{1,14}$">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
+                                                Please provide a valid phone number (E.164 format).
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Company Information -->
+                                <div class="mb-4">
+                                    <h5 class="text-muted mb-3">Company Information</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="company" class="form-label">Company Name</label>
+                                            <input type="text" class="form-control" id="company" th:field="*{company}" 
+                                                   required minlength="2" maxlength="100">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('company')}" th:errors="*{company}">
+                                                Please provide a valid company name (2-100 characters).
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="jobTitle" class="form-label">Job Title</label>
+                                            <input type="text" class="form-control" id="jobTitle" th:field="*{jobTitle}" 
+                                                   required minlength="2" maxlength="100">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">
+                                                Please provide a valid job title (2-100 characters).
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Registration Details -->
+                                <div class="mb-4">
+                                    <h5 class="text-muted mb-3">Registration Details</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="registrationStatus" class="form-label">Registration Status</label>
+                                            <select class="form-select" id="registrationStatus" th:field="*{registrationStatus}" required>
+                                                <option value="">Select Status</option>
+                                                <option value="PENDING">Pending</option>
+                                                <option value="CONFIRMED">Confirmed</option>
+                                                <option value="CANCELLED">Cancelled</option>
+                                            </select>
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('registrationStatus')}" th:errors="*{registrationStatus}">
+                                                Please select a valid registration status.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="registrationDate" class="form-label">Registration Date</label>
+                                            <input type="date" class="form-control" id="registrationDate" th:field="*{registrationDate}" 
+                                                   required min="2024-01-01" max="2024-12-31">
+                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('registrationDate')}" th:errors="*{registrationDate}">
+                                                Please provide a valid registration date.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Session Selection -->
+                                <div class="mb-4">
+                                    <h5 class="text-muted mb-3">Session Selection</h5>
+                                    <div class="mb-3">
+                                        <label class="form-label">Select Sessions</label>
+                                        <div class="row g-2">
+                                            <div class="col-md-6" th:each="session : ${sessions}">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" 
+                                                           th:field="*{sessions}" th:value="${session.id}" 
+                                                           th:id="'session-' + ${session.id}">
+                                                    <label class="form-check-label" th:for="'session-' + ${session.id}">
+                                                        <span th:text="${session.title}">Session Title</span>
+                                                        <small class="text-muted d-block" th:text="${#temporals.format(session.startTime, 'MMM dd, HH:mm')}">Jan 01, 10:00</small>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-save me-2"></i>
+                                        <span th:text="${attendee.id == null ? 'Create Attendee' : 'Update Attendee'}">Submit</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Validation Script -->
+    <th:block layout:fragment="js">
+        <script>
+            // Form validation
+            (function () {
+                'use strict'
+                var forms = document.querySelectorAll('.needs-validation')
+                Array.prototype.slice.call(forms).forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+
+            // Phone number formatting
+            document.getElementById('phoneNumber').addEventListener('input', function(e) {
+                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                e.target.value = !x[2] ? x[1] : !x[3] ? `(${x[1]}) ${x[2]}` : `(${x[1]}) ${x[2]}-${x[3]}`;
+            });
+
+            // Date validation
+            document.getElementById('registrationDate').addEventListener('change', function(e) {
+                const selectedDate = new Date(e.target.value);
+                const today = new Date();
+                if (selectedDate < today) {
+                    e.target.setCustomValidity('Registration date cannot be in the past');
+                } else {
+                    e.target.setCustomValidity('');
+                }
+            });
+        </script>
+    </th:block>
+</body>
+</html> 
