@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Size;
 public class Attendee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "attendee_id")
     private Long id;
 
     @NotEmpty(message = "First name is required")
@@ -29,11 +30,17 @@ public class Attendee {
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Please provide a valid email address")
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "company")
     private String company;
 
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     // Getters and Setters
     public Long getId() {
@@ -82,5 +89,13 @@ public class Attendee {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 } 

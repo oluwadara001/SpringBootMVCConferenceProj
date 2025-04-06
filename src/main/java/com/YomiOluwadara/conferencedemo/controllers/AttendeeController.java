@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.YomiOluwadara.conferencedemo.exceptions.ResourceNotFoundException;
 import com.YomiOluwadara.conferencedemo.models.Attendee;
 import com.YomiOluwadara.conferencedemo.services.AttendeeService;
 
@@ -48,15 +50,26 @@ public class AttendeeController {
     }
 
     @GetMapping("/{id}")
-    public String viewAttendee(@PathVariable Long id, Model model) {
-        model.addAttribute("attendee", attendeeService.findById(id));
-        return "attendees/view";
+    public String viewAttendee(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Attendee attendee = attendeeService.findById(id);
+            model.addAttribute("attendee", attendee);
+            return "attendees/view";
+        } catch (ResourceNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/attendees";
+        }
     }
 
     @GetMapping("/{id}/edit")
-    public String editAttendee(@PathVariable Long id, Model model) {
-        model.addAttribute("attendee", attendeeService.findById(id));
-        return "attendees/form";
+    public String editAttendee(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("attendee", attendeeService.findById(id));
+            return "attendees/form";
+        } catch (ResourceNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/attendees";
+        }
     }
 
     @PostMapping("/{id}")
@@ -70,9 +83,15 @@ public class AttendeeController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteAttendee(@PathVariable Long id) {
-        attendeeService.deleteById(id);
-        return "redirect:/attendees";
+    public String deleteAttendee(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            attendeeService.deleteById(id);
+            redirectAttributes.addFlashAttribute("success", "Attendee deleted successfully");
+            return "redirect:/attendees";
+        } catch (ResourceNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/attendees";
+        }
     }
 
     // API Endpoints

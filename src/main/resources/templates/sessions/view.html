@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <title th:text="${session.title + ' - Conference Management System'}">Session Details</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Session Details</title>
+    <!-- Include back button styles -->
+    <th:block th:replace="fragments/navigation :: back-button-styles"></th:block>
     <style>
         /* Global Styles */
         body {
@@ -13,13 +14,14 @@
         
         /* Page Header */
         .page-header {
-            background: linear-gradient(to right, rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.7));
-            padding: 3rem 0;
-            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: #ffffff;
+            padding: 1.5rem 0;
             position: relative;
             overflow: hidden;
+            margin-bottom: 1.5rem;
         }
-        
+
         .page-header::before {
             content: '';
             position: absolute;
@@ -27,238 +29,344 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('/data/conference_image.jpeg') center/cover no-repeat;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" fill="none"/><circle cx="3" cy="3" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
             opacity: 0.3;
-            z-index: -1;
         }
-        
-        .session-title {
-            font-size: 2.5rem;
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        
-        .session-meta {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-        }
-        
-        /* Content Cards */
-        .content-card {
-            background: rgba(31, 41, 55, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.5rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .card-title {
-            color: #ffffff;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .info-item {
-            background: rgba(55, 65, 81, 0.5);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .info-label {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.875rem;
             margin-bottom: 0.5rem;
         }
-        
-        .info-value {
-            color: #ffffff;
-            font-size: 1.125rem;
-            font-weight: 500;
+
+        /* Session Details Card */
+        .session-card {
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
-        
-        /* Speaker Section */
-        .speaker-card {
+
+        .session-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .meta-item {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            background: rgba(55, 65, 81, 0.5);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 0.5rem;
         }
-        
+
+        .meta-item i {
+            color: #6366f1;
+        }
+
+        .session-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* Details Sections */
+        .details-section {
+            margin-bottom: 2rem;
+        }
+
+        .details-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .details-title i {
+            color: #6366f1;
+        }
+
+        .details-content {
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+        }
+
+        .details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .details-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .details-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .details-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: #6366f1;
+            border-radius: 50%;
+        }
+
+        /* Speaker Section */
+        .speaker-section {
+            margin-top: 2rem;
+        }
+
+        .speaker-card {
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .speaker-avatar {
-            width: 80px;
-            height: 80px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #ffffff;
         }
-        
-        .speaker-info h4 {
+
+        .speaker-info {
+            flex: 1;
+        }
+
+        .speaker-name {
+            font-size: 1.1rem;
+            font-weight: 600;
             color: #ffffff;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
-        
-        .speaker-info p {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0;
+
+        .speaker-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
         }
-        
-        /* Register Button */
-        .register-btn {
+
+        /* Registration Section */
+        .registration-section {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .btn-register {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: #ffffff;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
             border: none;
-            font-size: 1.125rem;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            text-align: center;
-            display: block;
-            width: 100%;
-            margin-top: 2rem;
         }
-        
-        .register-btn:hover {
+
+        .btn-register:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-            color: #ffffff;
         }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .page-header {
-                padding: 2rem 0;
-            }
-            
-            .session-title {
-                font-size: 2rem;
-            }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .session-details {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .detail-section {
-            margin-bottom: 20px;
-        }
-        .detail-section h3 {
-            color: #2c3e50;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-        }
-        .detail-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .detail-list li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-        }
-        .detail-list li:before {
-            content: "•";
-            color: #3498db;
-            position: absolute;
-            left: 0;
-        }
-        .additional-notes {
-            font-style: italic;
-            color: #666;
-            border-left: 3px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        /* Alert Styles */
-        .alert {
-            padding: 1rem;
-            border-radius: 0.375rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .alert-success {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            color: #10b981;
-        }
-        
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            color: #ef4444;
+
+        .capacity-info {
+            margin-top: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
         }
     </style>
-    <!-- Include back button styles -->
-    <th:block th:replace="fragments/navigation :: back-button-styles"></th:block>
 </head>
 <body>
     <div layout:fragment="content">
-        <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <div class="page-header-content">
+                    <h1 class="page-title" th:text="${session.title}">Session Title</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
             <!-- Back button at the top -->
             <div th:replace="fragments/navigation :: back-button('/sessions', 'Back to Sessions')"></div>
-            
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${session.title}">Session Title</h2>
-                    <p class="card-text" th:text="${session.description}">Session Description</p>
-                    
-                    <div class="mt-4">
-                        <h4>Session Details</h4>
-                        <ul class="list-unstyled">
-                            <li><strong>Room:</strong> <span th:text="${session.room}">Room</span></li>
-                            <li><strong>Capacity:</strong> <span th:text="${session.capacity}">Capacity</span></li>
-                            <li><strong>Start Time:</strong> <span th:text="${#temporals.format(session.startTime, 'MMM dd, yyyy HH:mm')}">Start Time</span></li>
-                            <li><strong>End Time:</strong> <span th:text="${#temporals.format(session.endTime, 'MMM dd, yyyy HH:mm')}">End Time</span></li>
-                        </ul>
+
+            <!-- Session Details Card -->
+            <div class="session-card">
+                <!-- Session Meta Information -->
+                <div class="session-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span th:text="${#temporals.format(session.startTime, 'MMM dd, yyyy HH:mm')}">Start Time</span>
                     </div>
-                    
-                    <div class="mt-4">
-                        <h4>Speakers</h4>
-                        <div class="row">
-                            <div class="col-md-4" th:each="speaker : ${session.speakers}">
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <h5 class="card-title" th:text="${speaker.firstName + ' ' + speaker.lastName}">Speaker Name</h5>
-                                        <p class="card-text" th:text="${speaker.title + ' at ' + speaker.company}">Title at Company</p>
-                                        <a th:href="@{/speakers/{id}(id=${speaker.id})}" class="btn btn-primary">View Profile</a>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="meta-item">
+                        <i class="fas fa-hourglass-end"></i>
+                        <span th:text="${#temporals.format(session.endTime, 'HH:mm')}">End Time</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-door-open"></i>
+                        <span>Room <span th:text="${session.roomNumber}">Room</span></span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-users"></i>
+                        <span>Capacity: <span th:text="${session.capacity}">50</span></span>
+                    </div>
+                </div>
+
+                <!-- Session Description -->
+                <div class="session-description" th:text="${session.description}">
+                    Session description goes here...
+                </div>
+
+                <!-- Session Details -->
+                <div th:if="${sessionDetails != null}">
+                    <!-- Learning Objectives -->
+                    <div class="details-section" th:if="${sessionDetails.learningObjectives != null and not #lists.isEmpty(sessionDetails.learningObjectives)}">
+                        <h3 class="details-title">
+                            <i class="fas fa-bullseye"></i>
+                            Learning Objectives
+                        </h3>
+                        <div class="details-content">
+                            <ul class="details-list">
+                                <li th:each="objective : ${sessionDetails.learningObjectives}" th:text="${objective}">
+                                    Learning objective
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Prerequisites -->
+                    <div class="details-section" th:if="${sessionDetails.prerequisites != null and not #lists.isEmpty(sessionDetails.prerequisites)}">
+                        <h3 class="details-title">
+                            <i class="fas fa-clipboard-check"></i>
+                            Prerequisites
+                        </h3>
+                        <div class="details-content">
+                            <ul class="details-list">
+                                <li th:each="prerequisite : ${sessionDetails.prerequisites}" th:text="${prerequisite}">
+                                    Prerequisite
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Target Audience -->
+                    <div class="details-section" th:if="${sessionDetails.targetAudience != null and not #lists.isEmpty(sessionDetails.targetAudience)}">
+                        <h3 class="details-title">
+                            <i class="fas fa-users"></i>
+                            Target Audience
+                        </h3>
+                        <div class="details-content">
+                            <ul class="details-list">
+                                <li th:each="audience : ${sessionDetails.targetAudience}" th:text="${audience}">
+                                    Target audience
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Key Topics -->
+                    <div class="details-section" th:if="${sessionDetails.keyTopics != null and not #lists.isEmpty(sessionDetails.keyTopics)}">
+                        <h3 class="details-title">
+                            <i class="fas fa-key"></i>
+                            Key Topics
+                        </h3>
+                        <div class="details-content">
+                            <ul class="details-list">
+                                <li th:each="topic : ${sessionDetails.keyTopics}" th:text="${topic}">
+                                    Key topic
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Materials Needed -->
+                    <div class="details-section" th:if="${sessionDetails.materialsNeeded != null and not #lists.isEmpty(sessionDetails.materialsNeeded)}">
+                        <h3 class="details-title">
+                            <i class="fas fa-tools"></i>
+                            Materials Needed
+                        </h3>
+                        <div class="details-content">
+                            <ul class="details-list">
+                                <li th:each="material : ${sessionDetails.materialsNeeded}" th:text="${material}">
+                                    Material needed
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="details-section" th:if="${sessionDetails.additionalNotes != null and not #strings.isEmpty(sessionDetails.additionalNotes)}">
+                        <h3 class="details-title">
+                            <i class="fas fa-sticky-note"></i>
+                            Additional Notes
+                        </h3>
+                        <div class="details-content">
+                            <p th:text="${sessionDetails.additionalNotes}">Additional notes</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Speaker Information -->
+                <div class="speaker-section" th:if="${session.speaker != null}">
+                    <h3 class="details-title">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Speaker
+                    </h3>
+                    <div class="speaker-card">
+                        <div class="speaker-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="speaker-info">
+                            <h4 class="speaker-name" th:text="${session.speaker.firstName + ' ' + session.speaker.lastName}">Speaker Name</h4>
+                            <p class="speaker-title" th:text="${session.speaker.title}">Speaker Title</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registration Section -->
+                <div class="registration-section">
+                    <a th:href="@{/register/session/{id}(id=${session.id})}" class="btn btn-register">
+                        Register for this Session
+                    </a>
+                    <p class="capacity-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span th:text="${session.capacity + ' spots available'}">spots available</span>
+                    </p>
+                </div>
             </div>
-            
+
             <!-- Back button at the bottom -->
             <div th:replace="fragments/navigation :: back-button('/sessions', 'Back to Sessions')"></div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html> 
